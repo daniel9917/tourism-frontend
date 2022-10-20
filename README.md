@@ -1,3 +1,6 @@
+# Npm Modules installation
+npm install @mui/material @emotion/react @emotion/styled
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
