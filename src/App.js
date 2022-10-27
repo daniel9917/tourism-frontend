@@ -1,21 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
-import FilterElement from "./components/Filters/FilterCategory/FilterElement/FilterElement";
-import FilterGroup from "./components/Filters/FilterGroup/FilterGroup";
-import { Component, useState } from "react";
-import Home from "./pages/Home/Home";
-import { Box, Container } from "@mui/material";
-import CardElement from "./components/CardElement/CardElement";
-import Header from "./pages/Header/Header";
-// import { ThemeProvider, createTheme } from '@mui/material';
-
-// const theme = createTheme({
-//   typography  : {
-//     fontFamily : [
-//       'Raleway'
-//     ].join(',')
-//   }
-// });
+import { useState } from "react";
+import { Box } from "@mui/material";
+import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
 
 function App() {
   const filterObjects = [
@@ -70,10 +56,11 @@ function App() {
 
   return (
     // <ThemeProvider theme={theme}>
-    <Box className="root__box" maxWidth={1} maxHeight={1} sx={rootBoxSx}>
-      <Home></Home>
+    <Box  maxWidth={1} maxHeight={1} sx={rootBoxSx}>
+      {/* <Home></Home> */}
       {/* <Header></Header> */}
       {/* <CardElement title="titulo 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc = "https://i.imgur.com/ABIjoz5.png"></CardElement> */}
+      <TourismImpactForm></TourismImpactForm>
     </Box>
     // {/* </ThemeProvider> */}
   );
