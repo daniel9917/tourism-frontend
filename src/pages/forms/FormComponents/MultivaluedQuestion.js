@@ -1,7 +1,14 @@
 import React from "react";
 import { ThemeProvider, createTheme, FormControl } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Grid, Box, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import {
+  Grid,
+  Box,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import { Container } from "@mui/system";
 const theme = createTheme({
   typography: {
@@ -51,22 +58,41 @@ const MultiValuedQuestion = (props) => {
     color: "darkgreen",
   };
 
-  const {register, getValues} = useForm([]);
+  const { register, handleSubmit, getValues } = useForm({
+    mode: "onChange",
+  });
 
   const question = props.question;
 
-  const handleClick = (event,) => {
+  const handleClick = (event) => {
     // event.preventDefault();
     console.log(getValues());
     // props.onAddDimension(event.target.value)
+    console.log(register.test);
     console.log(event.target.value);
   };
 
-  return <ThemeProvider>
-    <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"} >
-        <Grid item xs={12} bgcolor={"#dcdcdc"} borderRadius = {"30px"} sx = {!props.opacity ? null : {background : getBackgroudOpacity(props.opacity, props.rgb)}} >
-          <Box alignContent={"center"} paddingRight={"5%"} paddingLeft={"5%"} borderRadius = {"50%"}>
-          <Grid container direction={"row"}>
+  return (
+    <ThemeProvider theme={theme}>
+      <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
+        <Grid
+          item
+          xs={12}
+          bgcolor={"#dcdcdc"}
+          borderRadius={"30px"}
+          sx={
+            !props.opacity
+              ? null
+              : { background: getBackgroudOpacity(props.opacity, props.rgb) }
+          }
+        >
+          <Box
+            alignContent={"center"}
+            paddingRight={"5%"}
+            paddingLeft={"5%"}
+            borderRadius={"50%"}
+          >
+            <Grid container direction={"row"}>
               <Grid sx={{ paddingTop: "2%" }} item xs={12}>
                 <Typography color={question.color} fontWeight={"bolder"}>
                   {" "}
@@ -74,33 +100,82 @@ const MultiValuedQuestion = (props) => {
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
-                {question.options.map(option => {
-                    return (
-                    <form onChange={handleClick}>
-
-                    <Grid container paddingTop={"2%"} spacing={1} minWidth = "100%" alignItems={"center"}>
-                        <Grid item xs={4}>
-                            <Typography>{option.value}</Typography>
+                {question.options.map((option) => {
+                  return (
+                    <Container>
+                      <Grid
+                        container
+                        paddingTop={"2%"}
+                        spacing={1}
+                        minWidth="100%"
+                        alignItems={"center"}
+                      >
+                        <Grid item xs={12}>
+                          <Grid container>
+                            <Grid item xs={4}></Grid>
+                            <Grid
+                              container
+                              justifyContent={"space-around"}
+                              xs={8}
+                            >
+                              {question.criteria.map((c) => {
+                                return (
+                                  <Typography
+                                    xs={Math.floor(
+                                      12 / question.criteria.length
+                                    )}
+                                  >
+                                    {" "}
+                                    {c}{" "}
+                                  </Typography>
+                                );
+                              })}
+                            </Grid>
+                          </Grid>
                         </Grid>
-                        <Grid item xs = {8}>
-                            <RadioGroup onChange={handleClick}  {...register(option.name, { required: true})} name={question.name}>
-                              <Grid container justifyContent={"space-around"} alignContent="center">
-                                {question.criteria.map((c, i) => {
-                                  return (<FormControlLabel value={c} control = {<Radio value={i} color="success"/>}/>);
-                                })}
-                              
+                        <Grid item xs={4}>
+                          <Typography>{option.value}</Typography>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <FormControl fullWidth onClick={()=>{console.log('holaaaa')}} >
+                          <RadioGroup                            
+                            name={question.name}
+                          >
+                            <Grid
+                              container
+                              justifyContent={"space-around"}
+                              alignContent="center"
+                            >
+                              {question.criteria.map((c, i) => {
+                                return (
+                                  <FormControlLabel
+                                    xs={Math.floor(
+                                      12 / question.criteria.length
+                                    )}
+                                    value={c}
+                                    control={
+                                      <Radio 
+                                      {...register(option.name)} 
+                                      value={i} 
+                                      color="success" />
+                                    }
+                                  />
+                                );
+                              })}
+
                               {/* <FormControlLabel value={c} control = {<Radio value={4}/>} />
                               <FormControlLabel value={c} control = {<Radio value={3}/>} />
                               <FormControlLabel value={c} control = {<Radio value={2}/>} />
                               <FormControlLabel value={c} control = {<Radio value={1}/>} /> */}
-                              </Grid>
-                            </RadioGroup>
+                            </Grid>
+                          </RadioGroup>
+                          </FormControl>
                         </Grid>
-                    </Grid>
-                    </form>
-                    );
+                      </Grid>
+                    </Container>
+                  );
                 })}
-                
+
                 {/* <RadioGroup
                   name="radioTest"
                   {...register(question.name, { required: true })}
@@ -120,7 +195,8 @@ const MultiValuedQuestion = (props) => {
           </Box>
         </Grid>
       </Grid>
-  </ThemeProvider>;
+    </ThemeProvider>
+  );
 };
 
 export default MultiValuedQuestion;

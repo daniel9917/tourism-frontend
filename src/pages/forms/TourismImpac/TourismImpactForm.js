@@ -16,7 +16,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import SingleQuestion from "../FormComponents/SingleQuestion";
-import MultiValuedQuestion from "../FormComponents/MultivaluedQuestion";
 import { useForm } from "react-hook-form";
 import "./TourismImpactForm";
 
@@ -87,31 +86,32 @@ const basicQuestions = [
 const qualityOfLifeQuestions = [
   {
     name: "socialRelationsips",
+    codeName : "sr",
     question: "Relaciones Sociales",
     type: "dimensionCriteria",
     criteria: ["No sucede", "A veces", "Mucho", "Critico"],
     options: [
       {
-        name: "sr1",
+        name: "sr",
         value:
           "Los turistas faltan el respeto a la comunidad y a su cultura, no se portan bien.",
       },
       {
-        name: "sr2",
+        name: "sr",
         value: "Los visitantes usan palabras ofensivas o groseras.",
       },
       {
-        name: "sr3",
+        name: "sr",
         value:
           "Los visitantes son sucios en su persona o dejan basura a su alrededor",
       },
       {
-        name: "sr4",
+        name: "sr",
         value:
           "Los comportamientos anteriores los hacen habitantes aun sin impacto del turista",
       },
       {
-        name: "sr5",
+        name: "sr",
         value: "No se puede descansar por el ruido que hacen los turistas",
       },
     ],
@@ -122,26 +122,27 @@ const qualityOfLifeQuestions = [
   },
   {
     name: "personalSecurity",
+    codeName : "ps",
     question: "Seguridad Personal",
     type: "dimensionCriteria",
     criteria: ["No sucede", "A veces", "Mucho", "Critico"],
     options: [
       {
-        name: "ps1",
+        name: "ps",
         value: "La inseguridad subió por la presencia de turistas",
       },
       {
-        name: "ps2",
+        name: "ps",
         value:
           "Mis hijas e hijos corren el riesgo de ser irresoetados por los turistas",
       },
       {
-        name: "ps3",
+        name: "ps",
         value:
           "La prostitución en jóvenes del pueblo aumentó por la llegada de turistas",
       },
       {
-        name: "ps4",
+        name: "ps",
         value:
           "Los comportamientos anteriores los hacen los habitantes aun sin impacto del turista",
       },
@@ -153,22 +154,23 @@ const qualityOfLifeQuestions = [
   },
   {
     name: "healthWellness",
+    codeName : "hw",
     question: "Buena Salud",
     type: "dimensionCriteria",
     criteria: ["No sucede", "A veces", "Mucho", "Critico"],
     options: [
       {
-        name: "hw1",
+        name: "hw",
         value:
           "Nuestros hijos están consumiendo drogas incentivados por los turistas",
       },
       {
-        name: "hw2",
+        name: "hw",
         value:
           "Nos estamos enfermando de cosas extrañas por la llegada de turistas",
       },
       {
-        name: "hw3",
+        name: "hw",
         value:
           "Estas situaciones las sufren los habitantes aun sin impacto del turista",
       },
@@ -183,6 +185,7 @@ const qualityOfLifeQuestions = [
 const wellnessSustainability = [
   {
     name: "cosmogonyTradition",
+    codeName : "ct",
     question: "Cosmogonía y tradición ",
     type: "dimensionCriteria",
     criteria: ["No sucede", "A veces", "Mucho", "Critico"],
@@ -221,18 +224,19 @@ const wellnessSustainability = [
   },
   {
     name: "ambientalSecurity",
+    codeName : "asnp",
     question: "Seguridad Ambiental - Naturaleza y Patrimonio",
     type: "dimensionCriteria",
     criteria: ["No sucede", "A veces", "Mucho", "Critico"],
     options: [
       {
         name: "asnp1",
-        value: "Los turistas rayan, se suben y maltratan los árboles , la naturaleza en general",
+        value:
+          "Los turistas rayan, se suben y maltratan los árboles , la naturaleza en general",
       },
       {
         name: "asnp2",
-        value:
-          "Los turistas maltratan a los animales",
+        value: "Los turistas maltratan a los animales",
       },
       {
         name: "asnp3",
@@ -240,8 +244,9 @@ const wellnessSustainability = [
       },
       {
         name: "asnp4",
-        value: "Los comportamientos anteriores los hacen los habitantes aun sin impacto del turista",
-      }
+        value:
+          "Los comportamientos anteriores los hacen los habitantes aun sin impacto del turista",
+      },
     ],
     required: true,
     hex: "#e0dcdc",
@@ -253,27 +258,69 @@ const wellnessSustainability = [
 const economicSituation = [
   {
     name: "economicSituation",
+    codeName : "ecs",
     question: "Acceso a bienes materiales",
     type: "dimensionCriteria",
     criteria: ["No sucede", "A veces", "Mucho", "Critico"],
     options: [
       {
         name: "ec1",
-        value: "Los precios de los alimentos, la vivienda y la recreación subieron por la legada de los turistas",
+        value:
+          "Los precios de los alimentos, la vivienda y la recreación subieron por la legada de los turistas",
       },
       {
         name: "ec2",
-        value:
-          "Sólo unos pocos se quedan con los beneficios del turismo",
+        value: "Sólo unos pocos se quedan con los beneficios del turismo",
       },
       {
         name: "ec3",
-        value: "No tenemos permiso de transitar por ciertos lugares para que los turistas no se molesten",
+        value:
+          "No tenemos permiso de transitar por ciertos lugares para que los turistas no se molesten",
       },
       {
         name: "ec4",
-        value: "Estas situaciones las sufren los habitantes aun sin impacto del turista",
-      }
+        value:
+          "Estas situaciones las sufren los habitantes aun sin impacto del turista",
+      },
+    ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },
+];
+
+const hostBehaviour = [
+  {
+    name: "likeTouristArrival",
+    codeName : "lta",
+    question: "Me gusra que vengan turistas a mi municipio",
+    type: "multiCheckBox",
+    options: [
+      {
+        name: "lta1",
+        value:
+          "Los precios de los alimentos, la vivienda y la recreación subieron por la legada de los turistas",
+      },
+      {
+        name: "lta2",
+        value: "Sólo unos pocos se quedan con los beneficios del turismo",
+      },
+      {
+        name: "lta3",
+        value:
+          "No tenemos permiso de transitar por ciertos lugares para que los turistas no se molesten",
+      },
+      {
+        name: "lta4",
+        value:
+          "Estas situaciones las sufren los habitantes aun sin impacto del turista",
+      },
+      {
+        name: "lta5",
+        value:
+          "Estas situaciones las sufren los habitantes aun sin impacto del turista",
+      },
     ],
     required: true,
     hex: "#e0dcdc",
@@ -317,7 +364,6 @@ const TourismImpactForm = () => {
     return present;
   };
 
-  var content;
   /**
    *
    * @param {*} question json objects that holds the contents of the question
@@ -367,7 +413,14 @@ const TourismImpactForm = () => {
                     return (
                       <FormControlLabel
                         value={option + ""}
-                        control={<Radio color="success" />}
+                        control={
+                          <Radio
+                            onClick={() => {
+                              console.log(register.selectTest);
+                            }}
+                            color="success"
+                          />
+                        }
                         label={option}
                       />
                     );
@@ -398,7 +451,6 @@ const TourismImpactForm = () => {
                   onChange={handleChange}
                   fullWidth
                   {...register(question.name, { required: true })}
-                  disableUnderline={true}
                   color="success"
                 >
                   {question.options.map((option) => {
@@ -435,7 +487,93 @@ const TourismImpactForm = () => {
         break;
       case "dimensionCriteria":
         content = (
-          <MultiValuedQuestion question={question}></MultiValuedQuestion>
+          <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
+            <Grid
+              item
+              xs={12}
+              bgcolor={"#dcdcdc"}
+              borderRadius={"30px"}
+              sx={
+                !question.opacity
+                  ? null
+                  : {
+                      background: getBackgroudOpacity(
+                        question.opacity,
+                        question.rgb
+                      ),
+                    }
+              }
+            >
+              <Box
+                alignContent={"center"}
+                paddingRight={"5%"}
+                paddingLeft={"5%"}
+                borderRadius={"50%"}
+              >
+                <Grid container direction={"row"}>
+                  <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                    <Typography color={question.color} fontWeight={"bolder"}>
+                      {" "}
+                      {question.question}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <Grid item xs={4}></Grid>
+                      <Grid container justifyContent={"space-around"} xs={8}>
+                        {question.criteria.map((c) => {
+                          return (
+                            <Typography fontWeight={800} color={"#7c8484"} fontSize={18}
+                              xs={Math.floor(12 / question.criteria.length)}
+                            >
+                              {" "}
+                              {c}{" "}
+                            </Typography>
+                          );
+                        })}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                    {question.options.map((option, index) => {
+                      return (
+                        <Grid
+                          container
+                          paddingTop={"2%"}
+                          spacing={1}
+                          minWidth="100%"
+                          alignItems={"center"}
+                        >
+                          <Grid item xs={4}>
+                            <Typography>{option.value}</Typography>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Grid
+                              container
+                              justifyContent={"space-around"}
+                              alignContent="center"
+                            >
+                              {question.criteria.map((c, i) => {
+                                return (
+                                  <input
+                                    type="radio"
+                                    name={question.codeName + "." + index}
+                                    {...register(question.codeName + "." + index)}
+                                    value={i}
+                                    color="success"
+                                  />
+                                );
+                              })}
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
         );
         break;
       default:
@@ -449,13 +587,21 @@ const TourismImpactForm = () => {
     return content;
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, event) => {
+    event.preventDefault();
+    console.log("holaaaaaaaaaaaaa");
     console.log(data);
   };
 
   const handleChange = (evt) => {
     console.log(evt.target);
   };
+
+  function getBackgroudOpacity(opacity, rgb) {
+    var bg = "rgba(" + [rgb, opacity].join(",") + ")";
+    // alert(bg,rgb);
+    return bg;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -470,6 +616,7 @@ const TourismImpactForm = () => {
             {basicQuestions.map((question) => {
               return getQuestion(question);
             })}
+
             {qualityOfLifeQuestions.map((question) => {
               return getQuestion(question);
             })}
