@@ -1,5 +1,6 @@
 import {
   Box,
+  Checkbox,
   Container,
   Grid,
   Input,
@@ -18,6 +19,7 @@ import {
 import SingleQuestion from "../FormComponents/SingleQuestion";
 import { useForm } from "react-hook-form";
 import "./TourismImpactForm";
+
 
 const theme = createTheme({
   typography: {
@@ -290,38 +292,115 @@ const economicSituation = [
   },
 ];
 
-const hostBehaviour = [
+const hostBehaviour = [  
   {
     name: "likeTouristArrival",
     codeName : "lta",
-    question: "Me gusra que vengan turistas a mi municipio",
-    type: "multiCheckBox",
+    question: "Me gusta que vengan turistas a mi municipio",
+    type: "radioSelect",
+    options: ["Si", "No", "Tal vez"],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },
+  {
+    name: "touristSpotted",
+    codeName : "ts",
+    question: "Cuando veo un rutista en mi ciudad o municipio",
+    type: "checkBox",
+    options: [
+      "Me siento inseguro",
+      "Me siento inferior",
+      "No sé de qué hablarle",
+      "No me interesa habarle",
+      "Me es indiferente",
+      "Ninguna"],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },
+  {
+    name: "touristSpokenInteraction",
+    codeName : "tsi",
+    question: "Cuando hablo con un turista",
+    type: "checkBox",
+    options: [
+      "No le respondo lo que me pregunta porque no sé",
+      "No sé en dónde quedan los lugares por los que me pregunta",
+      "Le hablo de mala manera",
+      "Me pregunta por historias y temas de mi lugar que desconozco",
+      "Ninguna"],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  }
+];
+
+const communityMemberOpinion = [
+  {
+    name: "communityShouldDefine",
+    codeName : "csd",
+    question: "Creo que la comunidad del destino debe participar en definir",
+    type: "dimensionCriteria",
+    criteria: ["Si", "No", "Tal vez"],
     options: [
       {
-        name: "lta1",
+        name: "csd1",
         value:
-          "Los precios de los alimentos, la vivienda y la recreación subieron por la legada de los turistas",
+          "Si el activo cultural se debe usar en el turismo",
       },
       {
-        name: "lta2",
-        value: "Sólo unos pocos se quedan con los beneficios del turismo",
+        name: "csd2",
+        value: "La conducta que deben tener los turistas y las sanciones si no se cumplen",
       },
       {
-        name: "lta3",
+        name: "csd3",
         value:
-          "No tenemos permiso de transitar por ciertos lugares para que los turistas no se molesten",
-      },
-      {
-        name: "lta4",
-        value:
-          "Estas situaciones las sufren los habitantes aun sin impacto del turista",
-      },
-      {
-        name: "lta5",
-        value:
-          "Estas situaciones las sufren los habitantes aun sin impacto del turista",
-      },
+          "Cómo deben ser usados los beneficios de la actividad turística en beneficio de la comunidad",
+      }
     ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },
+  {
+    name: "hostSuggestion",
+    question: "Qué sugiere usted para que las tradiciones, cultura, cosmogonía y forma de vida, sean respetadas y conservadas ante la visita de turistas?",
+    type: "text",
+    placeHolder: "Tu respuesta",
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },
+  {
+    name: "municipalityLacks",
+    question: "Qué hace falta en su municipio o ciudad para que el turismo mejore?",
+    type: "text",
+    placeHolder: "Tu respuesta",
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },
+  {
+    name: "hostTourismSectorParticipation",
+    codeName : "htsp",
+    question: "Es usted parte del sector turístico de su municipio?",
+    type: "checkBox",
+    options: [
+      "Hospedaje",
+      "Gastronomía",
+      "Transporte",
+      "Tour Operador",
+      "Docente o investigador",
+      "Estudiante",
+      "Oficina de gobierno",
+      "Habitante del lugar"],
     required: true,
     hex: "#e0dcdc",
     rgb: [224, 220, 220],
@@ -329,8 +408,229 @@ const hostBehaviour = [
   },
 ];
 
+const hostRegionCulturalAssets = [
+  {
+    name: "culturalAssetRecognition",
+    codeName : "car",
+    question: "Usted conoce estos activos culturales de su region?",
+    type: "dimensionCriteria",
+    criteria: ["Si", "No"],
+    options: [
+      {
+        name: "car1",
+        value:
+          "Maloca Ipanoré",
+      },
+      {
+        name: "car2",
+        value: "Cuevas de Urania",
+      },
+      {
+        name: "car3",
+        value:
+          "Cerro Flechas",
+      },
+      {
+        name: "car4",
+        value:
+          "Hee Yaia Keti Oka",
+      },
+      {
+        name: "car5",
+        value:
+          "Yuca brava",
+      },
+      {
+        name: "car6",
+        value:
+          "Raudal del Jirijirimo",
+      },
+    ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },{
+    name: "culturalAssetSacred",
+    codeName : "cas",
+    question: "En su conocimiento, alguno de estos activos culturales es sagrado?",
+    type: "dimensionCriteria",
+    criteria: ["Si", "No", "No se"],
+    options: [
+      {
+        name: "car1",
+        value:
+          "Maloca Ipanoré",
+      },
+      {
+        name: "car2",
+        value: "Cuevas de Urania",
+      },
+      {
+        name: "car3",
+        value:
+          "Cerro Flechas",
+      },
+      {
+        name: "car4",
+        value:
+          "Hee Yaia Keti Oka",
+      },
+      {
+        name: "car5",
+        value:
+          "Yuca brava",
+      },
+      {
+        name: "car6",
+        value:
+          "Raudal del Jirijirimo",
+      },
+    ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },{
+    name: "tourismPositiveImpacts",
+    codeName : "tpi",
+    question: "Cuáles impactos positvos trae el turismo en estos activos culturales?",
+    type: "dimensionCriteriaCheckbox",
+    // type: "dimensionCriteria",
+    criteria: [
+      "Genera dinero para la comunidad",
+      "Los turistas lo respetan y disfrutan",
+      "Se ha mejorado la seguridad",
+      "Tiene señalización",
+      "Las personas están dispuestas a pagar",
+      "Hay más información sobre el lugar",
+      "Ha mejorado su aspecto",
+      "Ninguno"
+    ],
+    options: [
+      {
+        name: "tpi1",
+        value:
+          "Maloca Ipanoré",
+      },{
+        name: "tpi2",
+        value:
+          "Cuevas de Urania",
+      },{
+        name: "tpi3",
+        value:
+          "Cerro Flechas",
+      },{
+        name: "tpi4",
+        value:
+          "Hee Yaia Keti Oka",
+      },{
+        name: "tpi5",
+        value:
+          "Yuca brava",
+      },{
+        name: "tpi6",
+        value:
+          "Raudal del Jirijirimo",
+      }
+    ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },{
+    name: "tourismNegativeImpacts",
+    codeName : "tni",
+    question: "Cuáles impactos negativos trae el turismo en estos activos culturales?",
+    type: "dimensionCriteriaCheckbox",
+    // type: "dimensionCriteria",
+    criteria: [
+      "Genera dinero sólo para los turoperadores",
+      "Los turistas lo ensucian y lo dañan",
+      "Está muy inseguro",
+      "No tiene señalizacion",
+      "La gente va y no paga",
+      "No hay nada de información sobre él",
+      "Se ha dañado su aspecto",
+      "Ninguno"
+    ],
+    options: [
+      {
+        name: "tni1",
+        value:
+          "Maloca Ipanoré",
+      },{
+        name: "tni2",
+        value:
+          "Cuevas de Urania",
+      },{
+        name: "tni3",
+        value:
+          "Cerro Flechas",
+      },{
+        name: "tni4",
+        value:
+          "Hee Yaia Keti Oka",
+      },{
+        name: "tni5",
+        value:
+          "Yuca brava",
+      },{
+        name: "tni6",
+        value:
+          "Raudal del Jirijirimo",
+      }
+    ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  },{
+    name: "culturalAssetAsCulturalAttractive",
+    codeName : "caaca",
+    question: "Según su opinión, ¿estos activos culturales pueden ser usados como atractivos turísticos?",
+    type: "dimensionCriteria",
+    criteria: ["Si", "No", "Tal vez"],
+    options: [
+      {
+        name: "caaca1",
+        value:
+          "Maloca Ipanoré",
+      },
+      {
+        name: "caaca2",
+        value: "Cuevas de Urania",
+      },
+      {
+        name: "caaca3",
+        value:
+          "Cerro Flechas",
+      },
+      {
+        name: "caaca4",
+        value:
+          "Hee Yaia Keti Oka",
+      },
+      {
+        name: "caaca5",
+        value:
+          "Yuca brava",
+      },
+      {
+        name: "caaca6",
+        value:
+          "Raudal del Jirijirimo",
+      },
+    ],
+    required: true,
+    hex: "#e0dcdc",
+    rgb: [224, 220, 220],
+    color: "darkgreen",
+  }
+];
+
 const TourismImpactForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
   const [dimensionValues, setDimensionValues] = useState([]);
 
   const addDimensionValue = (dimension) => {
@@ -384,7 +684,8 @@ const TourismImpactForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Input
-                  name="text"
+                  type="text"
+                  name={question.name}
                   {...register(question.name, { required: question.required })}
                   fullWidth
                   placeholder={question.placeHolder}
@@ -404,7 +705,7 @@ const TourismImpactForm = () => {
                   {question.question}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+              <Grid item xs={12}  sx={{ paddingBottom: "2%", paddingTop : "1%" }}>
                 <RadioGroup
                   name="radioTest"
                   {...register(question.name, { required: true })}
@@ -505,6 +806,7 @@ const TourismImpactForm = () => {
               }
             >
               <Box
+                paddingTop={"1%"}
                 alignContent={"center"}
                 paddingRight={"5%"}
                 paddingLeft={"5%"}
@@ -576,6 +878,129 @@ const TourismImpactForm = () => {
           </Grid>
         );
         break;
+      case "dimensionCriteriaCheckbox":
+        content = (
+          <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
+            <Grid
+              item
+              xs={12}
+              bgcolor={"#dcdcdc"}
+              borderRadius={"30px"}
+              sx={
+                !question.opacity
+                  ? null
+                  : {
+                      background: getBackgroudOpacity(
+                        question.opacity,
+                        question.rgb
+                      ),
+                    }
+              }
+            >
+              <Box
+                paddingTop={"1%"}
+                alignContent={"center"}
+                paddingRight={"5%"}
+                paddingLeft={"5%"}
+                borderRadius={"50%"}
+              >
+                <Grid container direction={"row"}>
+                  <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                    <Typography color={question.color} fontWeight={"bolder"}>
+                      {" "}
+                      {question.question}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <Grid item xs={4}></Grid>
+                      <Grid container justifyContent={"space-around"} xs={8}>
+                        {question.criteria.map((c) => {
+                          return (
+                            <Typography fontWeight={800} color={"#7c8484"} fontSize={18}
+                              xs={Math.floor(12 / question.criteria.length)}
+                            >
+                              {" "}
+                              {c}{" "}
+                            </Typography>
+                          );
+                        })}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                    {question.options.map((option, index) => {
+                      return (
+                        <Grid
+                          container
+                          paddingTop={"2%"}
+                          spacing={1}
+                          minWidth="100%"
+                          alignItems={"center"}
+                        >
+                          <Grid item xs={4}>
+                            <Typography>{option.value}</Typography>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Grid
+                              container
+                              justifyContent={"space-around"}
+                              alignContent="center"
+                            >
+                              {question.criteria.map((c, i) => {
+                                return (
+                                  <FormControlLabel
+                                    value={option.value + ""}
+                                    control={
+                                      <Checkbox color="success" value={i} {...register(question.codeName+"."+i)}/>
+                                    }
+                                  />
+                                );
+                              })}
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
+        );
+        break;
+      case "checkBox": 
+          content = <SingleQuestion>
+              <Grid container direction={"column"}>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={question.color} fontWeight={"bolder"}>
+                  {question.question}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}  sx={{ paddingBottom: "2%", paddingTop : "1%" }}>
+                  <Grid 
+                    direction={"column"} 
+                    // onChange={handleChange}
+                    >
+                  {question.options.map((option, index) => {
+                    return (     
+                      <Grid item>
+                      <FormControlLabel
+                        value={option + ""}
+                        control={
+                          <Checkbox color="success" xs={6} value={option} {...register(question.name, {max:3})}/>
+                        }
+                        label={option}
+                      />
+                      </Grid>
+                    );
+                  })}
+                  </Grid>
+
+              </Grid>
+            </Grid>
+          </SingleQuestion>;
+        break;
       default:
         content = (
           <SingleQuestion>
@@ -594,7 +1019,8 @@ const TourismImpactForm = () => {
   };
 
   const handleChange = (evt) => {
-    console.log(evt.target);
+    console.log(evt);
+    console.log(getValues());
   };
 
   function getBackgroudOpacity(opacity, rgb) {
@@ -616,7 +1042,6 @@ const TourismImpactForm = () => {
             {basicQuestions.map((question) => {
               return getQuestion(question);
             })}
-
             {qualityOfLifeQuestions.map((question) => {
               return getQuestion(question);
             })}
@@ -624,6 +1049,15 @@ const TourismImpactForm = () => {
               return getQuestion(question);
             })}
             {economicSituation.map((question) => {
+              return getQuestion(question);
+            })}
+            {hostBehaviour.map((question) => {
+              return getQuestion(question);
+            })}
+            {communityMemberOpinion.map((question) => {
+              return getQuestion(question);
+            })}
+            {hostRegionCulturalAssets.map((question) => {
               return getQuestion(question);
             })}
             <input item type="submit" />
