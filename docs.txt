@@ -22,3 +22,6 @@ https://www.w3schools.com/CSSref/css_selectors.php
 
 --------------------------MUI Inspiration-------------------------------
 https://mui-treasury.com/styles/select/
+
+Multicheckbox with useForms hook
+https://www.youtube.com/watch?v=mAaggEw1yig
