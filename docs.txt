@@ -1,0 +1,27 @@
+CSS Shadows
+https://www.w3schools.com/css/css3_shadows.asp
+
+
+FOrms with react
+https://www.youtube.com/watch?v=GEfOr56nBsc
+
+Default theme and customization MUI
+https://mui.com/material-ui/customization/default-theme/
+
+MUI Grid
+https://mui.com/material-ui/react-grid/
+
+How to customize
+https://mui.com/material-ui/customization/how-to-customize/
+
+React hook form
+https://react-hook-form.com/
+
+Css Selectors
+https://www.w3schools.com/CSSref/css_selectors.php
+
+--------------------------MUI Inspiration-------------------------------
+https://mui-treasury.com/styles/select/
+
+Multicheckbox with useForms hook
+https://www.youtube.com/watch?v=mAaggEw1yig
