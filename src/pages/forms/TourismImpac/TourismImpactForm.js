@@ -708,14 +708,15 @@ const TourismImpactForm = () => {
               <Grid item xs={12}  sx={{ paddingBottom: "2%", paddingTop : "1%" }}>
                 <RadioGroup
                   name="radioTest"
-                  {...register(question.name, { required: true })}
+                  
                 >
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
-                        value={option + ""}
+                        value={option}
                         control={
                           <Radio
+                          {...register(question.name, { required: true })}
                             onClick={() => {
                               console.log(register.selectTest);
                             }}

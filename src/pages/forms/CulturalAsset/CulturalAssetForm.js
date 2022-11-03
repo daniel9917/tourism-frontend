@@ -30,6 +30,34 @@ const boxSx = {
   height: "100vh",
 };
 
+const testQuestions = [
+  {
+      name: "ethnicCommunityRelated",
+      question: "Comunidad étnica con la que se relaciona?",
+      type: "radioSelect",
+      options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
+      // options : [
+      //   {
+      //     "name" : "Indigena",
+      //     "id" : "id1"
+      //   },{
+      //     "name" : "Afro",
+      //     "id" : "id2"
+      //   },{
+      //   "name" : "Raizal",
+      //   "id" : "id3"
+      // },{
+      //   "name" : "Rrom",
+      //   "id" : "id4"
+      // },{
+      //   "name" : "Ninguna",
+      //   "id" : "id5"
+      // }],
+      required: true,
+      color: "darkgreen",
+    }
+];
+
 const CulturalAssetForm = () => {
 
   const basicQuestions = [
@@ -830,14 +858,14 @@ const CulturalAssetForm = () => {
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
                 <RadioGroup
                   name="radioTest"
-                  {...register(question.name, { required: true })}
                 >
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
-                        value={option + ""}
+                        value={option}
                         control={
                           <Radio
+                          {...register(question.name, { required: true })}
                             onClick={() => {
                               console.log(register.selectTest);
                             }}
@@ -1204,8 +1232,9 @@ const CulturalAssetForm = () => {
             {recommendations.map( (question) => {
                 return getQuestion(question);
             })}
-            
-            
+              {/* `{testQuestions.map( (question) => {
+                  return getQuestion(question);
+              })}` */}
             <input item type="submit" />
           </form>
         </Container>

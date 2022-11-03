@@ -61,8 +61,8 @@ function App() {
       {/* <Home></Home> */}
       {/* <Header></Header> */}
       {/* <CardElement title="titulo 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc = "https://i.imgur.com/ABIjoz5.png"></CardElement> */}
-      {/* <TourismImpactForm></TourismImpactForm> */}
-      <CulturalAssetForm></CulturalAssetForm>
+      <TourismImpactForm></TourismImpactForm>
+      {/* <CulturalAssetForm></CulturalAssetForm> */}
     </Box>
     // {/* </ThemeProvider> */}
   );
