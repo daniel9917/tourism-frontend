@@ -33,10 +33,10 @@ const Title = (props) => {
     const setShadow = (shadow) => {
         switch (shadow) {
             case "bottom-left" :
-                typoSx.textShadow = "5px 5px 5px gray";
+                typoSx.textShadow = "5px 5px 10px #383535";
             break;
-            case "large" :
-                typoSx.textShadow = "3rem";
+            case "lighter-gray" :
+                typoSx.textShadow = "2px 5px 5px gray";
             break;
             case "medium" :
                 typoSx.textShadow = "2rem";

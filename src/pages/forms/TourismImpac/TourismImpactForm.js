@@ -1114,7 +1114,7 @@ const TourismImpactForm = () => {
               </Grid>
             </Grid>
           </Grid>
-        </Grid>        
+        </Grid>
       </Box>
       {/* Form */}
       <Box paddingTop={"5%"} maxWidth={1} sx={boxSx}>
@@ -1125,53 +1125,164 @@ const TourismImpactForm = () => {
               margin: "10px 0",
             }}
           >
-            <Container sx ={{paddingBottom : "2%"}}>
+            <Container sx={{ paddingBottom: "2%" }}>
               {basicQuestions.map((question) => {
                 return getQuestion(question);
               })}
             </Container>
             <Box sx={{ background: "#08a45c", paddingBottom: "2%" }}>
               <Container>
-                <Title
-                  padding="2%"
-                  textAlign="center"
-                  shadow="bottom-left"
-                  color="#ffffff"
-                  size="medium"
-                  titleName="Calidad de vida"
-                />
-                <Box sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }} ></Box>
-                {qualityOfLifeQuestions.map((question) => {
-                  return getQuestion(question);
-                })}
-                
+                <Box paddingTop={"3%"}>
+                  <Title
+                    textAlign="center"
+                    shadow="bottom-left"
+                    color="#ffffff"
+                    size="medium"
+                    titleName="Calidad de vida"
+                  />
+                </Box>
+                <Box paddingTop={"3%"}>
+                  <Box
+                    sx={{ background: "#ffffff", height: "1vh", width: "100%" }}
+                  ></Box>
+                </Box>
+                <Box paddingTop={"3%"}>
+                  {qualityOfLifeQuestions.map((question) => {
+                    return getQuestion(question);
+                  })}
+                </Box>
+              </Container>
+            </Box>
+
+            <Box sx={{ background: "#085c2c", paddingBottom: "2%" }}>
+              <Container>
+                <Box paddingTop={"3%"}>
+                  <Title
+                    textAlign="center"
+                    shadow="bottom-left"
+                    color="#ffffff"
+                    size="medium"
+                    titleName="Sustentabilidad del bienestar"
+                  />
+                </Box>
+                <Box paddingTop={"3%"}>
+                  <Box
+                    sx={{ background: "#ffffff", height: "1vh", width: "100%" }}
+                  ></Box>
+                </Box>
+                <Box paddingTop={"3%"}>
+                  {wellnessSustainability.map((question) => {
+                    return getQuestion(question);
+                  })}
+                </Box>
+              </Container>
+            </Box>
+
+            <Box sx={{ background: "#b84c14", paddingBottom: "2%" }}>
+              <Container>
+                <Box paddingTop={"3%"}>
+                  <Title
+                    textAlign="center"
+                    shadow="bottom-left"
+                    color="#ffffff"
+                    size="medium"
+                    titleName="Situacion economica"
+                  />
+                </Box>
+                <Box paddingTop={"3%"}>
+                  <Box
+                    sx={{ background: "#ffffff", height: "1vh", width: "100%" }}
+                  ></Box>
+                </Box>
+                <Box paddingTop={"3%"}>
+                  {economicSituation.map((question) => {
+                    return getQuestion(question);
+                  })}
+                </Box>
               </Container>
             </Box>
 
             <Container>
-              {wellnessSustainability.map((question) => {
-                return getQuestion(question);
-              })}
-            </Container>
+              <Box paddingTop={"3%"}>
+                <Title
+                  textAlign="center"
+                  shadow="lighter-gray"
+                  color="#085c2c"
+                  size="medium"
+                  titleName="Mi comportamiento como habitante anfitrion"
+                />
+              </Box>
+              <Box paddingTop={"3%"}>
+                <Box
+                  sx={{ background: "#085c2c", height: "0.5vh", width: "100%" }}
+                ></Box>
+              </Box>
+              <Box paddingTop={"3%"}>
+                {hostBehaviour.map((question) => {
+                  return getQuestion(question);
+                })}
+              </Box>
 
-            <Container>
-              {economicSituation.map((question) => {
-                return getQuestion(question);
-              })}
-            </Container>
+              <Box paddingTop={"3%"}>
+                <Title
+                  textAlign="center"
+                  shadow="lighter-gray"
+                  color="#085c2c"
+                  size="medium"
+                  titleName="Mi opinion como integrante de la comunidad"
+                />
+              </Box>
+              <Box paddingTop={"3%"}>
+                <Box
+                  sx={{ background: "#085c2c", height: "0.5vh", width: "100%" }}
+                ></Box>
+              </Box>
+              <Box paddingTop={"3%"}>
+                {communityMemberOpinion.map((question) => {
+                  return getQuestion(question);
+                })}
+              </Box>
 
-            <Container>
-              {hostBehaviour.map((question) => {
-                return getQuestion(question);
-              })}
-              {communityMemberOpinion.map((question) => {
-                return getQuestion(question);
-              })}
-              {hostRegionCulturalAssets.map((question) => {
-                return getQuestion(question);
-              })}
+              <Box paddingTop={"3%"}>
+                <Title
+                  textAlign="center"
+                  shadow="lighter-gray"
+                  color="#085c2c"
+                  size="medium"
+                  titleName="Los activos culturales de mi region"
+                />
+              </Box>
+              <Box paddingTop={"3%"}>
+                <Box
+                  sx={{ background: "#085c2c", height: "0.5vh", width: "100%" }}
+                ></Box>
+              </Box>
+              <Box paddingTop={"3%"}>
+                {hostRegionCulturalAssets.map((question) => {
+                  return getQuestion(question);
+                })}
+              </Box>
             </Container>
-            <input item type="submit" />
+            <Container>
+              <Grid container justifyContent={"center"} padding="5%">
+                <Button
+                  sx={{
+                    background: "#78d48c",
+                    textTransform: "initial",
+                    width: "50%",
+                    borderRadius: "18px",
+                    
+                  }}
+                  type="submit"
+                >
+                  <Title
+                    titleName="Enviar formulario"
+                    size="medium"
+                    color="#ffffff"
+                  ></Title>
+                </Button>
+              </Grid>
+            </Container>
           </form>
         </Box>
       </Box>
