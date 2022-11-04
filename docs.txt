@@ -20,6 +20,12 @@ https://react-hook-form.com/
 Css Selectors
 https://www.w3schools.com/CSSref/css_selectors.php
 
+Scroll to element on click with ref
+https://bobbyhadz.com/blog/react-scroll-to-element-on-click#:~:text=To%20scroll%20to%20an%20element,method%20on%20the%20ref%20object.
+
+UseRef Docs
+https://reactjs.org/docs/hooks-reference.html#useref
+
 --------------------------MUI Inspiration-------------------------------
 https://mui-treasury.com/styles/select/
 
