@@ -21,6 +21,9 @@ const Title = (props) => {
             case "large" :
                 typoSx.fontSize = "3rem";
             break;
+            case "big"  :
+                typoSx.fontSize = "2.5rem";
+            break;
             case "medium" :
                 typoSx.fontSize = "2rem";
             break;
