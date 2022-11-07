@@ -5,6 +5,7 @@ import {
   Grid,
   Input,
   RadioGroup,
+  Button,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -18,6 +19,7 @@ import {
 } from "@mui/material";
 import SingleQuestion from "../FormComponents/SingleQuestion";
 import { useForm } from "react-hook-form";
+import Title from "../../../components/Fonts/Title";
 
 const theme = createTheme({
   typography: {
@@ -26,40 +28,38 @@ const theme = createTheme({
 });
 
 const boxSx = {
-  background: "#ffffff",
-  height: "100vh",
+  background: "#b03404",
 };
 
 const testQuestions = [
   {
-      name: "ethnicCommunityRelated",
-      question: "Comunidad étnica con la que se relaciona?",
-      type: "radioSelect",
-      options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
-      // options : [
-      //   {
-      //     "name" : "Indigena",
-      //     "id" : "id1"
-      //   },{
-      //     "name" : "Afro",
-      //     "id" : "id2"
-      //   },{
-      //   "name" : "Raizal",
-      //   "id" : "id3"
-      // },{
-      //   "name" : "Rrom",
-      //   "id" : "id4"
-      // },{
-      //   "name" : "Ninguna",
-      //   "id" : "id5"
-      // }],
-      required: true,
-      color: "darkgreen",
-    }
+    name: "ethnicCommunityRelated",
+    question: "Comunidad étnica con la que se relaciona?",
+    type: "radioSelect",
+    options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
+    // options : [
+    //   {
+    //     "name" : "Indigena",
+    //     "id" : "id1"
+    //   },{
+    //     "name" : "Afro",
+    //     "id" : "id2"
+    //   },{
+    //   "name" : "Raizal",
+    //   "id" : "id3"
+    // },{
+    //   "name" : "Rrom",
+    //   "id" : "id4"
+    // },{
+    //   "name" : "Ninguna",
+    //   "id" : "id5"
+    // }],
+    required: true,
+    color: "#b03404",
+  },
 ];
 
 const CulturalAssetForm = () => {
-
   const basicQuestions = [
     {
       name: "userEmail",
@@ -67,10 +67,10 @@ const CulturalAssetForm = () => {
       type: "email",
       placeHolder: "Tu dirección de correo electrónico",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    }
+      color: "#b03404",
+    },
   ];
 
   const generatilitiesQuestions = [
@@ -80,9 +80,9 @@ const CulturalAssetForm = () => {
       type: "text",
       placeHolder: "Tu respuesta",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "alternateName",
@@ -90,9 +90,9 @@ const CulturalAssetForm = () => {
       type: "text",
       placeHolder: "Tu respuesta",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "subType",
@@ -100,7 +100,7 @@ const CulturalAssetForm = () => {
       type: "selectList",
       options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
       required: true,
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "municipality",
@@ -108,7 +108,7 @@ const CulturalAssetForm = () => {
       type: "selectList",
       options: ["Municipio 1", "Municipio 2", "Municipio 3"],
       required: true,
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "department",
@@ -116,7 +116,7 @@ const CulturalAssetForm = () => {
       type: "selectList",
       options: ["Departamento 1", "Departamento 2", "Departamento 3"],
       required: true,
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "location",
@@ -124,9 +124,9 @@ const CulturalAssetForm = () => {
       type: "text",
       placeHolder: "Tu respuesta",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "culturalAssetDescription",
@@ -134,48 +134,50 @@ const CulturalAssetForm = () => {
       type: "text",
       placeHolder: "Tu respuesta",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
   ];
 
   const characteristicsQuestions = [
-  {
-    name: "ethnicCommunityRelated",
-    question: "Comunidad étnica con la que se relaciona?",
-    type: "radioSelect",
-    options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
-    required: true,
-    color: "darkgreen",
-  },
-  {
-    name: "inmaterialManifestation",
-    question: "Es una manifestación Cultural Inmaterial?",
-    type: "radioSelect",
-    options: ["Si", "No"],
-    required: true,
-    color: "darkgreen",
-  },{
-    name: "sacredCosmogony",
-    question: "Es sagrado o tiene interpretación cosmogónica ?",
-    type: "radioSelect",
-    options: ["Si", "No"],
-    required: true,
-    color: "darkgreen",
-  },{
+    {
+      name: "ethnicCommunityRelated",
+      question: "Comunidad étnica con la que se relaciona?",
+      type: "radioSelect",
+      options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "inmaterialManifestation",
+      question: "Es una manifestación Cultural Inmaterial?",
+      type: "radioSelect",
+      options: ["Si", "No"],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "sacredCosmogony",
+      question: "Es sagrado o tiene interpretación cosmogónica ?",
+      type: "radioSelect",
+      options: ["Si", "No"],
+      required: true,
+      color: "#b03404",
+    },
+    {
       name: "comogonyImportance",
       question: "Correo",
       type: "text",
       placeHolder: "Por qué es sagrado o tiene interpretación cosmogónica?",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen"
+      color: "#b03404",
     },
     {
       name: "belongsToManifestationType",
-      codeName : "btmt",
+      codeName: "btmt",
       question: "A cuál tipo de manifestación pertenece? ",
       type: "checkBox",
       options: [
@@ -193,210 +195,242 @@ const CulturalAssetForm = () => {
         "Organización social",
         "Producción tradicional",
         "Técnicas y tradiciones fabricación objetos artesanales",
-        "Ninguna"],
+        "Ninguna",
+      ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    },{
-        name: "safeguardingRegistration",
-        question: "Registrado en salvaguardia?",
-        type: "radioSelect",
-        options: ["Si", "No"],
-        required: true,
-        color: "darkgreen",
-      },{
-        name: "uncescoRegistry",
-        question: "Reconocido UNESCO ?",
-        type: "radioSelect",
-        options: ["Si", "No"],
-        required: true,
-        color: "darkgreen",
-      },{
-        name: "partOfNaturalReservation",
-        question: "Es sagrado o tiene interpretación cosmogónica?",
-        type: "radioSelect",
-        options: ["Si", "No"],
-        required: true,
-        color: "darkgreen",
-      },{
-        name: "reservationName",
-        question: "Nombre de la reserva y link",
-        type: "text",
-        placeHolder: "Tu rewspuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "ongoingRecognition",
-        question: "Se está tramitando algún reconocimiento sobre el activo cultural?",
-        type: "radioSelect",
-        options: ["Si", "No"],
-        required: true,
-        color: "darkgreen",
-      },{
-        name: "reservationName",
-        question: "Link música, documentales, películas que lo describen o lo usan",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "tourismallowance",
-        question: "Está permitido el turismo en este lugar o con la  participación de este activo cultural?",
-        type: "radioSelect",
-        options: ["Si", "No", "N/A"],
-        required: true,
-        color: "darkgreen",
-      }
+      color: "#b03404",
+    },
+    {
+      name: "safeguardingRegistration",
+      question: "Registrado en salvaguardia?",
+      type: "radioSelect",
+      options: ["Si", "No"],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "uncescoRegistry",
+      question: "Reconocido UNESCO ?",
+      type: "radioSelect",
+      options: ["Si", "No"],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "partOfNaturalReservation",
+      question: "Es sagrado o tiene interpretación cosmogónica?",
+      type: "radioSelect",
+      options: ["Si", "No"],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "reservationName",
+      question: "Nombre de la reserva y link",
+      type: "text",
+      placeHolder: "Tu rewspuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "ongoingRecognition",
+      question:
+        "Se está tramitando algún reconocimiento sobre el activo cultural?",
+      type: "radioSelect",
+      options: ["Si", "No"],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "reservationName",
+      question:
+        "Link música, documentales, películas que lo describen o lo usan",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "tourismallowance",
+      question:
+        "Está permitido el turismo en este lugar o con la  participación de este activo cultural?",
+      type: "radioSelect",
+      options: ["Si", "No", "N/A"],
+      required: true,
+      color: "#b03404",
+    },
   ];
 
   const wellnessQuestions = [
-    
     {
-        name: "sharedCommunities",
-        codeName : "shc",
-        question: "Activos culturales y recursos turísticos",
-        type: "checkBox",
-        options: [
-          "Achagua (Achagua, ajagua, xagua, gente del rio.)",
-          "Ambaló",
-          "Amorúa (Wipiwe, Siripu, Mariposa)",
-          "Conocimientos y técnicas tradicionales del hábitat",
-          "Andakies",
-          "Andoque (la gente del hacha - andoque, cha’oie, businka)",
-          "Espacios culturales",
-          "Eventos religiosos tradicionales de carácter colectivo",
-          "Juegos y deportes tradicionales",
-          "Lengua y tradición oral",
-          "Medicina tradicional y prácticas tradicionales de la salud",
-          "Organización social",
-          "Producción tradicional",
-          "Técnicas y tradiciones fabricación objetos artesanales",
-          "Ninguna"],
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "vulnerability",
-        codeName : "vuln",
-        question: "Vulnerabilidad",
-        type: "dimensionCriteria",
-        criteria: ["Si", "No", "Aun no se sabe", "Ninguna"],
-        options: [
-          {
-            name: "sr",
-            value:
-              "Adaptado a la vida nacional?",
-          },
-          {
-            name: "sr",
-            value: "Comercializado?	",
-          },
-          {
-            name: "sr",
-            value:
-              "En riesgo de desaparecer?",
-          },
-        ],
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },
+      name: "sharedCommunities",
+      codeName: "shc",
+      question: "Activos culturales y recursos turísticos",
+      type: "checkBox",
+      options: [
+        "Achagua (Achagua, ajagua, xagua, gente del rio.)",
+        "Ambaló",
+        "Amorúa (Wipiwe, Siripu, Mariposa)",
+        "Conocimientos y técnicas tradicionales del hábitat",
+        "Andakies",
+        "Andoque (la gente del hacha - andoque, cha’oie, businka)",
+        "Espacios culturales",
+        "Eventos religiosos tradicionales de carácter colectivo",
+        "Juegos y deportes tradicionales",
+        "Lengua y tradición oral",
+        "Medicina tradicional y prácticas tradicionales de la salud",
+        "Organización social",
+        "Producción tradicional",
+        "Técnicas y tradiciones fabricación objetos artesanales",
+        "Ninguna",
+      ],
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "vulnerability",
+      codeName: "vuln",
+      question: "Vulnerabilidad",
+      type: "dimensionCriteria",
+      criteria: ["Si", "No", "Aun no se sabe", "Ninguna"],
+      options: [
+        {
+          name: "sr",
+          value: "Adaptado a la vida nacional?",
+        },
+        {
+          name: "sr",
+          value: "Comercializado?	",
+        },
+        {
+          name: "sr",
+          value: "En riesgo de desaparecer?",
+        },
+      ],
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
   ];
 
   const qualityQuestions = [
     {
-        name: "assetGroupdClassification",
-        question: "En qué grupo se clasifica el activo cultural?",
-        type: "radioSelect",
-        options: ["Patrimonio inmaterial -PI", "Patrimonio material (mueble e inmueble) - PM", "Festividades, eventos y convenciones - FE", "Grupos de especial interés - GE", "Sitios Naturales - SN"],
-        required: true,
-        color: "darkgreen",
-    },{
-        name: "criteria1",
-        question: "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "criteria2",
-        question: "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "criteria3",
-        question: "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "criteria4",
-        question: "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "criteria5",
-        question: "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "criteria6",
-        question: "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "criteria7",
-        question: "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      },{
-        name: "potential",
-        question: "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#e0dcdc",
-        rgb: [224, 220, 220],
-        color: "darkgreen",
-      }
+      name: "assetGroupdClassification",
+      question: "En qué grupo se clasifica el activo cultural?",
+      type: "radioSelect",
+      options: [
+        "Patrimonio inmaterial -PI",
+        "Patrimonio material (mueble e inmueble) - PM",
+        "Festividades, eventos y convenciones - FE",
+        "Grupos de especial interés - GE",
+        "Sitios Naturales - SN",
+      ],
+      required: true,
+      color: "#b03404",
+    },
+    {
+      name: "criteria1",
+      question:
+        "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "criteria2",
+      question:
+        "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "criteria3",
+      question:
+        "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "criteria4",
+      question:
+        "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "criteria5",
+      question:
+        "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "criteria6",
+      question:
+        "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "criteria7",
+      question:
+        "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "potential",
+      question:
+        "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
+      type: "text",
+      placeHolder: "Tu respuesta",
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
   ];
 
   const insideOutsideActivities = [
     {
       name: "nature",
-      codeName : "nat",
+      codeName: "nat",
       question: "Naturaleza",
       type: "dimensionCriteria",
       criteria: ["Dentro", "Fuera", "N/A"],
@@ -407,37 +441,33 @@ const CulturalAssetForm = () => {
         },
         {
           name: "nat",
-          value:
-            "Avistamiento de Ballenas",
+          value: "Avistamiento de Ballenas",
         },
         {
           name: "nat",
-          value:
-            "Observación de Fauna",
+          value: "Observación de Fauna",
         },
         {
           name: "nat",
-          value:
-            "Observación de Flora",
+          value: "Observación de Flora",
         },
         {
           name: "nat",
-          value:
-            "Ecoturismo",
-        },{
+          value: "Ecoturismo",
+        },
+        {
           name: "nat",
-          value:
-            "Agroturismo",
+          value: "Agroturismo",
         },
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    }, 
+      color: "#b03404",
+    },
     {
       name: "touristicRoutes",
-      codeName : "tr",
+      codeName: "tr",
       question: "Recorridos turisticos",
       type: "dimensionCriteria",
       criteria: ["Dentro", "Fuera", "N/A"],
@@ -445,11 +475,11 @@ const CulturalAssetForm = () => {
         {
           name: "tr",
           value: "Cruceros",
-        },       
+        },
         {
           name: "tr",
           value: "Paseos en bote",
-        },  
+        },
         {
           name: "tr",
           value: "Paseos en lancha",
@@ -469,16 +499,16 @@ const CulturalAssetForm = () => {
         {
           name: "tr",
           value: "Sobrevuelo",
-        }      
+        },
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "folklore",
-      codeName : "folk",
+      codeName: "folk",
       question: "Folclore",
       type: "dimensionCriteria",
       criteria: ["Dentro", "Fuera", "N/A"],
@@ -486,11 +516,11 @@ const CulturalAssetForm = () => {
         {
           name: "folk",
           value: "Actividades Religiosas",
-        },       
+        },
         {
           name: "folk",
           value: "Rituales Místicos",
-        },  
+        },
         {
           name: "folk",
           value: "Paseos en lancha",
@@ -514,16 +544,16 @@ const CulturalAssetForm = () => {
         {
           name: "folk",
           value: "Otros Eventos",
-        }      
+        },
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "otherServices",
-      codeName : "os",
+      codeName: "os",
       question: "Otros servicios",
       type: "dimensionCriteria",
       criteria: ["Dentro", "Fuera", "N/A"],
@@ -531,11 +561,11 @@ const CulturalAssetForm = () => {
         {
           name: "folk",
           value: "Alquiler de Carruajes",
-        },       
+        },
         {
           name: "folk",
           value: "Alquiler de Botes",
-        },  
+        },
         {
           name: "folk",
           value: "Alquiler de Bicicletas",
@@ -554,11 +584,11 @@ const CulturalAssetForm = () => {
         },
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    }
-  ]
+      color: "#b03404",
+    },
+  ];
 
   const access = [
     {
@@ -566,28 +596,29 @@ const CulturalAssetForm = () => {
       question: "Acceso",
       type: "radioSelect",
       options: [
-        "Libre", 
-        "Restringido", 
-        "Permanente", 
-        "Permiso previo", 
-        "Visita Exterior", 
-        "Previo Pago", 
-        "Con cita previa"],
+        "Libre",
+        "Restringido",
+        "Permanente",
+        "Permiso previo",
+        "Visita Exterior",
+        "Previo Pago",
+        "Con cita previa",
+      ],
       required: true,
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "dateEvent",
       question: "Si es evento, cual es la fecha?",
       type: "date",
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "landAccess",
-      codeName : "lnda",
+      codeName: "lnda",
       question: "Acceso terrestre",
       type: "checkBox",
       options: [
@@ -601,31 +632,27 @@ const CulturalAssetForm = () => {
         "Mototaxi",
         "Motocicleta",
         "Teleférico",
-        "Ninguno"],
+        "Ninguno",
+      ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "aerialAccess",
-      codeName : "arla",
+      codeName: "arla",
       question: "Acceso aereo",
       type: "checkBox",
-      options: [
-        "Avion",
-        "Avioneta",
-        "Helicoptero",
-        "Ninguno"
-      ],
+      options: ["Avion", "Avioneta", "Helicoptero", "Ninguno"],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "maritimeAccess",
-      codeName : "mrta",
+      codeName: "mrta",
       question: "Acceso maritimo",
       type: "checkBox",
       options: [
@@ -639,29 +666,25 @@ const CulturalAssetForm = () => {
         "Ninguno",
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "accessRoute",
-      codeName : "acsr",
+      codeName: "acsr",
       question: "Rutas de acceso",
       type: "radioSelect",
-      options: [
-        "Nacionales", 
-        "Departamentales", 
-        "Municipales", 
-        "No aplica"],
+      options: ["Nacionales", "Departamentales", "Municipales", "No aplica"],
       required: true,
-      color: "darkgreen",
-    }
+      color: "#b03404",
+    },
   ];
 
   const assetFacilities = [
     {
       name: "basicServices",
-      codeName : "bscs",
+      codeName: "bscs",
       question: "Servicios basicos",
       type: "checkBox",
       options: [
@@ -674,13 +697,13 @@ const CulturalAssetForm = () => {
         "No aplica",
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
     {
       name: "communications",
-      codeName : "comm",
+      codeName: "comm",
       question: "Comunicaciones",
       type: "checkBox",
       options: [
@@ -694,16 +717,16 @@ const CulturalAssetForm = () => {
         "Ninguno",
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    }
+      color: "#b03404",
+    },
   ];
 
   const recommendations = [
     {
       name: "quality",
-      codeName : "qol",
+      codeName: "qol",
       question: "Calidad de vida",
       type: "checkBox",
       options: [
@@ -720,12 +743,13 @@ const CulturalAssetForm = () => {
         "Llevar botas de caucho, ropa de algodón, camisas manga larga, impermeable",
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    },{
+      color: "#b03404",
+    },
+    {
       name: "wellness",
-      codeName : "wlls",
+      codeName: "wlls",
       question: "Sustentabilidad del Bienestar",
       type: "checkBox",
       options: [
@@ -738,12 +762,13 @@ const CulturalAssetForm = () => {
         "Prohibido dañar la flora y el ecosistema",
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
-    },{
+      color: "#b03404",
+    },
+    {
       name: "economic",
-      codeName : "ecos",
+      codeName: "ecos",
       question: "Situacion economica",
       type: "checkBox",
       options: [
@@ -751,12 +776,11 @@ const CulturalAssetForm = () => {
         "Evitar pedir regalados los productos o servicios",
       ],
       required: true,
-      hex: "#e0dcdc",
+      hex: "#b03404",
       rgb: [224, 220, 220],
-      color: "darkgreen",
+      color: "#b03404",
     },
   ];
-
 
   const { register, handleSubmit, getValues } = useForm();
   const [dimensionValues, setDimensionValues] = useState([]);
@@ -843,7 +867,7 @@ const CulturalAssetForm = () => {
               </Grid>
             </Grid>
           </SingleQuestion>
-          );
+        );
         break;
       case "radioSelect":
         content = (
@@ -856,16 +880,14 @@ const CulturalAssetForm = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
-                <RadioGroup
-                  name="radioTest"
-                >
+                <RadioGroup name="radioTest">
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
                         value={option}
                         control={
                           <Radio
-                          {...register(question.name, { required: true })}
+                            {...register(question.name, { required: true })}
                             onClick={() => {
                               console.log(register.selectTest);
                             }}
@@ -918,7 +940,7 @@ const CulturalAssetForm = () => {
           <SingleQuestion>
             <Grid container direction={"column"}>
               <Grid sx={{ paddingTop: "2%" }} item xs={12}>
-                <Typography fontWeight={"bolder"} color="darkgreen">
+                <Typography fontWeight={"bolder"} color="#b03404">
                   {" "}
                   {question.question}{" "}
                 </Typography>
@@ -1203,39 +1225,221 @@ const CulturalAssetForm = () => {
             onSubmit={handleSubmit(onSubmit)}
             sx={{
               margin: "10px 0",
-            }}            
+            }}
           >
-            {basicQuestions.map( (question) => {
+            <Container>
+            <Box paddingTop={"3%"}>
+              <Title
+                size="extra"
+                color="#ffffff"
+                textAlign="center"
+                titleName="Activos culturales y recursos turisticos"
+              ></Title>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {basicQuestions.map((question) => {
                 return getQuestion(question);
-            })}
-            {generatilitiesQuestions.map( (question) => {
+              })}
+            </Box>
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="1. Generalidades"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+            <Box paddingTop={"3%"}>
+              {generatilitiesQuestions.map((question) => {
                 return getQuestion(question);
-            })}
-            {characteristicsQuestions.map( (question) => {
+              })}
+            </Box>
+
+            {/* {generatilitiesQuestions.map( (question) => {
                 return getQuestion(question);
-            })}
-            {wellnessQuestions.map( (question) => {
+            })} */}
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="2. Caracteristicas"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+            <Box paddingTop={"3%"}>
+              {characteristicsQuestions.map((question) => {
                 return getQuestion(question);
-            })}
-            {qualityQuestions.map( (question) => {
+              })}
+            </Box>
+
+            {/*************************************/}
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="3. Indicadores de bienestar"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {wellnessQuestions.map((question) => {
                 return getQuestion(question);
-            })}
-            {insideOutsideActivities.map( (question) => {
+              })}
+            </Box>
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="4. Calidad"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {qualityQuestions.map((question) => {
                 return getQuestion(question);
-            })}
-            {access.map( (question) => {
+              })}
+            </Box>
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="5. Actividades dentro y fuera del activo"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {insideOutsideActivities.map((question) => {
                 return getQuestion(question);
-            })}
-            {assetFacilities.map( (question) => {
+              })}
+            </Box>
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="6. Acceso"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {access.map((question) => {
                 return getQuestion(question);
-            })}
-            {recommendations.map( (question) => {
+              })}
+            </Box>
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="7. Facilidades del atractivo "
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {assetFacilities.map((question) => {
                 return getQuestion(question);
-            })}
-              {/* `{testQuestions.map( (question) => {
+              })}
+            </Box>
+
+            <Box paddingTop={"5%"}>
+              <Title
+                shadow="bottom-left"
+                textAlign="center"
+                color="#ffffff"
+                size="big"
+                titleName="8. Recomendaciones de visita"
+              />
+            </Box>
+            <Box paddingTop={"3%"}>
+              <Box
+                sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
+              ></Box>
+            </Box>
+
+            <Box paddingTop={"3%"}>
+              {recommendations.map((question) => {
+                return getQuestion(question);
+              })}
+            </Box>
+            </Container>
+
+            {/* `{testQuestions.map( (question) => {
                   return getQuestion(question);
               })}` */}
-            <input item type="submit" />
+            {/* <input item type="submit" /> */}
+            <Container>
+              <Grid container justifyContent={"center"} padding="5%">
+                <Button
+                  sx={{
+                    background: "#78d48c",
+                    textTransform: "initial",
+                    width: "50%",
+                    borderRadius: "18px",
+                    
+                  }}
+                  type="submit"
+                >
+                  <Title
+                    titleName="Enviar formulario"
+                    size="medium"
+                    color="#ffffff"
+                  ></Title>
+                </Button>
+              </Grid>
+              </Container>
           </form>
         </Container>
       </Box>
