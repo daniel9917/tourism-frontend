@@ -35,363 +35,237 @@ const boxSx = {
   background: "#b03404",
 };
 
-const testQuestions = [
-  {
-    name: "ethnicCommunityRelated",
-    question: "Comunidad étnica con la que se relaciona?",
-    type: "radioSelect",
-    options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
-    // options : [
-    //   {
-    //     "name" : "Indigena",
-    //     "id" : "id1"
-    //   },{
-    //     "name" : "Afro",
-    //     "id" : "id2"
-    //   },{
-    //   "name" : "Raizal",
-    //   "id" : "id3"
-    // },{
-    //   "name" : "Rrom",
-    //   "id" : "id4"
-    // },{
-    //   "name" : "Ninguna",
-    //   "id" : "id5"
-    // }],
-    required: true,
-    color: "#b03404",
-  },
-];
+const getVulnerabilities = axios.get(`${formBuilderAPI__URL}/Vulnerability`);
+const vulnerabilities = await getVulnerabilities;
+
+const getMunicipalities = axios.get(`${formBuilderAPI__URL}/Municipality`);
+const municipalitiess = await getMunicipalities;
+
+const getDepartments = axios.get(`${formBuilderAPI__URL}/Department`);
+const departmentss = await getDepartments;
+
+const getEthnicities = axios.get(`${formBuilderAPI__URL}/Ethnicity`);
+const ethnicitiess = await getEthnicities;
+
+const getEhtnicGroups = axios.get(`${formBuilderAPI__URL}/EthnicGroup`);
+const ehtnicGroups = await getEhtnicGroups;
+
+const getSubtypes = axios.get(`${formBuilderAPI__URL}/Subtype`);
+const subtypess = await getSubtypes;
+
+const getManifestations = axios.get(`${formBuilderAPI__URL}/Manifestation`);
+const manifestationss = await getManifestations;
+
+const getGroups = axios.get(`${formBuilderAPI__URL}/Group`);
+const groupss = await getGroups;
+
+const getSports = axios.get(`${formBuilderAPI__URL}/Sport`);
+const sportss = await getSports;
+
+const getAccesss = axios.get(`${formBuilderAPI__URL}/Access`);
+const accesss = await getAccesss;
+
+const getFolkloress = axios.get(`${formBuilderAPI__URL}/Folklore`);
+const folkloress = await getFolkloress;
+
+const getTourss = axios.get(`${formBuilderAPI__URL}/Tours`);
+const tourss = await getTourss;
+
+const getOtherServicess = axios.get(`${formBuilderAPI__URL}/OtherServices`);
+const otherServicess = await getOtherServicess;
+
+const getMaritimeAccesss = axios.get(`${formBuilderAPI__URL}/Maritime`);
+const maritimeAccesss = await getMaritimeAccesss;
+
+const getTerrestrialAccesss = axios.get(`${formBuilderAPI__URL}/Terrestrial`);
+const terrestrialAccesss = await getTerrestrialAccesss;
+
+const getAerialAccess = axios.get(`${formBuilderAPI__URL}/Aerial`);
+const aerialAccesss = await getAerialAccess;
+
+const getCommunicationss = axios.get(`${formBuilderAPI__URL}/Communication`);
+const comunicationss = await getCommunicationss;
+
+const getAccessRoutess = axios.get(`${formBuilderAPI__URL}/AccessRoute`);
+const accessRoutess = await getAccessRoutess;
+
+const getPublicServicess = axios.get(`${formBuilderAPI__URL}/PublicService`);
+const publicServicess = await getPublicServicess;
+
+const getNaturess = axios.get(`${formBuilderAPI__URL}/Nature`);
+const naturess = await getNaturess;
 
 const CulturalAssetForm = () => {
-  const [municipalities, setMunicipalities] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [ethnicities, setEthnicities] = useState([]);
-  const [ehtnicGroup, setEhtnicGroup] = useState([]);
-  const [subtypes, setSubtypes] = useState([]);
-  const [manifestations, setManifestations] = useState([]);
-  const [groups, setGroups] = useState([]);
-  const [sports, setSports] = useState([]);
-  const [access, setAccess] = useState([]);
-  const [tours, setTours] = useState([]);
-  const [folklore, setFolklore] = useState([]);
-  const [otherServices, setOtherServices] = useState([]);
-
-  const [terrestrialAccess, setTerrestrialAccess] = useState([]);
-  const [aerialAccess, setAerialAccess] = useState([]);
-  const [maritimeAccess, setMaritimeAccess] = useState([]);
-
-  const [communication, setCommunications] = useState([]);
-  const [publicService, setPublicServices] = useState([]);
-
-  const [accessRoutes, setAccessRoutes] = useState([]);
-
-  
-
-
-  //Calling form builder API to get Values.
-  axios
-    .get(`${formBuilderAPI__URL}/Municipality`)
-    .then((response) => response.data)
-    .then((data) => {
-      setMunicipalities(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading municipalities due to: " + error);
-    });
-
-  axios
-  .get(`${formBuilderAPI__URL}/Communication`)
-  .then((response) => response.data)
-  .then((data) => {
-    setCommunications(
-      data.values.map((value) => {
-        return {
-          name: `${value.name}`,
-          value: `${value.id}`,
-        };
-      })
-    );
-  })
-  .catch((error) => {
-    console.log("Error loading communications due to: " + error);
+  const vulnList = vulnerabilities.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
   });
 
-  axios
-  .get(`${formBuilderAPI__URL}/AccessRoute`)
-  .then((response) => response.data)
-  .then((data) => {
-    setAccessRoutes(
-      data.values.map((value) => {
-        return {
-          name: `${value.name}`,
-          value: `${value.id}`,
-        };
-      })
-    );
-  })
-  .catch((error) => {
-    console.log("Error loading accessRoutes due to: " + error);
+  const munList = municipalitiess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
   });
 
-  axios
-    .get(`${formBuilderAPI__URL}/PublicService`)
-    .then((response) => response.data)
-    .then((data) => {
-      setPublicServices(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading publicServices due to: " + error);
-    });
+  const depList = departmentss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-  axios
-    .get(`${formBuilderAPI__URL}/Department`)
-    .then((response) => response.data)
-    .then((data) => {
-      setDepartments(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading departments due to: " + error);
-    });
+  const ethList = ethnicitiess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-  axios
-    .get(`${formBuilderAPI__URL}/Ethnicity`)
-    .then((response) => response.data)
-    .then((data) => {
-      setEthnicities(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading ethnicities due to: " + error);
-    });
+  const ethngList = ehtnicGroups.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-  axios
-    .get(`${formBuilderAPI__URL}/Subtype`)
-    .then((response) => response.data)
-    .then((data) => {
-      setSubtypes(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading subtypes due to: " + error);
-    });
-  axios
-    .get(`${formBuilderAPI__URL}/EthnicGroup`)
-    .then((response) => response.data)
-    .then((data) => {
-      setEhtnicGroup(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading ethnic groups due to: " + error);
-    });
-  axios
-    .get(`${formBuilderAPI__URL}/Manifestation`)
-    .then((response) => response.data)
-    .then((data) => {
-      setManifestations(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading manifestations due to: " + error);
-    });
-  axios
-    .get(`${formBuilderAPI__URL}/Group`)
-    .then((response) => response.data)
-    .then((data) => {
-      setGroups(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading groups due to: " + error);
-    });
+  const subtypeList = subtypess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/Sport`)
-    .then((response) => response.data)
-    .then((data) => {
-      setSports(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading sports due to: " + error);
-    });
-  
-    axios
-    .get(`${formBuilderAPI__URL}/Access`)
-    .then((response) => response.data)
-    .then((data) => {
-      setAccess(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading accesses due to: " + error);
-    });
+  const manifestationsList = manifestationss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/Folklore`)
-    .then((response) => response.data)
-    .then((data) => {
-      setFolklore(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading folklore due to: " + error);
-    });
+  const groupList = groupss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/Tours`)
-    .then((response) => response.data)
-    .then((data) => {
-      setTours(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading tours due to: " + error);
-    });
+  const sportList = sportss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/OtherServices`)
-    .then((response) => response.data)
-    .then((data) => {
-      setOtherServices(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading other services due to: " + error);
-    });
+  const accessList = accesss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/Maritime`)
-    .then((response) => response.data)
-    .then((data) => {
-      setMaritimeAccess(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading maritime accesses due to: " + error);
-    });
+  const tourList = tourss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/Terrestrial`)
-    .then((response) => response.data)
-    .then((data) => {
-      setTerrestrialAccess(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error terrestrialAccesses services due to: " + error);
-    });
+  const folkloreList = folkloress.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
 
-    axios
-    .get(`${formBuilderAPI__URL}/Aerial`)
-    .then((response) => response.data)
-    .then((data) => {
-      setAerialAccess(
-        data.values.map((value) => {
-          return {
-            name: `${value.name}`,
-            value: `${value.id}`,
-          };
-        })
-      );
-    })
-    .catch((error) => {
-      console.log("Error loading aerial accesses due to: " + error);
-    });
+  const otherServicesList = otherServicess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const terrestrialAccessList = terrestrialAccesss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const aerialAccessList = aerialAccesss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const maritimeAccesssList = maritimeAccesss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const comunicationssList = comunicationss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const accessRoutessList = accessRoutess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const publicServicessList = publicServicess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const naturessList = naturess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  // const  List = .data.values.map((value) => {
+  //   return {
+  //     name: `${value.name}`,
+  //     value: `${value.id}`,
+  //   }
+  // });;
+
+  const [municipalities, setMunicipalities] = useState(munList);
+  const [departments, setDepartments] = useState(depList);
+  const [ethnicities, setEthnicities] = useState(ethList);
+  const [ehtnicGroup, setEhtnicGroup] = useState(ethngList);
+  const [subtypes, setSubtypes] = useState(subtypeList);
+  const [manifestations, setManifestations] = useState(manifestationsList);
+  const [groups, setGroups] = useState(groupList);
+  const [sports, setSports] = useState(sportList);
+  const [access, setAccess] = useState(accessList);
+  const [tours, setTours] = useState(tourList);
+  const [folklore, setFolklore] = useState(folkloreList);
+  const [otherServices, setOtherServices] = useState(otherServicesList);
+  const [terrestrialAccess, setTerrestrialAccess] = useState(
+    terrestrialAccessList
+  );
+  const [aerialAccess, setAerialAccess] = useState(aerialAccessList);
+  const [maritimeAccess, setMaritimeAccess] = useState(maritimeAccesssList);
+  const [communication, setCommunications] = useState(comunicationssList);
+  const [publicService, setPublicServices] = useState(publicServicessList);
+  const [accessRoutes, setAccessRoutes] = useState(accessRoutessList);
+  const [natureList, setNatureList] = useState(naturessList);
+  const [assetVulnerabilityList, setAssetVulnerabilityList] =
+    useState(vulnList);
 
   const getBasicQuestions = () => {
     let basicQuestions = [
@@ -406,20 +280,7 @@ const CulturalAssetForm = () => {
         color: "#b03404",
       },
     ];
-    return basicQuestions.map((basicQuestion) => {
-      if (basicQuestion.name === "municipalityId") {
-        basicQuestion.options = municipalities;
-      } else if (basicQuestion.name === "departmentId") {
-        basicQuestion.options = departments;
-      } else if (basicQuestion.name === "ethnicity") {
-        basicQuestion.options = ethnicities;
-      } else if (basicQuestion.name === "ethnicGroup") {
-        basicQuestion.options = ehtnicGroup;
-      } else if (basicQuestion.name === "subtypeId") {
-        basicQuestion.options = subtypes;
-      }
-      return basicQuestion;
-    });
+    return basicQuestions;
   };
 
   const getGeneralitiesQuestions = () => {
@@ -470,8 +331,8 @@ const CulturalAssetForm = () => {
         color: "#b03404",
       },
       {
-        name: "locationDetail ",
-        question: "Ubicación",
+        name: "locationDetail",
+        question: "Detalle de la ubicación",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -512,7 +373,7 @@ const CulturalAssetForm = () => {
       {
         name: "assetCommunitiesTypes",
         question: "Tipo de comunidad étnica con la que se relaciona?",
-        type: "radioSelect",
+        type: "radioSelectt",
         options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
         required: true,
         color: "#b03404",
@@ -591,24 +452,54 @@ const CulturalAssetForm = () => {
       {
         name: "safeguardingRegistry",
         question: "Registrado en salvaguardia?",
-        type: "radioSelect",
-        options: ["Si", "No"],
+        type: "radioSelectt",
+        // options: ["Si", "No"],
+        options: [
+          {
+            name: "Si",
+            value: true,
+          },
+          {
+            name: "No",
+            value: false,
+          },
+        ],
         required: true,
         color: "#b03404",
       },
       {
         name: "unescoRegistry",
         question: "Reconocido UNESCO ?",
-        type: "radioSelect",
-        options: ["Si", "No"],
+        type: "radioSelectt",
+        // options: ["Si", "No"],
+        options: [
+          {
+            name: "Si",
+            value: true,
+          },
+          {
+            name: "No",
+            value: false,
+          },
+        ],
         required: true,
         color: "#b03404",
       },
       {
         name: "partOfNaturalReservation",
         question: "Se encuentra en una reservas natural?",
-        type: "radioSelect",
-        options: ["Si", "No"],
+        type: "radioSelectt",
+        // options: ["Si", "No"],
+        options: [
+          {
+            name: "Si",
+            value: true,
+          },
+          {
+            name: "No",
+            value: false,
+          },
+        ],
         required: true,
         color: "#b03404",
       },
@@ -626,8 +517,18 @@ const CulturalAssetForm = () => {
         name: "onGoingRecognition",
         question:
           "Se está tramitando algún reconocimiento sobre el activo cultural?",
-        type: "radioSelect",
-        options: ["Si", "No"],
+        type: "radioSelectt",
+        // options: ["Si", "No"],
+        options: [
+          {
+            name: "Si",
+            value: true,
+          },
+          {
+            name: "No",
+            value: false,
+          },
+        ],
         required: true,
         color: "#b03404",
       },
@@ -646,224 +547,222 @@ const CulturalAssetForm = () => {
         name: "tourismPermit",
         question:
           "Está permitido el turismo en este lugar o con la  participación de este activo cultural?",
-        type: "radioSelect",
+        type: "radioSelectt",
         options: ["Si", "No", "N/A"],
+        options: [
+          {
+            name: "Si",
+            value: true,
+          },
+          {
+            name: "No",
+            value: false,
+          },
+          {
+            name: "N/A",
+            value: 0,
+          },
+        ],
         required: true,
         color: "#b03404",
       },
     ];
 
     return characteristicsQuestions.map((basicQuestion) => {
-      if (basicQuestion.name === "municipalityId") {
-        basicQuestion.options = municipalities;
-      } else if (basicQuestion.name === "departmentId") {
-        basicQuestion.options = departments;
-      } else if (basicQuestion.name === "ethnicity") {
-        basicQuestion.options = ethnicities;
-      } else if (basicQuestion.name === "ethnicCommunity") {
-        basicQuestion.options = ehtnicGroup;
-      } else if (basicQuestion.name === "subtypeId") {
-        basicQuestion.options = subtypes;
-      } else if (basicQuestion.name === "assetManifestations") {
+      if (basicQuestion.name === "assetManifestations") {
         basicQuestion.options = manifestations;
+      } else if (basicQuestion.name === "assetCommunitiesTypes") {
+        basicQuestion.options = ethnicities;
       }
       return basicQuestion;
     });
   };
 
-  const wellnessQuestions = [
-    {
-      name: "assetCommunities",
-      codeName: "shc",
-      question: "Cuales pueblos o etnias lo comparten?",
-      type: "checkBox",
-      options: [
-        "Achagua (Achagua, ajagua, xagua, gente del rio.)",
-        "Ambaló",
-        "Amorúa (Wipiwe, Siripu, Mariposa)",
-        "Conocimientos y técnicas tradicionales del hábitat",
-        "Andakies",
-        "Andoque (la gente del hacha - andoque, cha’oie, businka)",
-        "Espacios culturales",
-        "Eventos religiosos tradicionales de carácter colectivo",
-        "Juegos y deportes tradicionales",
-        "Lengua y tradición oral",
-        "Medicina tradicional y prácticas tradicionales de la salud",
-        "Organización social",
-        "Producción tradicional",
-        "Técnicas y tradiciones fabricación objetos artesanales",
-        "Ninguna",
-      ],
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "assetVulnerabilityList",
-      codeName: "vuln",
-      question: "Vulnerabilidad",
-      type: "dimensionCriteria",
-      criteria: ["Si", "No", "Aun no se sabe", "Ninguna"],
-      options: [
-        {
-          name: "sr",
-          value: "Adaptado a la vida nacional?",
-        },
-        {
-          name: "sr",
-          value: "Comercializado?	",
-        },
-        {
-          name: "sr",
-          value: "En riesgo de desaparecer?",
-        },
-      ],
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-  ];
+  const getWellnessQuestions = () => {
+    const wellnessQuestions = [
+      {
+        name: "assetCommunities",
+        codeName: "shc",
+        question: "Cuales pueblos o etnias lo comparten?",
+        type: "checkBoxx",
+        options: [
+          "Achagua (Achagua, ajagua, xagua, gente del rio.)",
+          "Ambaló",
+          "Amorúa (Wipiwe, Siripu, Mariposa)",
+          "Conocimientos y técnicas tradicionales del hábitat",
+          "Andakies",
+          "Andoque (la gente del hacha - andoque, cha’oie, businka)",
+          "Espacios culturales",
+          "Eventos religiosos tradicionales de carácter colectivo",
+          "Juegos y deportes tradicionales",
+          "Lengua y tradición oral",
+          "Medicina tradicional y prácticas tradicionales de la salud",
+          "Organización social",
+          "Producción tradicional",
+          "Técnicas y tradiciones fabricación objetos artesanales",
+          "Ninguna",
+        ],
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "assetVulnerabilityList",
+        codeName: "vuln",
+        question: "Vulnerabilidad",
+        type: "dimensionCriteriaId",
+        criteria: ["Si", "No", "Aun no se sabe", "N/A"],
+        options: assetVulnerabilityList,
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+    ];
 
-  const qualityQuestions = [
-    {
-      name: "assetGroupdClassification",
-      question: "En qué grupo se clasifica el activo cultural?",
-      type: "radioSelect",
-      options: [
-        "Patrimonio inmaterial -PI",
-        "Patrimonio material (mueble e inmueble) - PM",
-        "Festividades, eventos y convenciones - FE",
-        "Grupos de especial interés - GE",
-        "Sitios Naturales - SN",
-      ],
-      required: true,
-      color: "#b03404",
-    },
-    {
-      name: "criteria1",
-      question:
-        "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "criteria2",
-      question:
-        "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "criteria3",
-      question:
-        "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "criteria4",
-      question:
-        "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "criteria5",
-      question:
-        "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "criteria6",
-      question:
-        "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "criteria7",
-      question:
-        "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-    {
-      name: "potential",
-      question:
-        "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
-      type: "text",
-      placeHolder: "Tu respuesta",
-      required: true,
-      hex: "#b03404",
-      rgb: [224, 220, 220],
-      color: "#b03404",
-    },
-  ];
+    return wellnessQuestions.map((basicQuestion) => {
+      if (basicQuestion.name === "assetCommunities") {
+        basicQuestion.options = ehtnicGroup;
+      }
+      return basicQuestion;
+    });
+  };
+
+  const getQualityQuestions = () => {
+    const qualityQuestions = [
+      {
+        name: "groupId",
+        question: "En qué grupo se clasifica el activo cultural?",
+        type: "radioSelectt",
+        options: [
+          "Patrimonio inmaterial -PI",
+          "Patrimonio material (mueble e inmueble) - PM",
+          "Festividades, eventos y convenciones - FE",
+          "Grupos de especial interés - GE",
+          "Sitios Naturales - SN",
+        ],
+        required: true,
+        color: "#b03404",
+      },
+      {
+        name: "criteria1",
+        question:
+          "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "criteria2",
+        question:
+          "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "criteria3",
+        question:
+          "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "criteria4",
+        question:
+          "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "criteria5",
+        question:
+          "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "criteria6",
+        question:
+          "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "criteria7",
+        question:
+          "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "potential",
+        question:
+          "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
+        type: "text",
+        placeHolder: "Tu respuesta",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+    ];
+
+    return qualityQuestions.map((basicQuestion) => {
+      if (basicQuestion.name === "groupId") {
+        basicQuestion.options = groups;
+      }
+      return basicQuestion;
+    });
+  };
 
   const insideOutsideActivities = [
     {
       name: "assetNatureList",
       codeName: "nat",
       question: "Naturaleza",
-      type: "dimensionCriteria",
+      type: "dimensionCriteriaId",
       criteria: ["Dentro", "Fuera", "N/A"],
-      options: [
-        {
-          name: "nat",
-          value: "Avistamiento de Aves",
-        },
-        {
-          name: "nat",
-          value: "Avistamiento de Ballenas",
-        },
-        {
-          name: "nat",
-          value: "Observación de Fauna",
-        },
-        {
-          name: "nat",
-          value: "Observación de Flora",
-        },
-        {
-          name: "nat",
-          value: "Ecoturismo",
-        },
-        {
-          name: "nat",
-          value: "Agroturismo",
-        },
-      ],
+      options: natureList,
+      required: true,
+      hex: "#b03404",
+      rgb: [224, 220, 220],
+      color: "#b03404",
+    },
+    {
+      name: "sports",
+      codeName: "sp",
+      question: "Deportes / Aventura",
+      type: "dimensionCriteriaId",
+      criteria: ["Dentro", "Fuera", "N/A"],
+      options: sports,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -873,38 +772,9 @@ const CulturalAssetForm = () => {
       name: "touristicRoutes",
       codeName: "tr",
       question: "Recorridos turisticos",
-      type: "dimensionCriteria",
+      type: "dimensionCriteriaId",
       criteria: ["Dentro", "Fuera", "N/A"],
-      options: [
-        {
-          name: "tr",
-          value: "Cruceros",
-        },
-        {
-          name: "tr",
-          value: "Paseos en bote",
-        },
-        {
-          name: "tr",
-          value: "Paseos en lancha",
-        },
-        {
-          name: "tr",
-          value: "Paseos en yate",
-        },
-        {
-          name: "tr",
-          value: "Paseos a caballo",
-        },
-        {
-          name: "tr",
-          value: "Excursiones",
-        },
-        {
-          name: "tr",
-          value: "Sobrevuelo",
-        },
-      ],
+      options: tours,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -914,42 +784,9 @@ const CulturalAssetForm = () => {
       name: "folklore",
       codeName: "folk",
       question: "Folclore",
-      type: "dimensionCriteria",
+      type: "dimensionCriteriaId",
       criteria: ["Dentro", "Fuera", "N/A"],
-      options: [
-        {
-          name: "folk",
-          value: "Actividades Religiosas",
-        },
-        {
-          name: "folk",
-          value: "Rituales Místicos",
-        },
-        {
-          name: "folk",
-          value: "Paseos en lancha",
-        },
-        {
-          name: "folk",
-          value: "Ferias y Fiestas",
-        },
-        {
-          name: "folk",
-          value: "Gastronomía Tipíca",
-        },
-        {
-          name: "folk",
-          value: "Artesanías",
-        },
-        {
-          name: "folk",
-          value: "Fotografía y filmación",
-        },
-        {
-          name: "folk",
-          value: "Otros Eventos",
-        },
-      ],
+      options: folklore,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -959,34 +796,9 @@ const CulturalAssetForm = () => {
       name: "otherServices",
       codeName: "os",
       question: "Otros servicios",
-      type: "dimensionCriteria",
+      type: "dimensionCriteriaId",
       criteria: ["Dentro", "Fuera", "N/A"],
-      options: [
-        {
-          name: "folk",
-          value: "Alquiler de Carruajes",
-        },
-        {
-          name: "folk",
-          value: "Alquiler de Botes",
-        },
-        {
-          name: "folk",
-          value: "Alquiler de Bicicletas",
-        },
-        {
-          name: "folk",
-          value: "Alquiler de Caballos",
-        },
-        {
-          name: "folk",
-          value: "Alquiler de Equipo de Turismo (Aventura)",
-        },
-        {
-          name: "folk",
-          value: "Alquiler de Equipo de Vuelo (Aventura)",
-        },
-      ],
+      options: otherServices,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -996,7 +808,7 @@ const CulturalAssetForm = () => {
 
   const accessRoute = [
     {
-      name: "assetAccessList",
+      name: "accessDetail",
       question: "Acceso",
       type: "radioSelect",
       options: [
@@ -1024,20 +836,8 @@ const CulturalAssetForm = () => {
       name: "landAccess",
       codeName: "lnda",
       question: "Acceso terrestre",
-      type: "checkBox",
-      options: [
-        "A pie",
-        "A caballo",
-        "Bicicleta",
-        "Automovil",
-        "Bus publico",
-        "Taxi",
-        "Tren",
-        "Mototaxi",
-        "Motocicleta",
-        "Teleférico",
-        "Ninguno",
-      ],
+      type: "checkBoxx",
+      options: terrestrialAccess,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1047,8 +847,8 @@ const CulturalAssetForm = () => {
       name: "aerialAccess",
       codeName: "arla",
       question: "Acceso aereo",
-      type: "checkBox",
-      options: ["Avion", "Avioneta", "Helicoptero", "Ninguno"],
+      type: "checkBoxx",
+      options: aerialAccess,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1058,17 +858,8 @@ const CulturalAssetForm = () => {
       name: "maritimeAccess",
       codeName: "mrta",
       question: "Acceso maritimo",
-      type: "checkBox",
-      options: [
-        "Barco",
-        "Bote",
-        "Canoa",
-        "Yate",
-        "Lancha",
-        "Balsa",
-        "Balsa",
-        "Ninguno",
-      ],
+      type: "checkBoxx",
+      options: maritimeAccess,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1078,8 +869,8 @@ const CulturalAssetForm = () => {
       name: "assetRouteList",
       codeName: "acsr",
       question: "Rutas de acceso",
-      type: "radioSelect",
-      options: ["Nacionales", "Departamentales", "Municipales", "No aplica"],
+      type: "radioSelectt",
+      options: accessRoutes,
       required: true,
       color: "#b03404",
     },
@@ -1090,16 +881,8 @@ const CulturalAssetForm = () => {
       name: "basicServices",
       codeName: "bscs",
       question: "Servicios basicos",
-      type: "checkBox",
-      options: [
-        "Agua potable",
-        "Luz",
-        "Alcantarillado",
-        "Gas",
-        "Internet",
-        "Ninguno",
-        "No aplica",
-      ],
+      type: "checkBoxx",
+      options: publicService,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1109,17 +892,8 @@ const CulturalAssetForm = () => {
       name: "communications",
       codeName: "comm",
       question: "Comunicaciones",
-      type: "checkBox",
-      options: [
-        "Teléfono",
-        "Correo Certificado",
-        "Radio - Emisora",
-        "Página web",
-        "Periódico",
-        "Revista",
-        "Volantes",
-        "Ninguno",
-      ],
+      type: "checkBoxx",
+      options: communication,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1399,6 +1173,104 @@ const CulturalAssetForm = () => {
           </SingleQuestion>
         );
         break;
+      case "dimensionCriteriaId":
+        content = (
+          <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
+            <Grid
+              item
+              xs={12}
+              bgcolor={"#dcdcdc"}
+              borderRadius={"30px"}
+              sx={
+                !question.opacity
+                  ? null
+                  : {
+                      background: getBackgroudOpacity(
+                        question.opacity,
+                        question.rgb
+                      ),
+                    }
+              }
+            >
+              <Box
+                paddingTop={"1%"}
+                alignContent={"center"}
+                paddingRight={"5%"}
+                paddingLeft={"5%"}
+                borderRadius={"50%"}
+              >
+                <Grid container direction={"row"}>
+                  <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                    <Typography color={question.color} fontWeight={"bolder"}>
+                      {" "}
+                      {question.question}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <Grid item xs={4}></Grid>
+                      <Grid container justifyContent={"space-around"} xs={8}>
+                        {question.criteria.map((c) => {
+                          return (
+                            <Typography
+                              fontWeight={800}
+                              color={"#7c8484"}
+                              fontSize={18}
+                              xs={Math.floor(12 / question.criteria.length)}
+                            >
+                              {" "}
+                              {c}{" "}
+                            </Typography>
+                          );
+                        })}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                    {question.options.map((option, index) => {
+                      return (
+                        <Grid
+                          container
+                          paddingTop={"2%"}
+                          spacing={1}
+                          minWidth="100%"
+                          alignItems={"center"}
+                        >
+                          <Grid item xs={4}>
+                            <Typography>{option.name}</Typography>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Grid
+                              container
+                              justifyContent={"space-around"}
+                              alignContent="center"
+                            >
+                              {question.criteria.map((c, i) => {
+                                // console.log(i + option.value);
+                                return (
+                                  <input
+                                    type="radio"
+                                    name={question.codeName}
+                                    {...register(
+                                      question.codeName + "." + index
+                                    )}
+                                    value={i + option.value}
+                                    color="success"
+                                  />
+                                );
+                              })}
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
+        );
+        break;
       case "dimensionCriteria":
         content = (
           <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
@@ -1463,7 +1335,7 @@ const CulturalAssetForm = () => {
                           alignItems={"center"}
                         >
                           <Grid item xs={4}>
-                            <Typography>{option.value}</Typography>
+                            <Typography>{option.name}</Typography>
                           </Grid>
                           <Grid item xs={8}>
                             <Grid
@@ -1475,7 +1347,104 @@ const CulturalAssetForm = () => {
                                 return (
                                   <input
                                     type="radio"
-                                    name={question.codeName + "." + index}
+                                    name={question.codeName}
+                                    {...register(
+                                      question.codeName + "." + index
+                                    )}
+                                    value={i}
+                                    color="success"
+                                  />
+                                );
+                              })}
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
+        );
+        break;
+      case "dimensionCriteriaa":
+        content = (
+          <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
+            <Grid
+              item
+              xs={12}
+              bgcolor={"#dcdcdc"}
+              borderRadius={"30px"}
+              sx={
+                !question.opacity
+                  ? null
+                  : {
+                      background: getBackgroudOpacity(
+                        question.opacity,
+                        question.rgb
+                      ),
+                    }
+              }
+            >
+              <Box
+                paddingTop={"1%"}
+                alignContent={"center"}
+                paddingRight={"5%"}
+                paddingLeft={"5%"}
+                borderRadius={"50%"}
+              >
+                <Grid container direction={"row"}>
+                  <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                    <Typography color={question.color} fontWeight={"bolder"}>
+                      {" "}
+                      {question.question}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container>
+                      <Grid item xs={4}></Grid>
+                      <Grid container justifyContent={"space-around"} xs={8}>
+                        {question.criteria.map((c) => {
+                          return (
+                            <Typography
+                              fontWeight={800}
+                              color={"#7c8484"}
+                              fontSize={18}
+                              xs={Math.floor(12 / question.criteria.length)}
+                            >
+                              {" "}
+                              {c}{" "}
+                            </Typography>
+                          );
+                        })}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                    {question.options.map((option, index) => {
+                      return (
+                        <Grid
+                          container
+                          paddingTop={"2%"}
+                          spacing={1}
+                          minWidth="100%"
+                          alignItems={"center"}
+                        >
+                          <Grid item xs={4}>
+                            <Typography>{option.name}</Typography>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Grid
+                              container
+                              justifyContent={"space-around"}
+                              alignContent="center"
+                            >
+                              {question.criteria.map((c, i) => {
+                                return (
+                                  <input
+                                    type="radio"
+                                    name={question.codeName}
                                     {...register(
                                       question.codeName + "." + index
                                     )}
@@ -1652,7 +1621,7 @@ const CulturalAssetForm = () => {
                     return (
                       <Grid item>
                         <FormControlLabel
-                          value={option.name}
+                          value={option.value}
                           control={
                             <Checkbox
                               color="success"
@@ -1681,9 +1650,186 @@ const CulturalAssetForm = () => {
 
   const onSubmit = (data, event) => {
     event.preventDefault();
-    console.log("holaaaaaaaaaaaaa");
-    console.log(data);
+    formatculturalAssetRequest(data);
+    // console.log(data);
   };
+
+  function formatculturalAssetRequest(body) {
+    let culturalAsset = {};
+    culturalAsset.departmentId = body.departmentId;
+    culturalAsset.municipalityId = body.municipalityId;
+    culturalAsset.subtypeId = body.subtypeId;
+    culturalAsset.groupId = body.groupId;
+    culturalAsset.name = body.name;
+    culturalAsset.dateEvent = body.dateEvent;
+    culturalAsset.description = body.description;
+    culturalAsset.locationDetail = body.locationDetail;
+    culturalAsset.cosmogony = body.cosmogony;
+    culturalAsset.cosmogonyDescription = body.cosmogonyDescription;
+    culturalAsset.inmaterialManifestation = body.inmaterialManifestation;
+    culturalAsset.safeguardingRegistry = body.safeguardingRegistry;
+    culturalAsset.unescoRegistry = body.unescoRegistry;
+    culturalAsset.tourismPermit = body.tourismPermit;
+    culturalAsset.partOfNaturalReservation = body.partOfNaturalReservation;
+    culturalAsset.reservationLink = body.reservationLink;
+    culturalAsset.onGoingRecognition = body.onGoingRecognition;
+    culturalAsset.links = body.links.split(",");
+
+    culturalAsset.alternateNames = body.alternateNames.split(",");
+    // culturalAsset.imageList
+    // culturalAsset.reservationId
+
+    // culturalAsset.assetClassification = {
+    //   subtypeId: "04815c1e-2f32-11ed-a261-0242ac120002",
+    //   typeId: "ffc9f3fc-2f31-11ed-a261-0242ac120002",
+    //   categoryId: "f92fac26-2f31-11ed-a261-0242ac120002",
+    //   patrimonyId: "20f4a518-2f32-11ed-a261-0242ac120002",
+    //   assetGroupId: "263885c6-2f32-11ed-a261-0242ac120002",
+    // };
+    culturalAsset.assetManifestations = body.assetManifestations.map(
+      (assetManifestationId) => {
+        return {
+          manifestationId: assetManifestationId,
+        };
+      }
+    );
+
+    culturalAsset.assetRouteList = [
+      {
+        routeId: body.assetRouteList,
+      },
+    ];
+
+    culturalAsset.assetCommunities = body.assetCommunities.map(
+      (assetCommunityId) => {
+        return {
+          communityId: assetCommunityId,
+        };
+      }
+    );
+
+    //Formating access list in request
+    let fullAccessList = body.maritimeAccess.concat(
+      body.aerialAccess.concat(body.maritimeAccess)
+    );
+
+    culturalAsset.assetAccessList = fullAccessList.map((accessId) => {
+      return {
+        accessId: accessId,
+      };
+    });
+
+    //Formating sports in request
+    culturalAsset.assetSportList = body.sp
+      .map((s) => {
+        if (s[0] === "0") {
+          return s.substring(1, s.length - 1);
+        }
+      })
+      .filter((element) => {
+        return element !== undefined;
+      })
+      .map((sportId) => {
+        return {
+          sportId: sportId,
+        };
+      });
+
+    //Formating offers in request
+    const offerTour = body.tr
+      .map((s) => {
+        if (s[0] === "0") {
+          return s.substring(1, s.length - 1);
+        }
+      })
+      .filter((element) => {
+        return element !== undefined;
+      });
+
+    const offerFolk = body.folk
+      .map((s) => {
+        if (s[0] === "0") {
+          return s.substring(1, s.length - 1);
+        }
+      })
+      .filter((element) => {
+        return element !== undefined;
+      });
+
+    const offerOtherServices = body.os
+      .map((s) => {
+        if (s[0] === "0") {
+          return s.substring(1, s.length - 1);
+        }
+      })
+      .filter((element) => {
+        return element !== undefined;
+      });
+
+    let fullOfferList = [...offerOtherServices, ...offerFolk, ...offerTour];
+
+    culturalAsset.assetOfferList = fullOfferList.map((offerId) => {
+      return {
+        offerId: offerId,
+      };
+    });
+
+    //Formating vulnerabilities in request
+    const vulnerabilitiesLists = body.vuln
+      .map((s) => {
+        if (s[0] === "0") {
+          return s.substring(1, s.length - 1);
+        }
+      })
+      .filter((element) => {
+        return element !== undefined;
+      });
+
+    culturalAsset.assetVulnerabilityList = vulnerabilitiesLists.map(
+      (vulnerabilityId) => {
+        return {
+          vulnerabilityId: vulnerabilityId,
+        };
+      }
+    );
+
+    //Formating nature in request
+    const fullNatureList = body.nat
+      .map((s) => {
+        if (s[0] === "0") {
+          return s.substring(1, s.length - 1);
+        }
+      })
+      .filter((element) => {
+        return element !== undefined;
+      });
+    culturalAsset.assetNatureList = fullNatureList.map((natureId) => {
+      return {
+        natureId: natureId,
+      };
+    });
+    
+    culturalAsset.assetCommunicationList = body.communications.map(
+      (communicationId) => {
+        return {
+          communicationId: communicationId,
+        };
+      }
+    );
+    culturalAsset.assetPublicServiceList = body.basicServices.map(
+      (publicServiceId) => {
+        return {
+          publicServiceId: publicServiceId,
+        };
+      }
+    );
+    // culturalAsset.assetRecognitionList = [
+    //   {
+    //     recognitionId: "219b7c44-3649-11ed-a261-0242ac120002",
+    //   },
+    // ];
+    console.log(culturalAsset);
+  }
 
   const handleChange = (evt) => {
     console.log(evt);
@@ -1742,10 +1888,6 @@ const CulturalAssetForm = () => {
                 })}
               </Box>
 
-              {/* {generatilitiesQuestions.map( (question) => {
-                return getQuestion(question);
-            })} */}
-
               <Box paddingTop={"5%"}>
                 <Title
                   shadow="bottom-left"
@@ -1784,7 +1926,7 @@ const CulturalAssetForm = () => {
               </Box>
 
               <Box paddingTop={"3%"}>
-                {wellnessQuestions.map((question) => {
+                {getWellnessQuestions().map((question) => {
                   return getQuestion(question);
                 })}
               </Box>
@@ -1805,7 +1947,7 @@ const CulturalAssetForm = () => {
               </Box>
 
               <Box paddingTop={"3%"}>
-                {qualityQuestions.map((question) => {
+                {getQualityQuestions().map((question) => {
                   return getQuestion(question);
                 })}
               </Box>
@@ -1894,11 +2036,6 @@ const CulturalAssetForm = () => {
                 })}
               </Box>
             </Container>
-
-            {/* `{testQuestions.map( (question) => {
-                  return getQuestion(question);
-              })}` */}
-            {/* <input item type="submit" /> */}
             <Container>
               <Grid container justifyContent={"center"} padding="5%">
                 <Button

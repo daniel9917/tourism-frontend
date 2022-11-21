@@ -3,6 +3,8 @@ npm install @mui/material @emotion/react @emotion/styled
 
 npm install axios
 
+npm i -D @craco/craco
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
