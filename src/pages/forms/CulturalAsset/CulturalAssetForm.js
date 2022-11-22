@@ -21,6 +21,7 @@ import SingleQuestion from "../FormComponents/SingleQuestion";
 import { useForm } from "react-hook-form";
 import Title from "../../../components/Fonts/Title";
 import axios from "axios";
+import InputMap from "../../../components/Maps/InputMap";
 
 const formBuilderAPI__URL =
   "http://localhost:8080/cultural-assets/form-builder";
@@ -267,6 +268,14 @@ const CulturalAssetForm = () => {
   const [assetVulnerabilityList, setAssetVulnerabilityList] =
     useState(vulnList);
 
+  const [locationObject, setLocationObject] = useState({});
+
+  const updatedLocationObject = (locationDTO) => {
+    //Ordering for assetts, this must match the Value in the database.
+    setLocationObject(locationDTO);
+    console.log(locationDTO);
+  };
+
   const getBasicQuestions = () => {
     let basicQuestions = [
       {
@@ -328,6 +337,15 @@ const CulturalAssetForm = () => {
         type: "selectList",
         options: ["Departamento 1", "Departamento 2", "Departamento 3"],
         required: true,
+        color: "#b03404",
+      },
+      {
+        name: "Ubicacion",
+        question: "Ubicacion del activo o recurso",
+        type: "mapPick",
+        required: true,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
         color: "#b03404",
       },
       {
@@ -396,7 +414,7 @@ const CulturalAssetForm = () => {
         color: "#b03404",
       },
       {
-        name: "cosomogony",
+        name: "cosmogony",
         question: "Es sagrado o tiene interpretación cosmogónica?",
         type: "radioSelectt",
         options: [
@@ -1020,6 +1038,30 @@ const CulturalAssetForm = () => {
                   fullWidth
                   placeholder={question.placeHolder}
                 ></Input>
+              </Grid>
+            </Grid>
+          </SingleQuestion>
+        );
+        break;
+      case "mapPick":
+        content = (
+          <SingleQuestion>
+            <Grid container direction={"column"}>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={question.color} fontWeight={"bolder"}>
+                  {" "}
+                  {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                <InputMap onSetLocation={updatedLocationObject}></InputMap>
+                {/* <Input
+                  type="text"
+                  name={question.name}
+                  {...register(question.name, { required: question.required })}
+                  fullWidth
+                  placeholder={question.placeHolder}
+                ></Input> */}
               </Grid>
             </Grid>
           </SingleQuestion>
@@ -1675,6 +1717,20 @@ const CulturalAssetForm = () => {
     culturalAsset.onGoingRecognition = body.onGoingRecognition;
     culturalAsset.links = body.links.split(",");
 
+    //Set up of location object for culturalAsset
+    let location = {
+      parentLocationId: !body.municipalityId
+        ? body.departmentId
+        : body.municipalityId,
+      detail: body.locationDetail,
+      latitude: locationObject.lat,
+      longitude: locationObject.lng,
+      name: body.name,
+      orderingId : '336e030a-6a7f-11ed-a1eb-0242ac120002'
+    };
+
+    culturalAsset.locationObject = location;
+
     culturalAsset.alternateNames = body.alternateNames.split(",");
     // culturalAsset.imageList
     // culturalAsset.reservationId
@@ -1808,7 +1864,7 @@ const CulturalAssetForm = () => {
         natureId: natureId,
       };
     });
-    
+
     culturalAsset.assetCommunicationList = body.communications.map(
       (communicationId) => {
         return {

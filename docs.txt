@@ -34,3 +34,18 @@ https://www.youtube.com/watch?v=mAaggEw1yig
 
 The top lever await experiment is not enabled:
 https://stackoverflow.com/a/74095665/19140611
+
+Change position of marker
+https://stackoverflow.com/questions/66341805/is-it-possible-to-change-the-position-of-a-marker-in-react-google-maps-api#:~:text=You%20can%20set%20the%20position,instance%20to%20the%20new%20coordinate.
+
+Marker documentation
+https://react-google-maps-api-docs.netlify.app/#marker
+
+Google Map documentation
+https://react-google-maps-api-docs.netlify.app/#googlemap
+
+GetLatLng on click
+https://developers.google.com/maps/documentation/javascript/examples/event-click-latlng
+
+Set up a map
+https://www.youtube.com/watch?v=9e-5QHpadi0&ab_channel=GoogleMapsPlatform
