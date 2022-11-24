@@ -49,3 +49,6 @@ https://developers.google.com/maps/documentation/javascript/examples/event-click
 
 Set up a map
 https://www.youtube.com/watch?v=9e-5QHpadi0&ab_channel=GoogleMapsPlatform
+
+String to local dete time (iso String)
+https://stackoverflow.com/a/22835394/19140611
