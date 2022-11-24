@@ -1703,7 +1703,12 @@ const CulturalAssetForm = () => {
     culturalAsset.subtypeId = body.subtypeId;
     culturalAsset.groupId = body.groupId;
     culturalAsset.name = body.name;
-    culturalAsset.dateEvent = body.dateEvent;
+
+    //Date event set up
+    var parts = body.dateEvent.split('-');
+    parts =  new Date(parts[0], parts[1] - 1, parts[2]);
+
+    culturalAsset.dateEvent = parts.toISOString();
     culturalAsset.description = body.description;
     culturalAsset.locationDetail = body.locationDetail;
     culturalAsset.cosmogony = body.cosmogony;
@@ -1779,7 +1784,7 @@ const CulturalAssetForm = () => {
     culturalAsset.assetSportList = body.sp
       .map((s) => {
         if (s[0] === "0") {
-          return s.substring(1, s.length - 1);
+          return s.substring(1, s.length);
         }
       })
       .filter((element) => {
@@ -1795,7 +1800,7 @@ const CulturalAssetForm = () => {
     const offerTour = body.tr
       .map((s) => {
         if (s[0] === "0") {
-          return s.substring(1, s.length - 1);
+          return s.substring(1, s.length);
         }
       })
       .filter((element) => {
@@ -1805,7 +1810,7 @@ const CulturalAssetForm = () => {
     const offerFolk = body.folk
       .map((s) => {
         if (s[0] === "0") {
-          return s.substring(1, s.length - 1);
+          return s.substring(1, s.length);
         }
       })
       .filter((element) => {
@@ -1815,7 +1820,7 @@ const CulturalAssetForm = () => {
     const offerOtherServices = body.os
       .map((s) => {
         if (s[0] === "0") {
-          return s.substring(1, s.length - 1);
+          return s.substring(1, s.length);
         }
       })
       .filter((element) => {
@@ -1834,7 +1839,7 @@ const CulturalAssetForm = () => {
     const vulnerabilitiesLists = body.vuln
       .map((s) => {
         if (s[0] === "0") {
-          return s.substring(1, s.length - 1);
+          return s.substring(1, s.length);
         }
       })
       .filter((element) => {
@@ -1853,7 +1858,7 @@ const CulturalAssetForm = () => {
     const fullNatureList = body.nat
       .map((s) => {
         if (s[0] === "0") {
-          return s.substring(1, s.length - 1);
+          return s.substring(1, s.length);
         }
       })
       .filter((element) => {
