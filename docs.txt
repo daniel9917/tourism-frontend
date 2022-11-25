@@ -52,3 +52,12 @@ https://www.youtube.com/watch?v=9e-5QHpadi0&ab_channel=GoogleMapsPlatform
 
 String to local dete time (iso String)
 https://stackoverflow.com/a/22835394/19140611
+
+Base64 to imga 
+https://stackoverflow.com/questions/21227078/convert-base64-to-image-in-javascript-jquery
+
+Async/Await file to base64
+https://stackoverflow.com/a/57272491/19140611
+
+Cant use foreach with filelist
+https://stackoverflow.com/questions/40902437/cant-use-foreach-with-filelist
