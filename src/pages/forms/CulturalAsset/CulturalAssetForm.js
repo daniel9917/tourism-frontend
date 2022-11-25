@@ -265,10 +265,11 @@ const CulturalAssetForm = () => {
   const [publicService, setPublicServices] = useState(publicServicessList);
   const [accessRoutes, setAccessRoutes] = useState(accessRoutessList);
   const [natureList, setNatureList] = useState(naturessList);
-  const [assetVulnerabilityList, setAssetVulnerabilityList] =
-    useState(vulnList);
+  const [assetVulnerabilityList, setAssetVulnerabilityList] = useState(vulnList);
 
   const [locationObject, setLocationObject] = useState({});
+
+  const [imageList, setImageList] = useState([]);
 
   const updatedLocationObject = (locationDTO) => {
     //Ordering for assetts, this must match the Value in the database.
@@ -290,6 +291,19 @@ const CulturalAssetForm = () => {
       },
     ];
     return basicQuestions;
+  };
+
+  const getFileQuestions = () => {
+    return [
+      {
+        name: "imageList",
+        question: "Imagenes del activo cultural",
+        type: "multiImage",
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+    ];
   };
 
   const getGeneralitiesQuestions = () => {
@@ -996,6 +1010,32 @@ const CulturalAssetForm = () => {
     }
   };
 
+  const handleImageList = (evt) => {
+    setImageList(evt.target.files);
+  };
+
+  const [imagenes, setImagenes] = useState([]);
+
+  const fileToBase64 = (files) => {
+    let images = [];
+
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    Array.prototype.forEach.call(files, async (file) => {
+      const fileBase64 = await toBase64(file);
+      setImagenes(images);
+      images.push(fileBase64);
+    });
+    console.log(imagenes);
+    return images;
+  };
+
   /**
    *
    * @param {*} name name to compare against
@@ -1062,6 +1102,37 @@ const CulturalAssetForm = () => {
                   fullWidth
                   placeholder={question.placeHolder}
                 ></Input> */}
+              </Grid>
+            </Grid>
+          </SingleQuestion>
+        );
+        break;
+      case "multiImage":
+        content = (
+          <SingleQuestion>
+            <Grid container direction={"column"}>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={question.color} fontWeight={"bolder"}>
+                  {" "}
+                  {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                {/* <Input
+                    type="text"
+                    name={question.name}
+                    {...register(question.name, { required: question.required })}
+                    fullWidth
+                    placeholder={question.placeHolder}
+                  ></Input> */}
+
+                <input
+                  accept="image/*"
+                  id="image-files"
+                  multiple
+                  type={"file"}
+                  onChange={handleImageList}
+                />
               </Grid>
             </Grid>
           </SingleQuestion>
@@ -1705,8 +1776,21 @@ const CulturalAssetForm = () => {
     culturalAsset.name = body.name;
 
     //Date event set up
-    var parts = body.dateEvent.split('-');
-    parts =  new Date(parts[0], parts[1] - 1, parts[2]);
+    var parts = body.dateEvent.split("-");
+    parts = new Date(parts[0], parts[1] - 1, parts[2]);
+
+    //Image list set up
+
+    console.log(fileToBase64(imageList));
+    // let imageBlobs = fileToBase64(imageList);
+    // setImagenes(fileToBase64(imageList));
+    // console.log(imagenes);
+
+    culturalAsset.imageList = imagenes.map((image) => {
+      return {
+        imageBlob: image,
+      };
+    });
 
     culturalAsset.dateEvent = parts.toISOString();
     culturalAsset.description = body.description;
@@ -1731,7 +1815,7 @@ const CulturalAssetForm = () => {
       latitude: locationObject.lat,
       longitude: locationObject.lng,
       name: body.name,
-      orderingId : '336e030a-6a7f-11ed-a1eb-0242ac120002'
+      orderingId: "336e030a-6a7f-11ed-a1eb-0242ac120002",
     };
 
     culturalAsset.locationObject = location;
@@ -1889,7 +1973,7 @@ const CulturalAssetForm = () => {
     //     recognitionId: "219b7c44-3649-11ed-a261-0242ac120002",
     //   },
     // ];
-    console.log(culturalAsset);
+    return console.log(culturalAsset);
   }
 
   const handleChange = (evt) => {
@@ -1925,6 +2009,12 @@ const CulturalAssetForm = () => {
 
               <Box paddingTop={"3%"}>
                 {getBasicQuestions().map((question) => {
+                  return getQuestion(question);
+                })}
+              </Box>
+
+              <Box paddingTop={"3%"}>
+                {getFileQuestions().map((question) => {
                   return getQuestion(question);
                 })}
               </Box>
