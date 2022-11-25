@@ -23,6 +23,10 @@ import "./TourismImpactForm";
 import Title from "../../../components/Fonts/Title";
 import Paragraph from "../../../components/Fonts/Paragraph";
 import { ExpandMoreRounded } from "@mui/icons-material";
+import axios from "axios";
+
+const formBuilderAPI__URL =
+  "http://localhost:8080/cultural-assets/form-builder";
 
 const theme = createTheme({
   typography: {
@@ -34,59 +38,6 @@ const boxSx = {
   background: "#ffffff",
   height: "100vh",
 };
-
-const basicQuestions = [
-  {
-    name: "userEmail",
-    question: "Correo",
-    type: "email",
-    placeHolder: "Tu dirección de correo electrónico",
-    required: true,
-    hex: "#e0dcdc",
-    rgb: [224, 220, 220],
-    color: "darkgreen",
-  },
-  {
-    name: "dataTreatment",
-    question: "¿Usted autoriza el uso de sus datos personales y respuestas?",
-    type: "radioSelect",
-    options: ["Si", "No"],
-    required: true,
-    color: "darkgreen",
-  },
-  {
-    name: "department",
-    question: "Departamento",
-    type: "selectList",
-    options: ["Departamento 1", "Departamento 2", "Departamento 3"],
-    required: true,
-    color: "darkgreen",
-  },
-  {
-    name: "municipality",
-    question: "Municipio",
-    type: "selectList",
-    options: ["Municipio 1", "Municipio 2", "Municipio 3"],
-    required: true,
-    color: "darkgreen",
-  },
-  {
-    name: "ethnicGroup",
-    question: "¿Con cuál grupo etnico se autoidentifica?",
-    type: "radioSelect",
-    options: ["ethnic group 1", "ethnic group 2", "ethnic group 3"],
-    required: true,
-    color: "darkgreen",
-  },
-  {
-    name: "ethnicity",
-    question: "¿Usted pertenece a alguna etnia?",
-    type: "selectList",
-    options: ["ethnicity 1", "ethnicity 2", "ethnicity 3"],
-    required: true,
-    color: "darkgreen",
-  },
-];
 
 const qualityOfLifeQuestions = [
   {
@@ -301,7 +252,11 @@ const hostBehaviour = [
     codeName: "lta",
     question: "Me gusta que vengan turistas a mi municipio",
     type: "radioSelect",
-    options: ["Si", "No", "Tal vez"],
+    options: [
+      { name: "Si", value: 3 },
+      { name: "Tal vez", value: 2 },
+      { name: "No", value: 1 },
+    ],
     required: true,
     hex: "#e0dcdc",
     rgb: [224, 220, 220],
@@ -634,6 +589,130 @@ const introText =
   "Somos conscientes de las ventajas del turismo sin embargo, esta encuesta se enforca en detectar aquellos aspectos que no estan saliendo bien. En este espacio puede plasmar su punto de vista con respecto de los aspectos en cuestion. Este instrumento hace parte de la investigacion de turismo en la facultad de ingenieria. La encuesta es anonima, los datos solicitados son con proposito de caracterizacion.";
 
 const TourismImpactForm = () => {
+  const [municipalities, setMunicipalities] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [ethnicities, setEthnicities] = useState([]);
+  const [ehtnicGroup, setEhtnicGroup] = useState([]);
+
+  //Calling form builder API to get Values.
+  axios
+    .get(`${formBuilderAPI__URL}/Municipality`)
+    .then((response) => response.data)
+    .then((data) => {
+      setMunicipalities(data.values);
+    });
+
+  axios
+    .get(`${formBuilderAPI__URL}/Department`)
+    .then((response) => response.data)
+    .then((data) => {
+      setDepartments(data.values);
+    })
+    .catch((error) => {
+      console.log("Error loading departments due to: " + error);
+    });
+
+  axios
+    .get(`${formBuilderAPI__URL}/Ethnicity`)
+    .then((response) => response.data)
+    .then((data) => {
+      setEthnicities(data.values);
+    })
+    .catch((error) => {
+      console.log("Error loading departments due to: " + error);
+    });
+
+  axios
+    .get(`${formBuilderAPI__URL}/EthnicGroup`)
+    .then((response) => response.data)
+    .then((data) => {
+      setEhtnicGroup(data.values.map((value) => 
+        {
+          // let ethnicGroup ={};
+          // ethnicGroup.name = value.name;
+          // ethnicGroup.value = value.id;
+          return {
+            "name" : `${value.name}`,
+            "value" : `${value.id}`,
+          };
+        }
+      ));
+    })
+    .catch((error) => {
+      console.log("Error loading departments due to: " + error);
+    });
+
+  const getBasicQuestions = () => {
+    let basicQuestions = [
+      {
+        name: "userEmail",
+        question: "Correo",
+        type: "email",
+        placeHolder: "Tu dirección de correo electrónico",
+        required: true,
+        hex: "#e0dcdc",
+        rgb: [224, 220, 220],
+        color: "darkgreen",
+      },
+      {
+        name: "dataTreatment",
+        question:
+          "¿Usted autoriza el uso de sus datos personales y respuestas?",
+        type: "radioSelect",
+        options: [
+          { name: "Si", value: "true" },
+          { name: "No", value: "false" },
+        ],
+        required: true,
+        color: "darkgreen",
+      },
+      {
+        name: "department",
+        question: "Departamento",
+        type: "selectList",
+        options: ["Departamento 1", "Departamento 2", "Departamento 3"],
+        required: true,
+        color: "darkgreen",
+      },
+      {
+        name: "municipality",
+        question: "Municipio",
+        type: "selectList",
+        options: ["Municipio 1", "Municipio 2", "Municipio 3"],
+        required: true,
+        color: "darkgreen",
+      },
+      {
+        name: "ethnicGroup",
+        question: "¿Con cuál grupo etnico se autoidentifica?",
+        type: "radioSelect",
+        options: ["ethnic group 1", "ethnic group 2", "ethnic group 3"],
+        required: true,
+        color: "darkgreen",
+      },
+      {
+        name: "ethnicity",
+        question: "¿Usted pertenece a alguna etnia?",
+        type: "selectList",
+        options: ["ethnicity 1", "ethnicity 2", "ethnicity 3"],
+        required: true,
+        color: "darkgreen",
+      },
+    ];
+    return basicQuestions.map((basicQuestion) => {
+      if (basicQuestion.name === "municipality") {
+        basicQuestion.options = municipalities;
+      } else if (basicQuestion.name === "department") {
+        basicQuestion.options = departments;
+      } else if (basicQuestion.name === "ethnicity") {
+        basicQuestion.options = ethnicities;
+      } else if (basicQuestion.name === "ethnicGroup") {
+        basicQuestion.options = ehtnicGroup;
+      }
+      return basicQuestion;
+    });
+  };
+
   const ref = useRef(null);
   const onClickScroll = () => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -718,7 +797,7 @@ const TourismImpactForm = () => {
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
-                        value={option}
+                        value={option.value}
                         control={
                           <Radio
                             {...register(question.name, { required: true })}
@@ -728,7 +807,7 @@ const TourismImpactForm = () => {
                             color="success"
                           />
                         }
-                        label={option}
+                        label={option.name}
                       />
                     );
                   })}
@@ -761,7 +840,7 @@ const TourismImpactForm = () => {
                   color="success"
                 >
                   {question.options.map((option) => {
-                    return <MenuItem value={option}>{option}</MenuItem>;
+                    return <MenuItem value={option.id}>{option.name}</MenuItem>;
                   })}
                 </Select>
               </Grid>
@@ -1043,7 +1122,6 @@ const TourismImpactForm = () => {
 
   const onSubmit = (data, event) => {
     event.preventDefault();
-    console.log("holaaaaaaaaaaaaa");
     console.log(data);
   };
 
@@ -1126,7 +1204,7 @@ const TourismImpactForm = () => {
             }}
           >
             <Container sx={{ paddingBottom: "2%" }}>
-              {basicQuestions.map((question) => {
+              {getBasicQuestions().map((question) => {
                 return getQuestion(question);
               })}
             </Container>
@@ -1271,7 +1349,6 @@ const TourismImpactForm = () => {
                     textTransform: "initial",
                     width: "50%",
                     borderRadius: "18px",
-                    
                   }}
                   type="submit"
                 >

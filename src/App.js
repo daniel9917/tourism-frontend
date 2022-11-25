@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
+// import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
 import CulturalAssetForm from "./pages/forms/CulturalAsset/CulturalAssetForm";
 
 function App() {

@@ -1,6 +1,15 @@
 # Npm Modules installation
 npm install @mui/material @emotion/react @emotion/styled
 
+### Install Axios
+npm install axios
+
+### Install Craco
+npm i -D @craco/craco
+
+### Install React Google Maps
+npm install --save @react-google-maps/api
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
