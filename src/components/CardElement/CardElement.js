@@ -34,7 +34,7 @@ const CardElement = (props) => {
           <img className = "__card_image" src={props.imgSrc}></img>
         </Grid>
         <Grid item className="cardTitle">
-          <Subtitle content={props.title} color={"white"}></Subtitle>
+          <Subtitle shadowType = "dizzy" content={props.title} color={"white"}></Subtitle>
         </Grid>
         <Grid item className="cardDescription">
           <Paragraph content={props.description} color={"white"} ></Paragraph>
