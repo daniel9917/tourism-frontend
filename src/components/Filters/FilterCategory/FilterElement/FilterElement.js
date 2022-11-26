@@ -1,10 +1,12 @@
 import { React, useState } from "react";
-import { Box, Modal } from "@mui/material";
+import { Box, Grid, Modal } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { ThemeProvider, createTheme } from "@mui/material";
 import Paragraph from "../../../Fonts/Paragraph";
+import Subtitle from "../../../Fonts/Subtitle";
+import Title from "../../../Fonts/Title";
 
 const theme = createTheme({
   typography: {
@@ -54,8 +56,9 @@ const FilterElement = (props) => {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: "2px solid #78d48c",
     boxShadow: 24,
+    borderRadius: "3%",
     p: 4,
   };
 
@@ -67,23 +70,82 @@ const FilterElement = (props) => {
           customClickEvent={handleOpen}
           size="1.3rem"
           color="#025928"
-          content = {name}
-          textAlign = "center"
+          content={name}
+          textAlign="center"
         ></Paragraph>
         <Modal open={open} onClose={handleClose}>
           <Box sx={style}>
-            <Typography>Filtros por {name}</Typography>
-            {sections.map((section, index) => (
-              <div key={index}>
-                <p>{section}</p>
-                <select id={section.toLowerCase()} onChange={selectOnChange}>
-                  {getElementValues(section, index).map((value) => (
-                    <option key={index}>{value}</option>
-                  ))}
-                </select>
-              </div>
-            ))}
-            <Button onClick={handleClick}>Select </Button>
+            <Grid container direction={"col"} justifyContent="center">
+              <Box>
+                <Subtitle
+                  color="#025928"
+                  content={"Filtros por " + name}
+                ></Subtitle>
+              </Box>
+              {/* <Typography>Filtros por {name}</Typography> */}
+              <Box paddingTop="5%" minWidth={"100%"}>
+                {sections.map((section, index) => (
+                  <Grid
+                    container
+                    key={index}
+                    direction="row"
+                    alignItems={"center"}
+                    justifyContent="space-around"
+                    padding={2}
+                  >
+                    <Grid item>
+                      <Paragraph
+                        // customClickEvent={handleOpen}
+                        size="1.3rem"
+                        color="#025928"
+                        content={section}
+                        // textAlign="center"
+                      ></Paragraph>
+                    </Grid>
+                    <Grid item>
+                      <select
+                        style={{
+                          borderColor: "transparent",
+                          minHeight: "30px",
+                          borderRadius: "5px",
+                        }}
+                        id={section.toLowerCase()}
+                        onChange={selectOnChange}
+                      >
+                        {getElementValues(section, index).map((value) => (
+                          <option key={index}>{value}</option>
+                        ))}
+                      </select>
+                    </Grid>
+                  </Grid>
+                ))}
+              </Box>
+
+              <Grid containter></Grid>
+
+              <Box
+                paddingTop={"5%"}
+                minWidth={1}
+                sx ={{
+                  display : "flex",
+                  justifyContent :"center",
+                  alignItems : "center"
+                }}
+                
+              >
+                <Button
+                  sx={{
+                    background: "#78d48c",
+                    textTransform: "initial",
+                    width: "70%",
+                    borderRadius: "20px 20px 20px 20px",
+                  }}
+                  onClick={handleClick}
+                >
+                  <Title titleName="Select" size="1rem" color="#ffffff"></Title>
+                </Button>
+              </Box>
+            </Grid>
           </Box>
         </Modal>
         {/* {sections.map(section => (
