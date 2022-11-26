@@ -73,12 +73,12 @@ const FilterElement = (props) => {
         <Modal open={open} onClose={handleClose}>
           <Box sx={style}>
             <Typography>Filtros por {name}</Typography>
-            {sections.map((section) => (
-              <div>
+            {sections.map((section, index) => (
+              <div key={index}>
                 <p>{section}</p>
                 <select id={section.toLowerCase()} onChange={selectOnChange}>
-                  {getElementValues(section).map((value) => (
-                    <option>{value}</option>
+                  {getElementValues(section, index).map((value) => (
+                    <option key={index}>{value}</option>
                   ))}
                 </select>
               </div>

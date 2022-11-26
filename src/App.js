@@ -30,6 +30,7 @@ function App() {
   const rootBoxSx = {
     background: "linear-gradient(to top, #085c2c, #08a45c)",
     height: "100vh",
+    overflow: "hidden"
   };
 
   const filterSections = ["Ubicacion", "Categoria", "Clasificacion"];

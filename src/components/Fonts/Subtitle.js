@@ -19,6 +19,24 @@ const Subtitle = (props) => {
     }
   };
 
+  const getFontSize = (size) => {
+    switch (size) {
+      case "extra":
+        return "4rem";
+      case "large":
+        return "3rem";
+      case "big":
+        return "2.5rem";
+      case "medium":
+        return "2rem";
+      case "normal":
+        return "1rem";
+      default:
+        return size;
+    }
+  };
+
+
   const typoSx = {};
 
   if (props.shadowType) {
@@ -31,6 +49,20 @@ const Subtitle = (props) => {
 
   if (props.textAlign) {
     typoSx.textAlign = props.textAlign;
+  }
+
+  if (props.fontSize){
+    typoSx.fontSize = getFontSize(props.fontSize);
+  }
+
+  
+  if (props.padding) {
+    if(props.padding.left) {
+      typoSx.paddingLeft = props.padding.left;
+    }
+    if(props.padding.top){
+      typoSx.paddingTop = props.padding.top;
+    }
   }
 
   return (

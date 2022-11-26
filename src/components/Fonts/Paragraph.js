@@ -43,6 +43,15 @@ const Paragraph = (props) => {
     typoSx.textAlign = props.textAlign;
   }
 
+  if (props.padding) {
+    if(props.padding.left) {
+      typoSx.paddingLeft = props.padding.left;
+    }
+    if(props.padding.top){
+      typoSx.paddingTop = props.padding.top;
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div onClick={props.customClickEvent}>

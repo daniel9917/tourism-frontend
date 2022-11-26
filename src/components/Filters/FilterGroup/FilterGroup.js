@@ -7,7 +7,7 @@ import Paragraph from "../../Fonts/Paragraph";
 import Title from "../../Fonts/Title";
 
 const boxCardSx = {
-  maxWidth: "250px",
+  width : "70%",
   background: "#ffffff",
   borderRadius: "5%",
 };
@@ -47,8 +47,9 @@ const FilterGroup = (props) => {
             borderRadius : "20px 20px 20px 20px"
           }}>
 
-            {filterObjects.map((filterObject) => (
+            {filterObjects.map((filterObject, index) => (
               <FilterElement
+              key ={index}
                 name={filterObject.name}
                 sections={filterObject.sections}
                 onFormAccept={props.onSelectFilters}
