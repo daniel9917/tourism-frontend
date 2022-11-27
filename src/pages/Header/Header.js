@@ -25,7 +25,6 @@ const loginBox = {
 
 const mainBox = {
   minHeight: "-webkit-fill-available",
-  overflow: "hidden",
 };
 
 const paddingBox = {

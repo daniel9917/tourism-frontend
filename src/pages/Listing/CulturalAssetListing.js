@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  ThemeProvider,
-  createTheme,
-  Box,
-  Container,
-  Grid,
-} from "@mui/material";
+import { ThemeProvider, createTheme, Box, Grid } from "@mui/material";
 import { useState } from "react";
 import FilterGroup from "../../components/Filters/FilterGroup/FilterGroup";
 import Header from "../Header/Header";
 import { Title } from "@mui/icons-material";
 import Subtitle from "../../components/Fonts/Subtitle";
 import Paragraph from "../../components/Fonts/Paragraph";
+import CardElement from "../../components/CardElement/CardElement";
 
 const theme = createTheme({
   typography: {
@@ -19,10 +14,38 @@ const theme = createTheme({
   },
 });
 
+const elements = [
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+];
+
+const mapImgUrl = "https://i.imgur.com/u6dkjRJ.png";
+
 const mainBox = {};
 
+const minSrcUrl =
+  "https://procolombia.co/sites/default/files/01-barranquilla-hori.jpg?1612187920";
+
 const headerBox = {
-  height: "13vh",
+  height: "5vh",
   background: "#CCF5AB",
   width: "100%",
 };
@@ -44,7 +67,9 @@ const descriptionBox = {
   width: "30%",
 };
 
-const resultBox = {};
+const resultBox = {
+  background: "#03A65A",
+};
 
 const boxSx = {
   background: "#08a45c",
@@ -98,61 +123,82 @@ const CulturalAssetListing = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div sx={{ overflow: "hidden" }}>
-        <Box sx={mainBox}>
-          <Box maxWidth={1} sx={headerBox}>
-            <Header></Header>
-          </Box>
-          <Box maxWidth={1} sx={queryBox}>
-            <Grid
-              sx={{
-                minHeight: "-webkit-fill-available",
-              }}
-              container
-              direction={"row"}
-              alignItems="center"
-
-            >
-              <Box sx={filterBox}>
-                <Grid
-                  container
-                  direction="col"
-                  justifyContent={"center"}
-                >
-                  <FilterGroup
-                    filterObjects={getFilterObjects()}
-                    onSelectFilters={addParams}
-                    onApplyFilters={getFilters}
-                    filterBy={filterParams}
-                  ></FilterGroup>
-                </Grid>
-              </Box>
-              <Box sx={mapBox}></Box>
-              <Box sx={descriptionBox}>
-                <Grid
-                  direction="col"
-                  alignItems="center"
-                  justifyContent={"center"}
-                  maxWidth={"80%"}
-                >
-                  <Subtitle
-                    color="#025928"
-                    fontSize="big"
-                    shadowType="light"
-                    content="Mapa de activos"
-                  ></Subtitle>
-                  <Paragraph
-                    padding={{ top: "5%" }}
-                    content="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "
-                    color="#025928"
-                  ></Paragraph>
-                </Grid>
-              </Box>
-            </Grid>
-          </Box>
-          <Box maxWidth={1} sx={resultBox}></Box>
+      <Box sx={mainBox} xs={12}>
+        <Box maxWidth={1} sx={headerBox}>
+          <Header></Header>
         </Box>
-      </div>
+        <Box maxWidth={1} sx={queryBox}>
+          <Grid
+            sx={{
+              minHeight: "-webkit-fill-available",
+            }}
+            container
+            direction={"row"}
+            alignItems="center"
+          >
+            <Box sx={filterBox}>
+              <Grid container direction={"col"} justifyContent={"center"}>
+                <FilterGroup
+                  filterObjects={getFilterObjects()}
+                  onSelectFilters={addParams}
+                  onApplyFilters={getFilters}
+                  filterBy={filterParams}
+                ></FilterGroup>
+              </Grid>
+            </Box>
+            <Box sx={mapBox}>
+              <Grid
+                container
+                direction={"col"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <img
+                  src={mapImgUrl}
+                  style={{
+                    width: "90%",
+                    height: "auto",
+                  }}
+                />
+              </Grid>
+            </Box>
+            <Box sx={descriptionBox}>
+              <Grid
+                direction={"col"}
+                alignItems="center"
+                justifyContent={"center"}
+                maxWidth={"80%"}
+              >
+                <Subtitle
+                  color="#025928"
+                  fontSize="big"
+                  shadowType="light"
+                  content="Mapa de activos"
+                ></Subtitle>
+                <Paragraph
+                  padding={{ top: "5%" }}
+                  content="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "
+                  color="#025928"
+                ></Paragraph>
+              </Grid>
+            </Box>
+          </Grid>
+        </Box>
+      </Box>
+      <Box sx={resultBox} xs={12}>
+        <Grid container direction={"row"} justifyContent="space-evenly">
+          {elements.map((element) => {
+            return (
+                <CardElement
+                  item
+                  color={"#025928"}
+                  imgSrc={minSrcUrl}
+                  title="Activo cultural"
+                ></CardElement>
+            );
+          })}
+        </Grid>
+      </Box>
     </ThemeProvider>
   );
 };
