@@ -1,13 +1,16 @@
 import "./App.css";
 import { useState } from "react";
 import { Box } from "@mui/material";
-// import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
+import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
 import CulturalAssetForm from "./pages/forms/CulturalAsset/CulturalAssetForm";
+import Home from "./pages/Home/Home";
+import CulturalAssetListing from "./pages/Listing/CulturalAssetListing";
+import FilterGroup from "./components/Filters/FilterGroup/FilterGroup";
 
 function App() {
   const filterObjects = [
     {
-      name: "Ubicacion",      
+      name: "Ubicación",
       sections: ["Pais", "Departamento", "Municipio"],
     },
     {
@@ -15,7 +18,7 @@ function App() {
       sections: ["Community", "Common"],
     },
     {
-      name: "Clasificacion",
+      name: "Clasificación",
       sections: ["Tipo", "Subtipo", "Manifestacion", "Patrimonio", "Categoria"],
     },
   ];
@@ -57,24 +60,23 @@ function App() {
 
   return (
     // <ThemeProvider theme={theme}>
-    <Box  maxWidth={1} maxHeight={1} sx={rootBoxSx}>
+    <Box maxWidth={1} maxHeight={1} sx={rootBoxSx}>
+      <CulturalAssetListing></CulturalAssetListing>
       {/* <Home></Home> */}
       {/* <Header></Header> */}
       {/* <CardElement title="titulo 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc = "https://i.imgur.com/ABIjoz5.png"></CardElement> */}
       {/* <TourismImpactForm></TourismImpactForm> */}
-      <CulturalAssetForm></CulturalAssetForm>
+      {/* <CulturalAssetForm></CulturalAssetForm> */}
     </Box>
     // {/* </ThemeProvider> */}
-  );
 
-  {
-    /* <FilterGroup 
-          filterObjects = {getFilterObjects()}
-          onSelectFilters = {addParams}
-          onApplyFilters = {getFilters}
-          filterBy = {filterParams}>
-        </FilterGroup> */
-  }
+    //  <FilterGroup
+    //         filterObjects = {getFilterObjects()}
+    //         onSelectFilters = {addParams}
+    //         onApplyFilters = {getFilters}
+    //         filterBy = {filterParams}>
+    //   </FilterGroup>
+  );
 }
 
 export default App;
