@@ -5,6 +5,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import Subtitle from "../../Fonts/Subtitle";
 import Paragraph from "../../Fonts/Paragraph";
 import Title from "../../Fonts/Title";
+import { useState } from "react";
 
 const boxCardSx = {
   width : "70%",
@@ -19,7 +20,11 @@ const theme = createTheme({
 });
 
 const FilterGroup = (props) => {
+  const [axiosRequest, setAxiosRequest] = useState ({});
   const filterObjects = props.filterObjects;
+  const filterSections = props.filterSections;
+
+  // console.log(filterSections);
 
   const applyFilters = props.onApplyFilters;
 
@@ -47,11 +52,11 @@ const FilterGroup = (props) => {
             borderRadius : "20px 20px 20px 20px"
           }}>
 
-            {filterObjects.map((filterObject, index) => (
+            {props.filterSections.values.map((section, index) => (
               <FilterElement
-              key ={index}
-                name={filterObject.name}
-                sections={filterObject.sections}
+                key ={index+section.objectName}
+                name={section.objectName}
+                sections={section.values}
                 onFormAccept={props.onSelectFilters}
               ></FilterElement>
             ))}
@@ -74,12 +79,6 @@ const FilterGroup = (props) => {
                     size="1.1rem"
                     color="#ffffff"
                   ></Title>
-                {/* <Paragraph
-                  size="1.3rem"
-                  color="#ffffff"
-                  content={"Aplicar Filtros"}
-                  textAlign="center"
-                ></Paragraph> */}
               </Button>
             </Grid>
           </Box>

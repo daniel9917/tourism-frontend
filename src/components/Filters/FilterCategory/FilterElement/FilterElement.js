@@ -17,9 +17,11 @@ const theme = createTheme({
 const boxCardStyle = {};
 
 const FilterElement = (props) => {
+
+
   const name = props.name;
   const sections = props.sections;
-  // let values = getElementValues(name);
+
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -27,7 +29,7 @@ const FilterElement = (props) => {
 
   let filtervalues = new Map();
   sections.forEach((element) => {
-    filtervalues.set(element.toLowerCase(), "");
+    filtervalues.set(element.objectName.toLowerCase(), "");
   });
 
   const selectOnChange = (event) => {
@@ -56,7 +58,7 @@ const FilterElement = (props) => {
     transform: "translate(-50%, -50%)",
     width: 400,
     bgcolor: "background.paper",
-    border: "2px solid #78d48c",
+    border: "none",
     boxShadow: 24,
     borderRadius: "3%",
     p: 4,
@@ -73,9 +75,9 @@ const FilterElement = (props) => {
           content={name}
           textAlign="center"
         ></Paragraph>
-        <Modal open={open} onClose={handleClose}>
+        <Modal sx= {{border: "none"}} open={open} onClose={handleClose}>
           <Box sx={style}>
-            <Grid container direction={"col"} justifyContent="center">
+            <Grid sx= {{border: "none"}} container direction={"col"} justifyContent="center">
               <Box>
                 <Subtitle
                   color="#025928"
@@ -90,7 +92,7 @@ const FilterElement = (props) => {
                     key={index}
                     direction="row"
                     alignItems={"center"}
-                    justifyContent="space-around"
+                    justifyContent="space-evenly"
                     padding={2}
                   >
                     <Grid item>
@@ -98,7 +100,7 @@ const FilterElement = (props) => {
                         // customClickEvent={handleOpen}
                         size="1.3rem"
                         color="#025928"
-                        content={section}
+                        content={section.objectName}
                         // textAlign="center"
                       ></Paragraph>
                     </Grid>
@@ -109,11 +111,11 @@ const FilterElement = (props) => {
                           minHeight: "30px",
                           borderRadius: "5px",
                         }}
-                        id={section.toLowerCase()}
+                        id={section.objectName.toLowerCase().trim()}
                         onChange={selectOnChange}
                       >
-                        {getElementValues(section, index).map((value) => (
-                          <option key={index}>{value}</option>
+                        {section.values.map((value) => (
+                          <option key={index} value = {value.id}>{value.name}</option>
                         ))}
                       </select>
                     </Grid>
@@ -156,8 +158,6 @@ const FilterElement = (props) => {
   );
 };
 
-function getElementValues(name) {
-  return [name + " 1", name + " 2", name + " 3"];
-}
+
 
 export default FilterElement;

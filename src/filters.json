@@ -1,0 +1,9 @@
+{
+    "departamento" : "department",
+    "municipio" : "municipality",
+    "subtipo" : "subtype",
+    "tipo" : "type",
+    "manifestacion" : "manifestation",
+    "comunidad" : "community",
+    "grupo etnico" : "community_type"
+} 

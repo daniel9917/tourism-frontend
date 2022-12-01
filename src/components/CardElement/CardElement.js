@@ -1,24 +1,34 @@
-import {
-  Box,
-  Grid,
-} from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import { useState } from "react";
 
 import Paragraph from "../Fonts/Paragraph";
 import Subtitle from "../Fonts/Subtitle";
 
 import "./CardElement.css";
 
-const boxSx = {
-  border: 1,
-  borderColor: "transparent",
-  borderRadius: "5%",
-  boxShadow: 20,
-  marginTop : "1%",
-  marginBottom : "1%"
-};
-
 
 const CardElement = (props) => {
+  const boxSxx = {
+    border: 1,
+    borderColor: "transparent",
+    borderRadius: "5%",
+    boxShadow: 20,
+    marginTop: "1%",
+    marginBottom: "1%",
+  };
+
+  const [boxSx, setBoxSx] = useState(boxSxx);
+
+  const onCursorIn = () => {
+    boxSxx.cursor = "pointer";
+    setBoxSx(boxSxx);
+  };
+
+  const onCursorOut = () => {
+    boxSxx.cursor = "default";
+    setBoxSx(boxSxx);
+  };
+
   const description = props.description ? (
     <Grid item className="cardDescription">
       <Paragraph content={props.description} color={"white"}></Paragraph>
@@ -28,7 +38,13 @@ const CardElement = (props) => {
   );
 
   return (
-    <Box maxWidth="20%" sx={boxSx} backgroundColor={props.color}>
+    <Box
+      onMouseEnter={onCursorIn}
+      onMouseLeave={onCursorOut}
+      maxWidth="20%"
+      sx={boxSx}
+      backgroundColor={props.color}
+    >
       <Grid container direction={"column"} alignItems={"center"}>
         <img
           style={{ paddingTop: "3%" }}
@@ -39,7 +55,7 @@ const CardElement = (props) => {
           <Subtitle
             shadowType="dizzy"
             content={props.title}
-            fontSize = "medium"
+            fontSize="medium"
             color={"white"}
           ></Subtitle>
         </Grid>
@@ -48,6 +64,5 @@ const CardElement = (props) => {
     </Box>
   );
 };
-
 
 export default CardElement;

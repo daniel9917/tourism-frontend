@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider, createTheme, Box, Grid } from "@mui/material";
 import { useState } from "react";
 import FilterGroup from "../../components/Filters/FilterGroup/FilterGroup";
@@ -7,35 +7,25 @@ import { Title } from "@mui/icons-material";
 import Subtitle from "../../components/Fonts/Subtitle";
 import Paragraph from "../../components/Fonts/Paragraph";
 import CardElement from "../../components/CardElement/CardElement";
+import urls from "../../urls.json";
+import axios from "axios";
+import filterValues from "../../filters.json";
+
+const getFilters = axios.get(urls.filtersURL);
+const filters = await getFilters;
+
+let filteringParams = {};
+
+const getElements = axios.get(urls.listByFiltersURL, {
+  params: filteringParams,
+});
+const elements = await getElements;
 
 const theme = createTheme({
   typography: {
     fontFamily: ["Raleway"].join(","),
   },
 });
-
-const elements = [
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-];
 
 const mapImgUrl = "https://i.imgur.com/u6dkjRJ.png";
 
@@ -68,21 +58,18 @@ const descriptionBox = {
 };
 
 const resultBox = {
+  minHeight : "100vh",
   background: "#03A65A",
-};
-
-const boxSx = {
-  background: "#08a45c",
 };
 
 const filterObjects = [
   {
     name: "Ubicación",
-    sections: ["Pais", "Departamento", "Municipio"],
+    sections: ["Departamento", "Municipio"],
   },
   {
     name: "Comunidad",
-    sections: ["Community", "Common"],
+    sections: ["Community"],
   },
   {
     name: "Clasificación",
@@ -91,15 +78,66 @@ const filterObjects = [
 ];
 
 const CulturalAssetListing = () => {
+  const [assets, setAssets] = useState(elements.data.data);
+  const [filterParams, setFilterParams] = useState([]);
+  const [reqParams, setReqParams] = useState({});
+
+  const sendRequest = () => {
+    fetch(
+      (typeof reqParams === undefined) ||
+        (Object.keys(reqParams).length === 0 &&
+          reqParams.constructor === Object)
+        ? urls.listByFiltersURL
+        : urls.listByFiltersURL + "?" + new URLSearchParams(reqParams)
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setAssets(result.data);
+          console.log("printing result data : " + result.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  };
+
   const getFilterObjects = () => {
     return filterObjects;
   };
 
-  const filterSections = ["Ubicacion", "Categoria", "Clasificacion"];
-  const [filterParams, setFilterParams] = useState([]);
+  const getAssets = () => {
+    let params = formatObjectFilter(filterParams);
+    console.log(params);
+    setReqParams(params);
+    sendRequest();
+  };
 
-  const getFilters = () => {
-    console.log(filterParams);
+  const formatObjectFilter = (filterAssetParams) => {
+    let objectFilters = [];
+    let params = {};
+
+    filterAssetParams.map((fp) => {
+      let keys = Object.keys(fp.params);
+      keys.map((key) => {
+        if (
+          !(typeof filterValues[key] === undefined) &&
+          fp.params[key] !== ""
+        ) {
+          let filterDTO = {
+            [filterValues[key]]: fp.params[key],
+          };
+          objectFilters.push(filterDTO);
+        }
+      });
+    });
+
+    objectFilters.map((object) => {
+      let keys = Object.keys(object);
+      params[keys[0]] = object[keys[0]];
+    });
+
+    return params;
   };
 
   const addParams = (param) => {
@@ -121,6 +159,7 @@ const CulturalAssetListing = () => {
     console.log(filterParams);
   };
 
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={mainBox} xs={12}>
@@ -139,9 +178,10 @@ const CulturalAssetListing = () => {
             <Box sx={filterBox}>
               <Grid container direction={"col"} justifyContent={"center"}>
                 <FilterGroup
+                  filterSections={filters.data}
                   filterObjects={getFilterObjects()}
                   onSelectFilters={addParams}
-                  onApplyFilters={getFilters}
+                  onApplyFilters={getAssets}
                   filterBy={filterParams}
                 ></FilterGroup>
               </Grid>
@@ -187,14 +227,15 @@ const CulturalAssetListing = () => {
       </Box>
       <Box sx={resultBox} xs={12}>
         <Grid container direction={"row"} justifyContent="space-evenly">
-          {elements.map((element) => {
+          {assets.map((element, index) => {
             return (
-                <CardElement
-                  item
-                  color={"#025928"}
-                  imgSrc={minSrcUrl}
-                  title="Activo cultural"
-                ></CardElement>
+              <CardElement
+                key={index + element.name}
+                item
+                color={"#025928"}
+                imgSrc={minSrcUrl}
+                title={element.name}
+              ></CardElement>
             );
           })}
         </Grid>

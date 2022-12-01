@@ -61,3 +61,7 @@ https://stackoverflow.com/a/57272491/19140611
 
 Cant use foreach with filelist
 https://stackoverflow.com/questions/40902437/cant-use-foreach-with-filelist
+
+
+Set key from a variable json;
+https://stackoverflow.com/a/29077216/19140611
