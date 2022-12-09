@@ -23,6 +23,8 @@ import Title from "../../../components/Fonts/Title";
 import axios from "axios";
 import InputMap from "../../../components/Maps/InputMap";
 
+import urls from "../../../urls.json";
+
 const formBuilderAPI__URL =
   "http://localhost:8080/cultural-assets/form-builder";
 
@@ -1763,8 +1765,33 @@ const CulturalAssetForm = () => {
 
   const onSubmit = (data, event) => {
     event.preventDefault();
-    formatculturalAssetRequest(data);
+    let request = formatculturalAssetRequest(data);
     // console.log(data);
+    postAsset(request);
+  };
+
+  const postAsset = (asset) => {
+    let headers = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    };
+    let url = urls.baseAssetURL;
+
+    axios({ 
+      method: "post", 
+      url: url, 
+      headers: headers, 
+      data: asset }).then(
+      (res) => {
+        console.log(res);
+        alert("Successfully posted host");
+      }
+    );
+
+    // axios.post(urls.baseAssetURL, asset).then((res) => {
+    //   console.log(res);
+    //   alert("Successfully posted host");
+    // });
   };
 
   function formatculturalAssetRequest(body) {
@@ -1785,12 +1812,6 @@ const CulturalAssetForm = () => {
     // let imageBlobs = fileToBase64(imageList);
     // setImagenes(fileToBase64(imageList));
     // console.log(imagenes);
-
-    culturalAsset.imageList = imagenes.map((image) => {
-      return {
-        imageBlob: image,
-      };
-    });
 
     culturalAsset.dateEvent = parts.toISOString();
     culturalAsset.description = body.description;
@@ -1968,6 +1989,12 @@ const CulturalAssetForm = () => {
         };
       }
     );
+
+    culturalAsset.imageList = imagenes.map((image) => {
+      return {
+        imageBlob: image,
+      };
+    });
     // culturalAsset.assetRecognitionList = [
     //   {
     //     recognitionId: "219b7c44-3649-11ed-a261-0242ac120002",
