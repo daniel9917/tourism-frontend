@@ -1,7 +1,9 @@
 {
     "baseUrl" : "http://localhost:8080",
-    "baseAssetURL":"http://localhost:8080/cultural-assets/",
+    "baseAssetURL":"http://localhost:8080/cultural-assets",
     "filtersURL" : "http://localhost:8080/cultural-assets/form-builder/filters",
     "listByFiltersURL" : "http://localhost:8080/cultural-assets/list-by-filters",
-    "formBuilder" : "http://localhost:8080/cultural-assets/form-builder"
+    "formBuilder" : "http://localhost:8080/cultural-assets/form-builder",
+    "impactFormBuilder" : "http://localhost:8081/host/form-builder",
+    "baseHostURL" : "http://localhost:8081/host"
 }

@@ -61,12 +61,12 @@ function App() {
   return (
     // <ThemeProvider theme={theme}>
     <Box maxWidth={1} maxHeight={1} sx={rootBoxSx}>
-      <CulturalAssetListing></CulturalAssetListing>
+      {/* <CulturalAssetListing></CulturalAssetListing> */}
       {/* <Home></Home> */}
       {/* <Header></Header> */}
       {/* <CardElement title="titulo 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc = "https://i.imgur.com/ABIjoz5.png"></CardElement> */}
       {/* <TourismImpactForm></TourismImpactForm> */}
-      {/* <CulturalAssetForm></CulturalAssetForm> */}
+      <CulturalAssetForm></CulturalAssetForm>
     </Box>
     // {/* </ThemeProvider> */}
 
