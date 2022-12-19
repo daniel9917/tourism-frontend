@@ -6,6 +6,11 @@ import CulturalAssetForm from "./pages/forms/CulturalAsset/CulturalAssetForm";
 import Home from "./pages/Home/Home";
 import CulturalAssetListing from "./pages/Listing/CulturalAssetListing";
 import FilterGroup from "./components/Filters/FilterGroup/FilterGroup";
+import CulturalAssetDetail from "./pages/Detail/CulturalAssetDetail";
+import CharacteristicGroup from "./components/CharactheristicGroup/CharectiristicGroup";
+import ListGroup from "./components/CharactheristicGroup/CharacteristicDisplay/ListGroup";
+import RadarChart from "./components/Charts/RadarChart";
+import ImpactTab from "./components/Tab/ImpactTab";
 
 function App() {
   const filterObjects = [
@@ -66,7 +71,12 @@ function App() {
       {/* <Header></Header> */}
       {/* <CardElement title="titulo 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc = "https://i.imgur.com/ABIjoz5.png"></CardElement> */}
       {/* <TourismImpactForm></TourismImpactForm> */}
-      <CulturalAssetForm></CulturalAssetForm>
+      {/* <CulturalAssetForm></CulturalAssetForm> */}
+      <CulturalAssetDetail></CulturalAssetDetail>
+      {/* <ImpactTab></ImpactTab> */}
+      {/* <RadarChart></RadarChart> */}
+      {/* <CharacteristicGroup></CharacteristicGroup> */}
+      {/* <ListGroup></ListGroup> */}
     </Box>
     // {/* </ThemeProvider> */}
 

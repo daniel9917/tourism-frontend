@@ -1,0 +1,75 @@
+.tabs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tabs button {
+    background-color: lightgray;
+    border: none;
+    color: #888888;
+    cursor: pointer;
+    padding: 25px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease-out;
+}
+
+.tabs button:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.tabs button:disabled {
+    /* background: linear-gradient(245.39deg, #FC65ED -35.14%, #0500FF 143.06%); */
+    background: linear-gradient(245.39deg, #F34C11 -35.14%, #9E2D0F 143.06%);
+    color: white;
+}
+
+.title {
+    color: black;
+    font-size: medium;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.content {
+    padding: 50px 80px;
+    background-color: white;
+    font-weight: 300;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: justify;
+}
+
+.content,
+button {
+    font-size: 15px;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    margin: 50px 0;
+}
+
+footer a {
+    color: #999999;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 960px) {
+
+    .container {
+        width: 100%;
+    }
+
+    .content {
+        padding: 50px;
+    }
+}
