@@ -6,11 +6,35 @@ import CulturalAssetForm from "./pages/forms/CulturalAsset/CulturalAssetForm";
 import Home from "./pages/Home/Home";
 import CulturalAssetListing from "./pages/Listing/CulturalAssetListing";
 import FilterGroup from "./components/Filters/FilterGroup/FilterGroup";
-import CulturalAssetDetail from "./pages/Detail/CulturalAssetDetail";
 import CharacteristicGroup from "./components/CharactheristicGroup/CharectiristicGroup";
 import ListGroup from "./components/CharactheristicGroup/CharacteristicDisplay/ListGroup";
 import RadarChart from "./components/Charts/RadarChart";
 import ImpactTab from "./components/Tab/ImpactTab";
+import CulturalAssetDetail from "./pages/Detail/CulturalAssetDetail";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+    {
+        path : "/",
+        element : <Home></Home>
+    },
+    {
+      path : "/list",
+      element : <CulturalAssetListing></CulturalAssetListing>
+    },
+    {
+      path : "/impact",
+      element : <TourismImpactForm></TourismImpactForm>
+    },
+    {
+      path : "/asset",
+      element : <CulturalAssetForm></CulturalAssetForm>
+    },
+    {
+      path : "/asset-detail/:assetId",
+      element : <CulturalAssetDetail></CulturalAssetDetail>
+    }
+])
 
 function App() {
   const filterObjects = [
@@ -63,6 +87,8 @@ function App() {
     console.log(filterParams);
   };
 
+  // return <RouterProvider router={router}></RouterProvider>;
+
   return (
     // <ThemeProvider theme={theme}>
     <Box maxWidth={1} maxHeight={1} sx={rootBoxSx}>
@@ -72,7 +98,8 @@ function App() {
       {/* <CardElement title="titulo 1" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." imgSrc = "https://i.imgur.com/ABIjoz5.png"></CardElement> */}
       {/* <TourismImpactForm></TourismImpactForm> */}
       {/* <CulturalAssetForm></CulturalAssetForm> */}
-      <CulturalAssetDetail></CulturalAssetDetail>
+      <RouterProvider router={router}></RouterProvider>
+      {/* <CulturalAssetDetail></CulturalAssetDetail> */}
       {/* <ImpactTab></ImpactTab> */}
       {/* <RadarChart></RadarChart> */}
       {/* <CharacteristicGroup></CharacteristicGroup> */}

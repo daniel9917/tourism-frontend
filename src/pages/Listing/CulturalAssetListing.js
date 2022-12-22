@@ -231,6 +231,7 @@ const CulturalAssetListing = () => {
             return (
               <CardElement
                 key={index + element.name}
+                link = {'/asset-detail/'+element.id}
                 item
                 color={"#025928"}
                 imgSrc={minSrcUrl}

@@ -25,6 +25,8 @@ import Paragraph from "../../../components/Fonts/Paragraph";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import axios from "axios";
 import urls from "../../../urls.json";
+import Header from "../../Header/Header";
+import { height } from "@mui/system";
 
 const formBuilderAPI__URL = urls.formBuilder;
 
@@ -1353,15 +1355,15 @@ const TourismImpactForm = () => {
   const onSubmit = (data, event) => {
     event.preventDefault();
     let host = {
-      email : data.email,
-      municipalityId : data.municipality,
-      departmentId : data.department,
-      dataTreatment : data.dataTreatment,
-      suggestion : data.hostSuggestion,
-      lack : data.municipalityLacks,
-      municipalityId : data.municipality,
-      communityTypeId : data.ethnicGroup,
-      communityId : data.ethnicity
+      email: data.email,
+      municipalityId: data.municipality,
+      departmentId: data.department,
+      dataTreatment: data.dataTreatment,
+      suggestion: data.hostSuggestion,
+      lack: data.municipalityLacks,
+      municipalityId: data.municipality,
+      communityTypeId: data.ethnicGroup,
+      communityId: data.ethnicity,
     };
     /**
      * GIVING FORMAT TO FACTORS
@@ -1472,24 +1474,26 @@ const TourismImpactForm = () => {
 
     let touristRelationshipFactoryType = {
       factorTypeId: "ecc1ebfc-725c-11ed-a1eb-0242ac120002",
-      factorList: [communityShouldDefineFactor]
-    }
+      factorList: [communityShouldDefineFactor],
+    };
 
     let maturity = {
       factorTypeList: [
         qualityOfLifeFactorType,
         wellnessSustainabilityFactoryType,
         economicSituationFactoryType,
-        touristRelationshipFactoryType
+        touristRelationshipFactoryType,
       ],
     };
     host.maturity = maturity;
 
-    host.hostTourismSectorList = data.hostTourismSectorParticipation.map (htsp => {
-      return {
-        tourismSectorId : htsp
+    host.hostTourismSectorList = data.hostTourismSectorParticipation.map(
+      (htsp) => {
+        return {
+          tourismSectorId: htsp,
+        };
       }
-    });
+    );
 
     console.log(host);
 
@@ -1499,12 +1503,11 @@ const TourismImpactForm = () => {
   };
 
   const postHost = (host) => {
-    axios.post(urls.baseHostURL, host).then(res => {
+    axios.post(urls.baseHostURL, host).then((res) => {
       console.log(res);
-      alert('Successfully posted host');
-    })
-
-  }
+      alert("Successfully posted host");
+    });
+  };
 
   const handleChange = (evt) => {
     console.log(evt);
@@ -1519,6 +1522,9 @@ const TourismImpactForm = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Box sx={{ height: "7vh", background : "#ffffff" }}>
+        <Header></Header>
+      </Box>
       {/* Intro */}
       <Box maxWidth={1} sx={{ background: "#ffffff" }}>
         <Grid container direction={"row"}>

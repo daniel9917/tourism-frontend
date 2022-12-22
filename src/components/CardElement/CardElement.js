@@ -1,11 +1,11 @@
 import { Box, Grid } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import Paragraph from "../Fonts/Paragraph";
 import Subtitle from "../Fonts/Subtitle";
 
 import "./CardElement.css";
-
 
 const CardElement = (props) => {
   const boxSxx = {
@@ -52,12 +52,14 @@ const CardElement = (props) => {
           src={props.imgSrc}
         ></img>
         <Grid item className="cardTitle">
-          <Subtitle
-            shadowType="dizzy"
-            content={props.title}
-            fontSize="medium"
-            color={"white"}
-          ></Subtitle>
+          <Link to={props.link}>
+            <Subtitle
+              shadowType="dizzy"
+              content={props.title}
+              fontSize="medium"
+              color={"white"}
+            ></Subtitle>
+          </Link>
         </Grid>
         {description}
       </Grid>
