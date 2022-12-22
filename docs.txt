@@ -65,3 +65,18 @@ https://stackoverflow.com/questions/40902437/cant-use-foreach-with-filelist
 
 Set key from a variable json;
 https://stackoverflow.com/a/29077216/19140611
+
+Nuka carousel
+https://github.com/FormidableLabs/nuka-carousel
+
+Flatten Arrays
+https://stackoverflow.com/questions/10865025/merge-flatten-an-array-of-arrays
+
+Sum values in a map
+https://bobbyhadz.com/blog/javascript-sum-values-in-map
+
+ChartJS
+https://www.chartjs.org/docs/latest/charts/radar.html
+
+React Simple Tabs
+https://rojaslabs.github.io/react-simple-tabs/

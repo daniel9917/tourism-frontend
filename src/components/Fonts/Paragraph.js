@@ -31,6 +31,18 @@ const Paragraph = (props) => {
     }
   };
 
+  if (props.fontStyle) {
+    typoSx.fontStyle = props.fontStyle;
+  }
+
+  if (props.bold) {
+    typoSx.fontWeight = '800';
+  }
+
+  if (props.shadow){
+    typoSx.shadow = props.textShadow;
+  }
+
   if (props.size) {
     setFontSize(props.size);
   }
@@ -44,6 +56,13 @@ const Paragraph = (props) => {
   }
 
   if (props.padding) {
+    typoSx.padding = props.padding;
+    if (props.paddingLeft){
+      typoSx.paddingLeft = props.paddingLeft;
+    }
+    if (props.paddingTop){
+      typoSx.paddingTop = props.paddingTop;
+    }
     if(props.padding.left) {
       typoSx.paddingLeft = props.padding.left;
     }

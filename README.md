@@ -1,6 +1,12 @@
 # Npm Modules installation
 npm install @mui/material @emotion/react @emotion/styled
 
+## Install ChartsJS react-chartjs-2
+npm install --save chart.js react-chartjs-2
+
+## Install Nuka Carousel
+npm install nuka-carousel
+
 ### Install Axios
 npm install axios
 

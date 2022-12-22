@@ -42,12 +42,18 @@ const Title = (props) => {
       case "lighter-gray":
         typoSx.textShadow = "2px 5px 5px gray";
         break;
+      case "lighter-black":
+        typoSx.textShadow = "2px 5px 7px black";
+        break;
       case "medium":
         typoSx.textShadow = "2rem";
         break;
       case "normal":
         typoSx.textShadow = "1rem";
         break;
+      default :
+        typoSx.textShadow = shadow;
+        break
     }
   };
 
@@ -67,6 +73,10 @@ const Title = (props) => {
         break;
     }
   };
+
+  if (props.padding) {
+    typoSx.padding = props.padding;
+  }
 
   if (props.shadow) {
     setShadow(props.shadow);

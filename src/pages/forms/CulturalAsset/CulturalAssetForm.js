@@ -98,7 +98,17 @@ const publicServicess = await getPublicServicess;
 const getNaturess = axios.get(`${formBuilderAPI__URL}/Nature`);
 const naturess = await getNaturess;
 
+const getQualityRecommendationss = axios.get(`${formBuilderAPI__URL}/Quality`);
+const qualityRecommendationss = await getQualityRecommendationss;
+
+const getWellnessRecommendationss = axios.get(`${formBuilderAPI__URL}/Wellness`);
+const wellnessRecommendationss = await getWellnessRecommendationss;
+
+const getEconomicRecommendationss = axios.get(`${formBuilderAPI__URL}/Economic`);
+const economicRecommendationss = await getEconomicRecommendationss;
+
 const CulturalAssetForm = () => {
+
   const vulnList = vulnerabilities.data.values.map((value) => {
     return {
       name: `${value.name}`,
@@ -239,6 +249,27 @@ const CulturalAssetForm = () => {
     };
   });
 
+  const qualityRecommendationsList = qualityRecommendationss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+  
+  const wellnessRecommendationsList = wellnessRecommendationss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
+  const economicRecommendationsList = economicRecommendationss.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+    };
+  });
+
   // const  List = .data.values.map((value) => {
   //   return {
   //     name: `${value.name}`,
@@ -268,6 +299,9 @@ const CulturalAssetForm = () => {
   const [accessRoutes, setAccessRoutes] = useState(accessRoutessList);
   const [natureList, setNatureList] = useState(naturessList);
   const [assetVulnerabilityList, setAssetVulnerabilityList] = useState(vulnList);
+  const [qualityRecommendations, setQualityRecommendationsList] = useState(qualityRecommendationsList);
+  const [wellnessRecommendations, setWellnessRecommendationsList] = useState(wellnessRecommendationsList);
+  const [economicRecommendations, setEconomicRecommendations] = useState(economicRecommendationsList);
 
   const [locationObject, setLocationObject] = useState({});
 
@@ -295,6 +329,7 @@ const CulturalAssetForm = () => {
     return basicQuestions;
   };
 
+  
   const getFileQuestions = () => {
     return [
       {
@@ -940,20 +975,8 @@ const CulturalAssetForm = () => {
       name: "quality",
       codeName: "qol",
       question: "Calidad de vida",
-      type: "checkBox",
-      options: [
-        "Ropa cómoda, sombrero y bebidas hidratantes.",
-        "Snacks pequeños como frutos secos, frutas e incluso bocadillos.",
-        "Bloqueador solar y repelente",
-        "Dormir con mosquitero",
-        "Respetar normas de las comunidades",
-        "Permiso para visitar los resguardos o las comunidades",
-        "Guía certificado",
-        "Celular GPS, brújula, linterna",
-        "Vacunarse contra fiebre amarilla y tétano",
-        "Incluir suero antiofídico polivalente y antidiareico en el botiquín",
-        "Llevar botas de caucho, ropa de algodón, camisas manga larga, impermeable",
-      ],
+      type: "checkBoxx",
+      options: qualityRecommendations,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -963,16 +986,8 @@ const CulturalAssetForm = () => {
       name: "wellness",
       codeName: "wlls",
       question: "Sustentabilidad del Bienestar",
-      type: "checkBox",
-      options: [
-        "Evitar fuentes de luz nocturnas",
-        "Prohibido traficar con animales y fauna silvestre",
-        "Prohibido contaminar los cuerpos de agua",
-        "Prohibido encender fogatas",
-        "No llevar enlatados ni elementos perecederos que dejen contaminación",
-        "Llevarse la basura con usted",
-        "Prohibido dañar la flora y el ecosistema",
-      ],
+      type: "checkBoxx",
+      options: wellnessRecommendations,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -982,11 +997,8 @@ const CulturalAssetForm = () => {
       name: "economic",
       codeName: "ecos",
       question: "Situacion economica",
-      type: "checkBox",
-      options: [
-        "Evitar regatear los precios puede ser un insulto o una falta de consideración",
-        "Evitar pedir regalados los productos o servicios",
-      ],
+      type: "checkBoxx",
+      options: economicRecommendations,
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1766,7 +1778,7 @@ const CulturalAssetForm = () => {
   const onSubmit = (data, event) => {
     event.preventDefault();
     let request = formatculturalAssetRequest(data);
-    // console.log(data);
+    console.log(request);
     postAsset(request);
   };
 
@@ -1778,7 +1790,7 @@ const CulturalAssetForm = () => {
     let url = urls.baseAssetURL;
 
     axios({ 
-      method: "post", 
+      method: "POST", 
       url: url, 
       headers: headers, 
       data: asset }).then(
@@ -2000,7 +2012,14 @@ const CulturalAssetForm = () => {
     //     recognitionId: "219b7c44-3649-11ed-a261-0242ac120002",
     //   },
     // ];
-    return console.log(culturalAsset);
+    culturalAsset.recommendations = [...body.quality, ...body.wellness, ...body.economic].join(',');
+    culturalAsset.assetRecommendationList = [...body.quality, ...body.wellness, ...body.economic].map(r => {
+      return {
+        recommendationId : r
+      }
+    });
+
+    return culturalAsset;
   }
 
   const handleChange = (evt) => {
