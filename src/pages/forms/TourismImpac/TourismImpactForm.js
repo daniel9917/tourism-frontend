@@ -18,7 +18,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import SingleQuestion from "../FormComponents/SingleQuestion";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import "./TourismImpactForm";
 import Title from "../../../components/Fonts/Title";
 import Paragraph from "../../../components/Fonts/Paragraph";
@@ -26,7 +26,6 @@ import { ExpandMoreRounded } from "@mui/icons-material";
 import axios from "axios";
 import urls from "../../../urls.json";
 import Header from "../../Header/Header";
-import { height } from "@mui/system";
 
 const formBuilderAPI__URL = urls.formBuilder;
 
@@ -265,14 +264,10 @@ const TourismImpactForm = () => {
         type: "selectList",
         options: departments,
         onChange: (evt) => {
-          // setLocationId(evt.target.value);
           setMunicipalities(
             munList.filter((ca) => ca.parentLocationId === evt.target.value)
           );
           setUrl(`${urls.listByFiltersURL}?location=${evt.target.value}`);
-          // useEffect(() => {
-          //   fetchData(evt.target.value);
-          // }, []);
         },
         required: true,
         color: "darkgreen",
@@ -1556,8 +1551,7 @@ const TourismImpactForm = () => {
       }
     );
 
-    // console.log(host);
-    console.log(data);
+    console.log(host);
 
     postHost(host);
 
@@ -1597,7 +1591,7 @@ const TourismImpactForm = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ height: "7vh", background: "#ffffff" }}>
+      <Box sx={{ height: "7vh", background : "#ffffff" }}>
         <Header></Header>
       </Box>
       {/* Intro */}
