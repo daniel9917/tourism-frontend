@@ -96,13 +96,13 @@ const CulturalAssetDetail = () => {
               shadow="lighter-gray"
               color="#025928"
               textAlign="center"
-              titleName={culturalAsset.name}
+              titleName={assetDetaill.name}
             ></Title>
             <Box sx={{ paddingTop: "5%" }}>
               <Paragraph
                 size="normal"
                 color="#194A47"
-                content={culturalAsset.description}
+                content={assetDetaill.description}
                 textAlign="center"
               ></Paragraph>
             </Box>
@@ -114,7 +114,7 @@ const CulturalAssetDetail = () => {
                 slidesToShow={2}
                 cellAlign="center"
               >
-                {culturalAsset.imageList.map((img) => {
+                {assetDetaill.imageList.map((img) => {
                   return (
                     <img
                       alt={img.assetId + " " + img.id}

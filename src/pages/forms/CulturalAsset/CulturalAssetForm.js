@@ -1849,6 +1849,7 @@ const CulturalAssetForm = () => {
   const postAsset = (asset) => {
     let headers = {
       "Access-Control-Allow-Origin": "*",
+      "Content-Type" : "application/json",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     };
     let url = urls.baseAssetURL;
@@ -1888,7 +1889,7 @@ const CulturalAssetForm = () => {
     // setImagenes(fileToBase64(imageList));
     // console.log(imagenes);
 
-    culturalAsset.dateEvent = parts.toISOString();
+    culturalAsset.dateEvent = parts.toISOString().substring(0,19);
     culturalAsset.description = body.description;
     culturalAsset.locationDetail = body.locationDetail;
     culturalAsset.cosmogony = body.cosmogony;
@@ -1927,13 +1928,16 @@ const CulturalAssetForm = () => {
     //   patrimonyId: "20f4a518-2f32-11ed-a261-0242ac120002",
     //   assetGroupId: "263885c6-2f32-11ed-a261-0242ac120002",
     // };
-    culturalAsset.assetManifestations = body.assetManifestations.map(
-      (assetManifestationId) => {
-        return {
-          manifestationId: assetManifestationId,
-        };
-      }
-    );
+
+    if (body.assetManifestations){
+      culturalAsset.assetManifestations = body.assetManifestations.map(
+        (assetManifestationId) => {
+          return {
+            manifestationId: assetManifestationId,
+          };
+        }
+      );
+    }
 
     culturalAsset.assetRouteList = [
       {
@@ -2100,6 +2104,8 @@ const CulturalAssetForm = () => {
         recommendationId: r,
       };
     });
+
+    return culturalAsset;
   }
 
   const handleChange = (evt) => {
