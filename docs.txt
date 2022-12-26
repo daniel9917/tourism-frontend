@@ -80,3 +80,15 @@ https://www.chartjs.org/docs/latest/charts/radar.html
 
 React Simple Tabs
 https://rojaslabs.github.io/react-simple-tabs/
+
+React router
+https://reactrouter.com/en/main
+
+React useEffect 
+https://stackoverflow.com/questions/47658765/objects-are-not-valid-as-a-react-child-found-object-promise
+
+Data Fetching
+https://www.escuelafrontend.com/data-fetching-con-react
+
+cannot read properties of undefined UseEffect & fetch
+https://stackoverflow.com/questions/61157302/react-fetch-data-from-api-gives-error-cannot-read-property-of-undefined

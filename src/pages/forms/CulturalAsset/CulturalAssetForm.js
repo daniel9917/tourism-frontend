@@ -24,6 +24,7 @@ import axios from "axios";
 import InputMap from "../../../components/Maps/InputMap";
 
 import urls from "../../../urls.json";
+import Header from "../../Header/Header";
 
 const formBuilderAPI__URL =
   "http://localhost:8080/cultural-assets/form-builder";
@@ -101,10 +102,17 @@ const naturess = await getNaturess;
 const getQualityRecommendationss = axios.get(`${formBuilderAPI__URL}/Quality`);
 const qualityRecommendationss = await getQualityRecommendationss;
 
-const getWellnessRecommendationss = axios.get(`${formBuilderAPI__URL}/Wellness`);
+const getCriteria = axios.get(`${formBuilderAPI__URL}/Criteria`);
+const criterias = await getCriteria;
+
+const getWellnessRecommendationss = axios.get(
+  `${formBuilderAPI__URL}/Wellness`
+);
 const wellnessRecommendationss = await getWellnessRecommendationss;
 
-const getEconomicRecommendationss = axios.get(`${formBuilderAPI__URL}/Economic`);
+const getEconomicRecommendationss = axios.get(
+  `${formBuilderAPI__URL}/Economic`
+);
 const economicRecommendationss = await getEconomicRecommendationss;
 
 const CulturalAssetForm = () => {
@@ -113,6 +121,14 @@ const CulturalAssetForm = () => {
     return {
       name: `${value.name}`,
       value: `${value.id}`,
+    };
+  });
+
+  const critList = criterias.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+      groupId: `${value.groupId}`,
     };
   });
 
@@ -249,26 +265,32 @@ const CulturalAssetForm = () => {
     };
   });
 
-  const qualityRecommendationsList = qualityRecommendationss.data.values.map((value) => {
-    return {
-      name: `${value.name}`,
-      value: `${value.id}`,
-    };
-  });
-  
-  const wellnessRecommendationsList = wellnessRecommendationss.data.values.map((value) => {
-    return {
-      name: `${value.name}`,
-      value: `${value.id}`,
-    };
-  });
+  const qualityRecommendationsList = qualityRecommendationss.data.values.map(
+    (value) => {
+      return {
+        name: `${value.name}`,
+        value: `${value.id}`,
+      };
+    }
+  );
 
-  const economicRecommendationsList = economicRecommendationss.data.values.map((value) => {
-    return {
-      name: `${value.name}`,
-      value: `${value.id}`,
-    };
-  });
+  const wellnessRecommendationsList = wellnessRecommendationss.data.values.map(
+    (value) => {
+      return {
+        name: `${value.name}`,
+        value: `${value.id}`,
+      };
+    }
+  );
+
+  const economicRecommendationsList = economicRecommendationss.data.values.map(
+    (value) => {
+      return {
+        name: `${value.name}`,
+        value: `${value.id}`,
+      };
+    }
+  );
 
   // const  List = .data.values.map((value) => {
   //   return {
@@ -298,14 +320,24 @@ const CulturalAssetForm = () => {
   const [publicService, setPublicServices] = useState(publicServicessList);
   const [accessRoutes, setAccessRoutes] = useState(accessRoutessList);
   const [natureList, setNatureList] = useState(naturessList);
-  const [assetVulnerabilityList, setAssetVulnerabilityList] = useState(vulnList);
-  const [qualityRecommendations, setQualityRecommendationsList] = useState(qualityRecommendationsList);
-  const [wellnessRecommendations, setWellnessRecommendationsList] = useState(wellnessRecommendationsList);
-  const [economicRecommendations, setEconomicRecommendations] = useState(economicRecommendationsList);
+  const [assetVulnerabilityList, setAssetVulnerabilityList] =
+    useState(vulnList);
+  const [qualityRecommendations, setQualityRecommendationsList] = useState(
+    qualityRecommendationsList
+  );
+  const [wellnessRecommendations, setWellnessRecommendationsList] = useState(
+    wellnessRecommendationsList
+  );
+  const [economicRecommendations, setEconomicRecommendations] = useState(
+    economicRecommendationsList
+  );
 
   const [locationObject, setLocationObject] = useState({});
 
   const [imageList, setImageList] = useState([]);
+  const [imagenes, setImagenes] = useState([]);
+
+  const [criteriaQuestions, setCriteriaQuestions] = useState([]);
 
   const updatedLocationObject = (locationDTO) => {
     //Ordering for assetts, this must match the Value in the database.
@@ -328,6 +360,7 @@ const CulturalAssetForm = () => {
     ];
     return basicQuestions;
   };
+
 
   
   const getFileQuestions = () => {
@@ -698,110 +731,125 @@ const CulturalAssetForm = () => {
     });
   };
 
+  const getCriteriaQuestions = (groupId) => {
+    return critList
+      .filter((c) => c.groupId === groupId)
+      .map((c, index) => {
+        return {
+          name: "criteria[" + index + "]",
+          question: c.name,
+          type: "text",
+          placeHolder: "Tu respuesta",
+          required: true,
+          hex: "#b03404",
+          rgb: [224, 220, 220],
+          color: "#b03404",
+        };
+      });
+  };
+
   const getQualityQuestions = () => {
     const qualityQuestions = [
       {
         name: "groupId",
         question: "En qué grupo se clasifica el activo cultural?",
         type: "radioSelectt",
-        options: [
-          "Patrimonio inmaterial -PI",
-          "Patrimonio material (mueble e inmueble) - PM",
-          "Festividades, eventos y convenciones - FE",
-          "Grupos de especial interés - GE",
-          "Sitios Naturales - SN",
-        ],
+        options: groups,
+        onChange: (evt) => {
+          setCriteriaQuestions(getCriteriaQuestions(evt.target.value));
+          console.log(criteriaQuestions);
+        },
         required: true,
         color: "#b03404",
       },
-      {
-        name: "criteria1",
-        question:
-          "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "criteria2",
-        question:
-          "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "criteria3",
-        question:
-          "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "criteria4",
-        question:
-          "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "criteria5",
-        question:
-          "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "criteria6",
-        question:
-          "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "criteria7",
-        question:
-          "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
-      {
-        name: "potential",
-        question:
-          "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
-        type: "text",
-        placeHolder: "Tu respuesta",
-        required: true,
-        hex: "#b03404",
-        rgb: [224, 220, 220],
-        color: "#b03404",
-      },
+      // {
+      //   name: "criteria1",
+      //   question:
+      //     "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "criteria2",
+      //   question:
+      //     "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "criteria3",
+      //   question:
+      //     "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "criteria4",
+      //   question:
+      //     "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "criteria5",
+      //   question:
+      //     "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "criteria6",
+      //   question:
+      //     "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "criteria7",
+      //   question:
+      //     "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
+      // {
+      //   name: "potential",
+      //   question:
+      //     "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
+      //   type: "text",
+      //   placeHolder: "Tu respuesta",
+      //   required: true,
+      //   hex: "#b03404",
+      //   rgb: [224, 220, 220],
+      //   color: "#b03404",
+      // },
     ];
 
     return qualityQuestions.map((basicQuestion) => {
@@ -1024,11 +1072,14 @@ const CulturalAssetForm = () => {
     }
   };
 
-  const handleImageList = (evt) => {
-    setImageList(evt.target.files);
+  const loadImages = () => {
+    console.log(fileToBase64(imageList));
   };
 
-  const [imagenes, setImagenes] = useState([]);
+  const handleImageList = (evt) => {
+    setImageList(evt.target.files);
+    console.log(imageList);
+  };
 
   const fileToBase64 = (files) => {
     let images = [];
@@ -1131,7 +1182,16 @@ const CulturalAssetForm = () => {
                   {question.question}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+              <br></br>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  paddingBottom: "2%",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                }}
+              >
                 {/* <Input
                     type="text"
                     name={question.name}
@@ -1139,13 +1199,17 @@ const CulturalAssetForm = () => {
                     fullWidth
                     placeholder={question.placeHolder}
                   ></Input> */}
-
                 <input
                   accept="image/*"
                   id="image-files"
                   multiple
                   type={"file"}
                   onChange={handleImageList}
+                />
+                <input
+                  type="button"
+                  onClick={loadImages}
+                  value="Cargar Imagenes"
                 />
               </Grid>
             </Grid>
@@ -1220,7 +1284,7 @@ const CulturalAssetForm = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
-                <RadioGroup name="radioTest">
+                <RadioGroup onChange={question.onChange} name="radioTest">
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
@@ -1789,16 +1853,15 @@ const CulturalAssetForm = () => {
     };
     let url = urls.baseAssetURL;
 
-    axios({ 
-      method: "POST", 
-      url: url, 
-      headers: headers, 
-      data: asset }).then(
-      (res) => {
-        console.log(res);
-        alert("Successfully posted host");
-      }
-    );
+    axios({
+      method: "POST",
+      url: url,
+      headers: headers,
+      data: asset,
+    }).then((res) => {
+      console.log(res);
+      alert("Successfully posted host");
+    });
 
     // axios.post(urls.baseAssetURL, asset).then((res) => {
     //   console.log(res);
@@ -2002,6 +2065,17 @@ const CulturalAssetForm = () => {
       }
     );
 
+    let currentCritList = critList.filter((c) => c.groupId === body.groupId);
+
+    culturalAsset.assetCriteriaList = body.criteria
+      .filter((c) => !(c === ""))
+      .map((c, index) => {
+        return {
+          criteriaId: currentCritList[index].value,
+          score: c,
+        };
+      });
+
     culturalAsset.imageList = imagenes.map((image) => {
       return {
         imageBlob: image,
@@ -2012,14 +2086,20 @@ const CulturalAssetForm = () => {
     //     recognitionId: "219b7c44-3649-11ed-a261-0242ac120002",
     //   },
     // ];
-    culturalAsset.recommendations = [...body.quality, ...body.wellness, ...body.economic].join(',');
-    culturalAsset.assetRecommendationList = [...body.quality, ...body.wellness, ...body.economic].map(r => {
+    culturalAsset.recommendations = [
+      ...body.quality,
+      ...body.wellness,
+      ...body.economic,
+    ].join(",");
+    culturalAsset.assetRecommendationList = [
+      ...body.quality,
+      ...body.wellness,
+      ...body.economic,
+    ].map((r) => {
       return {
-        recommendationId : r
-      }
+        recommendationId: r,
+      };
     });
-
-    return culturalAsset;
   }
 
   const handleChange = (evt) => {
@@ -2036,6 +2116,7 @@ const CulturalAssetForm = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box maxWidth={1} sx={boxSx}>
+        <Header fontColor = "#ffffff" fontSize = "big" ></Header>
         <Container>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -2145,6 +2226,11 @@ const CulturalAssetForm = () => {
 
               <Box paddingTop={"3%"}>
                 {getQualityQuestions().map((question) => {
+                  return getQuestion(question);
+                })}
+              </Box>
+              <Box paddingTop={"3%"}>
+                {criteriaQuestions.map((question) => {
                   return getQuestion(question);
                 })}
               </Box>

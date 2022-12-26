@@ -1,6 +1,9 @@
 # Npm Modules installation
 npm install @mui/material @emotion/react @emotion/styled
 
+## Install react router
+npm install react-router-dom localforage match-sorter sort-by
+
 ## Install ChartsJS react-chartjs-2
 npm install --save chart.js react-chartjs-2
 

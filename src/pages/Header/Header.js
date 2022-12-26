@@ -1,6 +1,7 @@
 import { Box, ThemeProvider, createTheme, Grid } from "@mui/material";
 import "./Header.css";
 import Subtitle from "../../components/Fonts/Subtitle";
+import { Link } from "react-router-dom";
 
 const theme = createTheme({
   typography: {
@@ -10,21 +11,27 @@ const theme = createTheme({
 
 const titleBox = {
   width: "20%",
-  height : "100%"
+  height: "100%",
 };
 
 const spacingBox = {
   width: "60%",
-  height : "100%"
+  height: "100%",
 };
 
 const loginBox = {
   width: "20%",
-  height : "100%"
+  height: "100%",
 };
 
 const mainBox = {
   minHeight: "-webkit-fill-available",
+};
+
+const subtitleSx = {
+  color: "#025928",
+  t1: "2.5rem",
+  t2: "1.5rem",
 };
 
 const paddingBox = {
@@ -32,31 +39,55 @@ const paddingBox = {
   width: "67%",
 };
 
-const Header = () => {
+const Header = (props) => {
+  if (props.fontColor) {
+    subtitleSx.color = props.fontColor;
+  }
+  if (props.fontSize) {
+    switch (props.fontSize) {
+      case "big":
+        subtitleSx.t1 = "3rem";
+        subtitleSx.t2 = "2rem"
+        break;      
+      default:
+        break;
+    }
+  }
   return (
     <ThemeProvider theme={theme}>
       {/* <Box sx={mainBox}> */}
-        <Grid container direction="row" alignItems={"center"} sx ={mainBox} >
-          <Box sx={titleBox}>
-            <Grid container direction={"col"} justifyContent = "center" alignContent={"center"}>
-              <Subtitle color="#025928" fontSize="2.5rem" content="Ecoturismo" />
-            </Grid>
-          </Box>
-          <Box sx={spacingBox}>
-            <br></br>
-          </Box>
-          <Box sx={loginBox}>
-            <Subtitle
-              fontSize="1.5rem"
-              // padding={{ right: "6%", top: "0.6%" }}
-              color="#025928"
-              content="Iniciar sesion"
-            />
-          </Box>
-          {/* <Grid sx={{ height: "100%" }} container direction={"row"}>
+      <Grid container direction="row" alignItems={"center"} sx={mainBox}>
+        <Box sx={titleBox}>
+          <Grid
+            container
+            direction={"col"}
+            justifyContent="center"
+            alignContent={"center"}
+          >
+            <Link reloadDocument to={`/`}>
+              <Subtitle
+                color={subtitleSx.color}
+                fontSize={subtitleSx.t1}
+                content="Ecoturismo"
+              />
+            </Link>
+          </Grid>
+        </Box>
+        <Box sx={spacingBox}>
+          <br></br>
+        </Box>
+        <Box sx={loginBox}>
+          <Subtitle
+            fontSize={subtitleSx.t2}
+            // padding={{ right: "6%", top: "0.6%" }}
+            color={subtitleSx.color}
+            content="Iniciar sesion"
+          />
+        </Box>
+        {/* <Grid sx={{ height: "100%" }} container direction={"row"}>
           <Subtitle color="#025928" content="Ecoturismo"></Subtitle>
         </Grid> */}
-        </Grid>
+      </Grid>
       {/* </Box> */}
     </ThemeProvider>
   );
