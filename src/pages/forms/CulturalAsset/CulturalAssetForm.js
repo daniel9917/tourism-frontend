@@ -27,7 +27,7 @@ import urls from "../../../urls.json";
 import Header from "../../Header/Header";
 
 const formBuilderAPI__URL =
-  "http://localhost:8080/cultural-assets/form-builder";
+  process.env.REACT_APP_BASE_ASSET_URL + "/form-builder";
 
 const theme = createTheme({
   typography: {
@@ -116,7 +116,6 @@ const getEconomicRecommendationss = axios.get(
 const economicRecommendationss = await getEconomicRecommendationss;
 
 const CulturalAssetForm = () => {
-
   const vulnList = vulnerabilities.data.values.map((value) => {
     return {
       name: `${value.name}`,
@@ -361,8 +360,6 @@ const CulturalAssetForm = () => {
     return basicQuestions;
   };
 
-
-  
   const getFileQuestions = () => {
     return [
       {
@@ -394,7 +391,7 @@ const CulturalAssetForm = () => {
           "Por cuál otro nombre se conoce? (Ingresar nombres separados por comas)",
         type: "text",
         placeHolder: "Tu respuesta",
-        required: true,
+        required: false,
         hex: "#b03404",
         rgb: [224, 220, 220],
         color: "#b03404",
@@ -610,7 +607,7 @@ const CulturalAssetForm = () => {
         question: "Nombre de la reserva y link",
         type: "text",
         placeHolder: "Tu rewspuesta",
-        required: true,
+        required: false,
         hex: "#b03404",
         rgb: [224, 220, 220],
         color: "#b03404",
@@ -640,7 +637,7 @@ const CulturalAssetForm = () => {
           "Link música, documentales, películas que lo describen o lo usan",
         type: "text",
         placeHolder: "Tu respuesta",
-        required: true,
+        required: false,
         hex: "#b03404",
         rgb: [224, 220, 220],
         color: "#b03404",
@@ -944,7 +941,7 @@ const CulturalAssetForm = () => {
       name: "dateEvent",
       question: "Si es evento, cual es la fecha?",
       type: "date",
-      required: true,
+      required: false,
       hex: "#b03404",
       rgb: [224, 220, 220],
       color: "#b03404",
@@ -988,7 +985,7 @@ const CulturalAssetForm = () => {
       question: "Rutas de acceso",
       type: "radioSelectt",
       options: accessRoutes,
-      required: true,
+      required: false,
       color: "#b03404",
     },
   ];
@@ -1443,7 +1440,8 @@ const CulturalAssetForm = () => {
                                     type="radio"
                                     name={question.codeName}
                                     {...register(
-                                      question.codeName + "." + index
+                                      question.codeName + "." + index,
+                                      { required: question.required }
                                     )}
                                     value={i + option.value}
                                     color="success"
@@ -1849,10 +1847,10 @@ const CulturalAssetForm = () => {
   const postAsset = (asset) => {
     let headers = {
       "Access-Control-Allow-Origin": "*",
-      "Content-Type" : "application/json",
+      "Content-Type": "application/json",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     };
-    let url = urls.baseAssetURL;
+    let url = process.env.REACT_APP_BASE_ASSET_URL;
 
     axios({
       method: "POST",
@@ -1879,17 +1877,14 @@ const CulturalAssetForm = () => {
     culturalAsset.name = body.name;
 
     //Date event set up
-    var parts = body.dateEvent.split("-");
-    parts = new Date(parts[0], parts[1] - 1, parts[2]);
-
-    //Image list set up
+    if (!(body.dateEvent === "")) {
+      var parts = body.dateEvent.split("-");
+      parts = new Date(parts[0], parts[1] - 1, parts[2]);
+      culturalAsset.dateEvent = parts.toISOString().substring(0, 19);
+    }
 
     console.log(fileToBase64(imageList));
-    // let imageBlobs = fileToBase64(imageList);
-    // setImagenes(fileToBase64(imageList));
-    // console.log(imagenes);
 
-    culturalAsset.dateEvent = parts.toISOString().substring(0,19);
     culturalAsset.description = body.description;
     culturalAsset.locationDetail = body.locationDetail;
     culturalAsset.cosmogony = body.cosmogony;
@@ -1918,18 +1913,9 @@ const CulturalAssetForm = () => {
     culturalAsset.locationObject = location;
 
     culturalAsset.alternateNames = body.alternateNames.split(",");
-    // culturalAsset.imageList
-    // culturalAsset.reservationId
 
-    // culturalAsset.assetClassification = {
-    //   subtypeId: "04815c1e-2f32-11ed-a261-0242ac120002",
-    //   typeId: "ffc9f3fc-2f31-11ed-a261-0242ac120002",
-    //   categoryId: "f92fac26-2f31-11ed-a261-0242ac120002",
-    //   patrimonyId: "20f4a518-2f32-11ed-a261-0242ac120002",
-    //   assetGroupId: "263885c6-2f32-11ed-a261-0242ac120002",
-    // };
 
-    if (body.assetManifestations){
+    if (body.assetManifestations) {
       culturalAsset.assetManifestations = body.assetManifestations.map(
         (assetManifestationId) => {
           return {
@@ -1945,6 +1931,9 @@ const CulturalAssetForm = () => {
       },
     ];
 
+    if (!body.assetCommunities){
+      alert('Seleccione al menos una comunidad etnica asociada al activo');
+    }
     culturalAsset.assetCommunities = body.assetCommunities.map(
       (assetCommunityId) => {
         return {
@@ -1953,10 +1942,17 @@ const CulturalAssetForm = () => {
       }
     );
 
-    //Formating access list in request
-    let fullAccessList = body.maritimeAccess.concat(
-      body.aerialAccess.concat(body.maritimeAccess)
-    );
+    let fullAccessList = [];
+
+    if (body.maritimeAccess) {
+      fullAccessList.concat(body.maritimeAccess);
+    }
+    if (body.aerialAccess) {
+      fullAccessList.concat(body.aerialAccess);
+    }
+    if (body.terrestrialAccess) {
+      fullAccessList.concat(body.terrestrialAccess);
+    }
 
     culturalAsset.assetAccessList = fullAccessList.map((accessId) => {
       return {
@@ -2054,20 +2050,25 @@ const CulturalAssetForm = () => {
       };
     });
 
-    culturalAsset.assetCommunicationList = body.communications.map(
-      (communicationId) => {
-        return {
-          communicationId: communicationId,
-        };
-      }
-    );
-    culturalAsset.assetPublicServiceList = body.basicServices.map(
-      (publicServiceId) => {
-        return {
-          publicServiceId: publicServiceId,
-        };
-      }
-    );
+    if (body.communications) {
+      culturalAsset.assetCommunicationList = body.communications.map(
+        (communicationId) => {
+          return {
+            communicationId: communicationId,
+          };
+        }
+      );
+    }
+
+    if (body.basicServices) {
+      culturalAsset.assetPublicServiceList = body.basicServices.map(
+        (publicServiceId) => {
+          return {
+            publicServiceId: publicServiceId,
+          };
+        }
+      );
+    }
 
     let currentCritList = critList.filter((c) => c.groupId === body.groupId);
 
@@ -2085,21 +2086,18 @@ const CulturalAssetForm = () => {
         imageBlob: image,
       };
     });
-    // culturalAsset.assetRecognitionList = [
-    //   {
-    //     recognitionId: "219b7c44-3649-11ed-a261-0242ac120002",
-    //   },
-    // ];
-    culturalAsset.recommendations = [
-      ...body.quality,
-      ...body.wellness,
-      ...body.economic,
-    ].join(",");
-    culturalAsset.assetRecommendationList = [
-      ...body.quality,
-      ...body.wellness,
-      ...body.economic,
-    ].map((r) => {
+
+    let fullRecList = [];
+    if (body.quality){
+      fullRecList.concat(body.quality);
+    }
+    if (body.wellness){
+      fullRecList.concat(body.wellness);
+    }
+    if (body.economic){
+      fullRecList.concat(body.economic);
+    }
+    culturalAsset.assetRecommendationList =  fullRecList.map((r) => {
       return {
         recommendationId: r,
       };
@@ -2115,14 +2113,13 @@ const CulturalAssetForm = () => {
 
   function getBackgroudOpacity(opacity, rgb) {
     var bg = "rgba(" + [rgb, opacity].join(",") + ")";
-    // alert(bg,rgb);
     return bg;
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Box maxWidth={1} sx={boxSx}>
-        <Header fontColor = "#ffffff" fontSize = "big" ></Header>
+        <Header fontColor="#ffffff" fontSize="big"></Header>
         <Container>
           <form
             onSubmit={handleSubmit(onSubmit)}

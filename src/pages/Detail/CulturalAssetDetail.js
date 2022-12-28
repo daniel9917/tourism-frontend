@@ -65,7 +65,8 @@ const CulturalAssetDetail = () => {
     };
 
   async function fetchData() {
-    const response = await fetch(`${urls.baseAssetURL}/${assetId}`);
+    const response = await fetch(`${process.env.REACT_APP_BASE_ASSET_URL}/${assetId}`);
+    // const response = await fetch(`${urls.baseAssetURL}/${assetId}`);
     response.json().then((response) => {
       setAssetDetaill(response);
       setIsFetched(true);
