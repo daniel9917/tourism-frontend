@@ -92,3 +92,31 @@ https://www.escuelafrontend.com/data-fetching-con-react
 
 cannot read properties of undefined UseEffect & fetch
 https://stackoverflow.com/questions/61157302/react-fetch-data-from-api-gives-error-cannot-read-property-of-undefined
+
+Env Files ReactJS
+
+
+
+------ BACKEND
+
+Docker Compose Networking
+https://docs.docker.com/compose/compose-file/compose-file-v3/
+https://docs.docker.com/compose/networking/
+    Network Chuck
+    https://www.youtube.com/watch?v=bKFMS5C4CG0&t=963s&ab_channel=NetworkChuck
+    Communicate Containers
+    https://www.tutorialworks.com/container-networking/#:~:text=Most%20container%2Dbased%20applications%20talk,a%20port%20on%20another%20container.&text=For%20example%2C%20an%20application%20might,a%20connection%20to%20a%20database.
+    Example
+    https://runnable.com/docker/docker-compose-networking
+
+Environment Variables Spring Boot
+https://www.baeldung.com/spring-boot-properties-env-variables
+
+Local Tunnel
+https://theboroer.github.io/localtunnel-www/
+
+Tunnel Providers
+    http://localtunnel.me/
+    https://ngrok.com/
+    http://localhost.run/
+    Cloudflare Tunnel

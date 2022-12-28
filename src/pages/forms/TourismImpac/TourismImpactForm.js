@@ -27,9 +27,9 @@ import axios from "axios";
 import urls from "../../../urls.json";
 import Header from "../../Header/Header";
 
-const formBuilderAPI__URL = urls.formBuilder;
+const formBuilderAPI__URL = process.env.REACT_APP_BASE_ASSET_URL + "/form-builder"
 
-const impactFormBuilder__URL = urls.impactFormBuilder;
+const impactFormBuilder__URL = process.env.REACT_APP_BASE_HOST_URL + "/form-builder";
 
 const theme = createTheme({
   typography: {
@@ -47,7 +47,7 @@ const frogsImgUrl = "https://i.imgur.com/3uZahvX.png";
 const introText =
   "Somos conscientes de las ventajas del turismo sin embargo, esta encuesta se enforca en detectar aquellos aspectos que no estan saliendo bien. En este espacio puede plasmar su punto de vista con respecto de los aspectos en cuestion. Este instrumento hace parte de la investigacion de turismo en la facultad de ingenieria. La encuesta es anonima, los datos solicitados son con proposito de caracterizacion.";
 
-const getInitialAssets = axios.get(`${urls.listByFiltersURL}`);
+const getInitialAssets = axios.get(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}`);
 const initialAssetsRequest = await getInitialAssets;
 
 const getMunicipalities = axios.get(`${formBuilderAPI__URL}/Municipality`);
@@ -232,7 +232,6 @@ const TourismImpactForm = () => {
   const [isFetched, setIsFetched] = useState(false);
   const [assets, setAssets] = useState(initialAssetList);
   const [url, setUrl] = useState("");
-  console.log(assets);
 
   const getBasicQuestions = () => {
     let basicQuestions = [
@@ -267,7 +266,7 @@ const TourismImpactForm = () => {
           setMunicipalities(
             munList.filter((ca) => ca.parentLocationId === evt.target.value)
           );
-          setUrl(`${urls.listByFiltersURL}?location=${evt.target.value}`);
+          setUrl(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}?location=${evt.target.value}`);
         },
         required: true,
         color: "darkgreen",
@@ -278,11 +277,7 @@ const TourismImpactForm = () => {
         type: "selectList",
         options: municipalities,
         onChange: (evt) => {
-          // setLocationId(evt.target.value);
-          setUrl(`${urls.listByFiltersURL}?location=${evt.target.value}`);
-          // useEffect(() => {
-          //   fetchData(evt.target.value);
-          // }, []);
+          setUrl(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}?location=${evt.target.value}`);          
         },
         required: true,
         color: "darkgreen",
@@ -1559,7 +1554,7 @@ const TourismImpactForm = () => {
   };
 
   const postHost = (host) => {
-    axios.post(urls.baseHostURL, host).then((res) => {
+    axios.post(process.env.REACT_APP_BASE_HOST_URL, host).then((res) => {
       console.log(res);
       alert("Successfully posted host");
     });
@@ -1575,7 +1570,6 @@ const TourismImpactForm = () => {
     console.log(url);
     const response = await fetch(url);
     response.json().then((response) => {
-      console.log(response);
       setAssets(response);
       setIsFetched(true);
     });
@@ -1583,7 +1577,7 @@ const TourismImpactForm = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   if (isFetched) {
     console.log(assets);

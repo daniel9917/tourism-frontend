@@ -11,13 +11,14 @@ import urls from "../../urls.json";
 import axios from "axios";
 import filterValues from "../../filters.json";
 
-const getFilters = axios.get(urls.filtersURL);
+
+const getFilters = axios.get(process.env.REACT_APP_BASE_ASSET_URL + "/form-builder/filters");
 const filters = await getFilters;
 
 let filteringParams = {};
 
-const getElements = axios.get(urls.listByFiltersURL, {
-  params: filteringParams,
+const getElements = axios.get(process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters", {      
+    params: filteringParams,
 });
 const elements = await getElements;
 
@@ -87,8 +88,8 @@ const CulturalAssetListing = () => {
       (typeof reqParams === undefined) ||
         (Object.keys(reqParams).length === 0 &&
           reqParams.constructor === Object)
-        ? urls.listByFiltersURL
-        : urls.listByFiltersURL + "?" + new URLSearchParams(reqParams)
+        ? process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"
+        : process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters" + "?" + new URLSearchParams(reqParams)
     )
       .then((res) => res.json())
       .then(
