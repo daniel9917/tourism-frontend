@@ -647,7 +647,7 @@ const CulturalAssetForm = () => {
       {
         name: "links",
         question:
-          "Link música, documentales, películas que lo describen o lo usan",
+          "Link música, documentales, películas que lo describen o lo usan (por favor ingresar links separados por comas).",
         type: "text",
         placeHolder: "Tu respuesta",
         required: false,
