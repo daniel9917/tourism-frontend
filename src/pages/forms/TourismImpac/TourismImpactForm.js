@@ -292,7 +292,7 @@ const TourismImpactForm = () => {
       },
       {
         name: "ethnicity",
-        question: "¿Usted pertenece a alguna etnia?",
+        question: "¿A qué pueblo pertenece?",
         type: "selectList",
         options: ehtnicGroup,
         required: true,
@@ -888,7 +888,15 @@ const TourismImpactForm = () => {
                   })}
                   color="success"
                 >
-                  {question.options.map((option) => {
+                  {question.options.sort(function (a, b) {
+                    if (a.name < b.name) {
+                      return -1;
+                    }
+                    if (a.name > b.name) {
+                      return 1;
+                    }
+                    return 0;
+                  }).map((option) => {
                     return (
                       <MenuItem value={option.value}>{option.name}</MenuItem>
                     );
@@ -1803,7 +1811,7 @@ const TourismImpactForm = () => {
                   type="submit"
                 >
                   <Title
-                    titleName="Enviar formulario"
+                    titleName="Registrar mis respuestas"
                     size="medium"
                     color="#ffffff"
                   ></Title>

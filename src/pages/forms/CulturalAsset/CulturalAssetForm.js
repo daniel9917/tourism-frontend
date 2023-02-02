@@ -22,8 +22,8 @@ import { useForm } from "react-hook-form";
 import Title from "../../../components/Fonts/Title";
 import axios from "axios";
 import InputMap from "../../../components/Maps/InputMap";
+import "./CulturalAssetForm.css";
 
-import urls from "../../../urls.json";
 import Header from "../../Header/Header";
 
 const formBuilderAPI__URL =
@@ -32,6 +32,7 @@ const formBuilderAPI__URL =
 const theme = createTheme({
   typography: {
     fontFamily: ["Raleway"].join(","),
+    fontWeight : "bold"
   },
 });
 
@@ -341,7 +342,7 @@ const CulturalAssetForm = () => {
   const updatedLocationObject = (locationDTO) => {
     //Ordering for assetts, this must match the Value in the database.
     setLocationObject(locationDTO);
-    console.log(locationDTO);
+    // console.log(locationDTO);
   };
 
   const getBasicQuestions = () => {
@@ -365,6 +366,8 @@ const CulturalAssetForm = () => {
       {
         name: "imageList",
         question: "Imagenes del activo cultural",
+        instructions:
+          "Por favor haga click en el boton 'choose files' para subir las imagenes y luego click en 'Cargar Imagenes' para guardar las imagenes en el sistema. Imagenes con tamaño máximo de 1MB.",
         type: "multiImage",
         hex: "#b03404",
         rgb: [224, 220, 220],
@@ -377,7 +380,7 @@ const CulturalAssetForm = () => {
     const generatilitiesQuestions = [
       {
         name: "name",
-        question: " Nombre del activo cultural o recurso turístico",
+        question: " Nombre del activo cultural",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -422,7 +425,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "Ubicacion",
-        question: "Ubicacion del activo o recurso",
+        question: "Ubicacion del activo cultural",
         type: "mapPick",
         required: true,
         hex: "#b03404",
@@ -431,7 +434,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "locationDetail",
-        question: "Detalle de la ubicación",
+        question: "Detalle de la ubicación, indicar dirección o indicaciones de llegada.",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -441,7 +444,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "description",
-        question: "Descripción del activo o recurso",
+        question: "Descripción del activo cultural",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -603,10 +606,20 @@ const CulturalAssetForm = () => {
         color: "#b03404",
       },
       {
-        name: "reservationLink",
-        question: "Nombre de la reserva y link",
+        name: "reservationName",
+        question: "Nombre de la reserva",
         type: "text",
-        placeHolder: "Tu rewspuesta",
+        placeHolder: "Tu respuesta",
+        required: false,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "reservationLink",
+        question: "Link de la reserva",
+        type: "text",
+        placeHolder: "Tu respuesta",
         required: false,
         hex: "#b03404",
         rgb: [224, 220, 220],
@@ -754,7 +767,7 @@ const CulturalAssetForm = () => {
         options: groups,
         onChange: (evt) => {
           setCriteriaQuestions(getCriteriaQuestions(evt.target.value));
-          console.log(criteriaQuestions);
+          // console.log(criteriaQuestions);
         },
         required: true,
         color: "#b03404",
@@ -1075,7 +1088,7 @@ const CulturalAssetForm = () => {
 
   const handleImageList = (evt) => {
     setImageList(evt.target.files);
-    console.log(imageList);
+    // console.log(imageList);
   };
 
   const fileToBase64 = (files) => {
@@ -1177,6 +1190,11 @@ const CulturalAssetForm = () => {
                 <Typography color={question.color} fontWeight={"bolder"}>
                   {" "}
                   {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#000000"} fontWeight={"bold"}>
+                  {question.instructions}
                 </Typography>
               </Grid>
               <br></br>
@@ -1327,11 +1345,22 @@ const CulturalAssetForm = () => {
                   {...register(question.name, { required: true })}
                   color="success"
                 >
-                  {question.options.map((option) => {
-                    return (
-                      <MenuItem value={option.value}>{option.name}</MenuItem>
-                    );
-                  })}
+                  {question.options
+                    .sort(function (a, b) {
+                      if (a.name < b.name) {
+                        return -1;
+                      }
+                      if (a.name > b.name) {
+                        return 1;
+                      }
+                      return 0;
+                    })
+                    .map((option) => {
+                      console.log(question.options);
+                      return (
+                        <MenuItem value={option.value}>{option.name}</MenuItem>
+                      );
+                    })}
                 </Select>
               </Grid>
             </Grid>
@@ -1840,7 +1869,7 @@ const CulturalAssetForm = () => {
   const onSubmit = (data, event) => {
     event.preventDefault();
     let request = formatculturalAssetRequest(data);
-    console.log(request);
+    // console.log(request);
     postAsset(request);
   };
 
@@ -1894,6 +1923,7 @@ const CulturalAssetForm = () => {
     culturalAsset.unescoRegistry = body.unescoRegistry;
     culturalAsset.tourismPermit = body.tourismPermit;
     culturalAsset.partOfNaturalReservation = body.partOfNaturalReservation;
+    culturalAsset.reservationName = body.reservationName;
     culturalAsset.reservationLink = body.reservationLink;
     culturalAsset.onGoingRecognition = body.onGoingRecognition;
     culturalAsset.links = body.links.split(",");
@@ -1914,7 +1944,6 @@ const CulturalAssetForm = () => {
 
     culturalAsset.alternateNames = body.alternateNames.split(",");
 
-
     if (body.assetManifestations) {
       culturalAsset.assetManifestations = body.assetManifestations.map(
         (assetManifestationId) => {
@@ -1931,8 +1960,8 @@ const CulturalAssetForm = () => {
       },
     ];
 
-    if (!body.assetCommunities){
-      alert('Seleccione al menos una comunidad etnica asociada al activo');
+    if (!body.assetCommunities) {
+      alert("Seleccione al menos una comunidad etnica asociada al activo");
     }
     culturalAsset.assetCommunities = body.assetCommunities.map(
       (assetCommunityId) => {
@@ -2088,16 +2117,16 @@ const CulturalAssetForm = () => {
     });
 
     let fullRecList = [];
-    if (body.quality){
+    if (body.quality) {
       fullRecList.concat(body.quality);
     }
-    if (body.wellness){
+    if (body.wellness) {
       fullRecList.concat(body.wellness);
     }
-    if (body.economic){
+    if (body.economic) {
       fullRecList.concat(body.economic);
     }
-    culturalAsset.assetRecommendationList =  fullRecList.map((r) => {
+    culturalAsset.assetRecommendationList = fullRecList.map((r) => {
       return {
         recommendationId: r,
       };
@@ -2130,21 +2159,16 @@ const CulturalAssetForm = () => {
             <Container>
               <Box paddingTop={"3%"}>
                 <Title
-                  size="extra"
+                  size="large"
+                  shadow="bottom-left"
                   color="#ffffff"
                   textAlign="center"
-                  titleName="Activos culturales y recursos turisticos"
+                  titleName="Formulario de activos culturales"
                 ></Title>
               </Box>
 
               <Box paddingTop={"3%"}>
                 {getBasicQuestions().map((question) => {
-                  return getQuestion(question);
-                })}
-              </Box>
-
-              <Box paddingTop={"3%"}>
-                {getFileQuestions().map((question) => {
                   return getQuestion(question);
                 })}
               </Box>
@@ -2162,6 +2186,11 @@ const CulturalAssetForm = () => {
                 <Box
                   sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
                 ></Box>
+              </Box>
+              <Box paddingTop={"3%"}>
+                {getFileQuestions().map((question) => {
+                  return getQuestion(question);
+                })}
               </Box>
               <Box paddingTop={"3%"}>
                 {getGeneralitiesQuestions().map((question) => {
@@ -2189,7 +2218,6 @@ const CulturalAssetForm = () => {
                 })}
               </Box>
 
-              {/*************************************/}
 
               <Box paddingTop={"5%"}>
                 <Title
@@ -2334,7 +2362,7 @@ const CulturalAssetForm = () => {
                   type="submit"
                 >
                   <Title
-                    titleName="Enviar formulario"
+                    titleName="Guardar Activo Cultural"
                     size="medium"
                     color="#ffffff"
                   ></Title>

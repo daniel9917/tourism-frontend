@@ -10,12 +10,12 @@ const theme = createTheme({
 });
 
 const titleBox = {
-  width: "20%",
+  width: "30%",
   height: "100%",
 };
 
 const spacingBox = {
-  width: "60%",
+  width: "50%",
   height: "100%",
 };
 
@@ -68,7 +68,7 @@ const Header = (props) => {
               <Subtitle
                 color={subtitleSx.color}
                 fontSize={subtitleSx.t1}
-                content="Ecoturismo"
+                content="Turismo Consciente"
               />
             </Link>
           </Grid>
