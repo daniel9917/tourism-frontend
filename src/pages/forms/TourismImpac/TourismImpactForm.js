@@ -230,6 +230,7 @@ const TourismImpactForm = () => {
   const [tourismSector, setTourismSector] = useState(tourismSectorList);
 
   const [isFetched, setIsFetched] = useState(false);
+  // const [assets, setAssets] = useState([]);
   const [assets, setAssets] = useState(initialAssetList);
   const [url, setUrl] = useState("");
 
@@ -267,6 +268,7 @@ const TourismImpactForm = () => {
             munList.filter((ca) => ca.parentLocationId === evt.target.value)
           );
           setUrl(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}?location=${evt.target.value}`);
+          console.log(assets);
         },
         required: true,
         color: "darkgreen",
@@ -278,6 +280,7 @@ const TourismImpactForm = () => {
         options: municipalities,
         onChange: (evt) => {
           setUrl(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}?location=${evt.target.value}`);          
+          console.log(assets);
         },
         required: true,
         color: "darkgreen",
@@ -293,6 +296,9 @@ const TourismImpactForm = () => {
       {
         name: "ethnicity",
         question: "¿A qué pueblo pertenece?",
+        onChange : (evt) => {
+          console.log(evt.target.value);
+        },
         type: "selectList",
         options: ehtnicGroup,
         required: true,
@@ -883,6 +889,7 @@ const TourismImpactForm = () => {
                 <Select
                   value={register.selectTest}
                   fullWidth
+                  onChange={question.onChange}
                   {...register(question.name, {
                     onChange: question.onChange,
                   })}
