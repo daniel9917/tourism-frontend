@@ -27,9 +27,11 @@ import axios from "axios";
 import urls from "../../../urls.json";
 import Header from "../../Header/Header";
 
-const formBuilderAPI__URL = process.env.REACT_APP_BASE_ASSET_URL + "/form-builder"
+const formBuilderAPI__URL =
+  process.env.REACT_APP_BASE_ASSET_URL + "/form-builder";
 
-const impactFormBuilder__URL = process.env.REACT_APP_BASE_HOST_URL + "/form-builder";
+const impactFormBuilder__URL =
+  process.env.REACT_APP_BASE_HOST_URL + "/form-builder";
 
 const theme = createTheme({
   typography: {
@@ -47,7 +49,9 @@ const frogsImgUrl = "https://i.imgur.com/3uZahvX.png";
 const introText =
   "Somos conscientes de las ventajas del turismo sin embargo, esta encuesta se enforca en detectar aquellos aspectos que no estan saliendo bien. En este espacio puede plasmar su punto de vista con respecto de los aspectos en cuestion. Este instrumento hace parte de la investigacion de turismo en la facultad de ingenieria. La encuesta es anonima, los datos solicitados son con proposito de caracterizacion.";
 
-const getInitialAssets = axios.get(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}`);
+const getInitialAssets = axios.get(
+  `${process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"}`
+);
 const initialAssetsRequest = await getInitialAssets;
 
 const getMunicipalities = axios.get(`${formBuilderAPI__URL}/Municipality`);
@@ -106,7 +110,6 @@ const tourismSectorRequest = await getTourismSector;
 // const Request = await get;
 
 const TourismImpactForm = () => {
-
   const initialAssetList = initialAssetsRequest.data;
 
   const munList = municipalitiesRequest.data.values.map((value) => {
@@ -232,6 +235,7 @@ const TourismImpactForm = () => {
   const [isFetched, setIsFetched] = useState(false);
   // const [assets, setAssets] = useState([]);
   const [assets, setAssets] = useState(initialAssetList);
+  const [selectedAssets, setSelectedAssets] = useState([]);
   const [url, setUrl] = useState("");
 
   const getBasicQuestions = () => {
@@ -267,7 +271,11 @@ const TourismImpactForm = () => {
           setMunicipalities(
             munList.filter((ca) => ca.parentLocationId === evt.target.value)
           );
-          setUrl(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}?location=${evt.target.value}`);
+          setUrl(
+            `${
+              process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"
+            }?location=${evt.target.value}`
+          );
           console.log(assets);
         },
         required: true,
@@ -279,7 +287,11 @@ const TourismImpactForm = () => {
         type: "selectList",
         options: municipalities,
         onChange: (evt) => {
-          setUrl(`${process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"}?location=${evt.target.value}`);          
+          setUrl(
+            `${
+              process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"
+            }?location=${evt.target.value}`
+          );
           console.log(assets);
         },
         required: true,
@@ -296,8 +308,34 @@ const TourismImpactForm = () => {
       {
         name: "ethnicity",
         question: "¿A qué pueblo pertenece?",
-        onChange : (evt) => {
+        onChange: (evt) => {
           console.log(evt.target.value);
+          // console.log(assets);
+
+          console.log(
+            assets.data.filter((asset) =>
+              asset.assetCommunities
+                .map((assetCommunity) => assetCommunity.communityId)
+                .includes(evt.target.value)
+            )
+          );
+
+          setSelectedAssets(
+            assets.data.filter((asset) =>
+              asset.assetCommunities
+                .map((assetCommunity) => assetCommunity.communityId)
+                .includes(evt.target.value)
+            )
+          );
+          // assets.data.map(
+          //   asset => {
+          //     console.log(asset);
+          //   }
+          // );
+
+          // assets.data.filter(
+          //   asset => asset.assetCommunitites.map(assetCommunity => {assetCommunity.communityId}).includes("")
+          // )
         },
         type: "selectList",
         options: ehtnicGroup,
@@ -497,38 +535,17 @@ const TourismImpactForm = () => {
       question: "Usted conoce estos activos culturales de su region?",
       type: "dimensionCriteria",
       criteria: ["Si", "No"],
-      options : assets.data.map (a => {
-        return {
-          name : a.id,
-          value : a.name,
-        }
-      }),
-      // options: [
-      //   {
-      //     name: "car1",
-      //     value: "Maloca Ipanoré",
-      //   },
-      //   {
-      //     name: "car2",
-      //     value: "Cuevas de Urania",
-      //   },
-      //   {
-      //     name: "car3",
-      //     value: "Cerro Flechas",
-      //   },
-      //   {
-      //     name: "car4",
-      //     value: "Hee Yaia Keti Oka",
-      //   },
-      //   {
-      //     name: "car5",
-      //     value: "Yuca brava",
-      //   },
-      //   {
-      //     name: "car6",
-      //     value: "Raudal del Jirijirimo",
-      //   },
-      // ],
+      options: selectedAssets && selectedAssets.length > 0
+      ? selectedAssets.map((a) => {
+          return {
+            name: a.id,
+            value: a.name,
+          };
+        })
+      : [{
+        name : "",
+        value : 0
+      }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -541,38 +558,17 @@ const TourismImpactForm = () => {
         "En su conocimiento, alguno de estos activos culturales es sagrado?",
       type: "dimensionCriteria",
       criteria: ["Si", "No", "No se"],
-      options : assets.data.map (a => {
-        return {
-          name : a.id,
-          value : a.name,
-        }
-      }),
-      // options: [
-      //   {
-      //     name: "car1",
-      //     value: "Maloca Ipanoré",
-      //   },
-      //   {
-      //     name: "car2",
-      //     value: "Cuevas de Urania",
-      //   },
-      //   {
-      //     name: "car3",
-      //     value: "Cerro Flechas",
-      //   },
-      //   {
-      //     name: "car4",
-      //     value: "Hee Yaia Keti Oka",
-      //   },
-      //   {
-      //     name: "car5",
-      //     value: "Yuca brava",
-      //   },
-      //   {
-      //     name: "car6",
-      //     value: "Raudal del Jirijirimo",
-      //   },
-      // ],
+      options: selectedAssets && selectedAssets.length > 0
+      ? selectedAssets.map((a) => {
+          return {
+            name: a.id,
+            value: a.name,
+          };
+        })
+      : [{
+        name : "",
+        value : 0
+      }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -595,38 +591,17 @@ const TourismImpactForm = () => {
         "Ha mejorado su aspecto",
         "Ninguno",
       ],
-      options : assets.data.map (a => {
-        return {
-          name : a.id,
-          value : a.name,
-        }
-      }),
-      // options: [
-      //   {
-      //     name: "tpi1",
-      //     value: "Maloca Ipanoré",
-      //   },
-      //   {
-      //     name: "tpi2",
-      //     value: "Cuevas de Urania",
-      //   },
-      //   {
-      //     name: "tpi3",
-      //     value: "Cerro Flechas",
-      //   },
-      //   {
-      //     name: "tpi4",
-      //     value: "Hee Yaia Keti Oka",
-      //   },
-      //   {
-      //     name: "tpi5",
-      //     value: "Yuca brava",
-      //   },
-      //   {
-      //     name: "tpi6",
-      //     value: "Raudal del Jirijirimo",
-      //   },
-      // ],
+      options: selectedAssets && selectedAssets.length > 0
+      ? selectedAssets.map((a) => {
+          return {
+            name: a.id,
+            value: a.name,
+          };
+        })
+      : [{
+        name : "",
+        value : 0
+      }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -649,38 +624,17 @@ const TourismImpactForm = () => {
         "Se ha dañado su aspecto",
         "Ninguno",
       ],
-      options : assets.data.map (a => {
-        return {
-          name : a.id,
-          value : a.name,
-        }
-      }),
-      // options: [
-      //   {
-      //     name: "tni1",
-      //     value: "Maloca Ipanoré",
-      //   },
-      //   {
-      //     name: "tni2",
-      //     value: "Cuevas de Urania",
-      //   },
-      //   {
-      //     name: "tni3",
-      //     value: "Cerro Flechas",
-      //   },
-      //   {
-      //     name: "tni4",
-      //     value: "Hee Yaia Keti Oka",
-      //   },
-      //   {
-      //     name: "tni5",
-      //     value: "Yuca brava",
-      //   },
-      //   {
-      //     name: "tni6",
-      //     value: "Raudal del Jirijirimo",
-      //   },
-      // ],
+      options: selectedAssets && selectedAssets.length > 0
+      ? selectedAssets.map((a) => {
+          return {
+            name: a.id,
+            value: a.name,
+          };
+        })
+      : [{
+        name : "",
+        value : 0
+      }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -693,38 +647,17 @@ const TourismImpactForm = () => {
         "Según su opinión, ¿estos activos culturales pueden ser usados como atractivos turísticos?",
       type: "dimensionCriteria",
       criteria: ["Si", "No", "Tal vez"],
-      options : assets.data.map (a => {
-        return {
-          name : a.id,
-          value : a.name,
-        }
-      }),
-      // options: [
-      //   {
-      //     name: "caaca1",
-      //     value: "Maloca Ipanoré",
-      //   },
-      //   {
-      //     name: "caaca2",
-      //     value: "Cuevas de Urania",
-      //   },
-      //   {
-      //     name: "caaca3",
-      //     value: "Cerro Flechas",
-      //   },
-      //   {
-      //     name: "caaca4",
-      //     value: "Hee Yaia Keti Oka",
-      //   },
-      //   {
-      //     name: "caaca5",
-      //     value: "Yuca brava",
-      //   },
-      //   {
-      //     name: "caaca6",
-      //     value: "Raudal del Jirijirimo",
-      //   },
-      // ],
+      options: selectedAssets && selectedAssets.length > 0
+        ? selectedAssets.map((a) => {
+            return {
+              name: a.id,
+              value: a.name,
+            };
+          })
+        : [{
+          name : "",
+          value : 0
+        }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -895,19 +828,21 @@ const TourismImpactForm = () => {
                   })}
                   color="success"
                 >
-                  {question.options.sort(function (a, b) {
-                    if (a.name < b.name) {
-                      return -1;
-                    }
-                    if (a.name > b.name) {
-                      return 1;
-                    }
-                    return 0;
-                  }).map((option) => {
-                    return (
-                      <MenuItem value={option.value}>{option.name}</MenuItem>
-                    );
-                  })}
+                  {question.options
+                    .sort(function (a, b) {
+                      if (a.name < b.name) {
+                        return -1;
+                      }
+                      if (a.name > b.name) {
+                        return 1;
+                      }
+                      return 0;
+                    })
+                    .map((option) => {
+                      return (
+                        <MenuItem value={option.value}>{option.name}</MenuItem>
+                      );
+                    })}
                 </Select>
               </Grid>
             </Grid>
@@ -1600,7 +1535,7 @@ const TourismImpactForm = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ height: "7vh", background : "#ffffff" }}>
+      <Box sx={{ height: "7vh", background: "#ffffff" }}>
         <Header></Header>
       </Box>
       {/* Intro */}
@@ -1786,25 +1721,33 @@ const TourismImpactForm = () => {
                 })}
               </Box>
 
-              <Box paddingTop={"3%"}>
-                <Title
-                  textAlign="center"
-                  shadow="lighter-gray"
-                  color="#085c2c"
-                  size="medium"
-                  titleName="Los activos culturales de mi region"
-                />
-              </Box>
-              <Box paddingTop={"3%"}>
-                <Box
-                  sx={{ background: "#085c2c", height: "0.5vh", width: "100%" }}
-                ></Box>
-              </Box>
-              <Box paddingTop={"3%"}>
-                {hostRegionCulturalAssets.map((question) => {
-                  return getQuestion(question);
-                })}
-              </Box>
+              {selectedAssets.length > 0 && (
+                <Box>
+                  <Box paddingTop={"3%"}>
+                    <Title
+                      textAlign="center"
+                      shadow="lighter-gray"
+                      color="#085c2c"
+                      size="medium"
+                      titleName="Los activos culturales de mi region"
+                    />
+                  </Box>
+                  <Box paddingTop={"3%"}>
+                    <Box
+                      sx={{
+                        background: "#085c2c",
+                        height: "0.5vh",
+                        width: "100%",
+                      }}
+                    ></Box>
+                  </Box>
+                  <Box paddingTop={"3%"}>
+                    {hostRegionCulturalAssets.map((question) => {
+                      return getQuestion(question);
+                    })}
+                  </Box>
+                </Box>
+              )}
             </Container>
             <Container>
               <Grid container justifyContent={"center"} padding="5%">

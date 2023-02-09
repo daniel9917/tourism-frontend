@@ -132,6 +132,8 @@ const CulturalAssetForm = () => {
       name: `${value.name}`,
       value: `${value.id}`,
       groupId: `${value.groupId}`,
+      min: `${value.min}`,
+      max: `${value.max}`
     };
   });
 
@@ -785,8 +787,10 @@ const CulturalAssetForm = () => {
       .map((c, index) => {
         return {
           name: "criteria[" + index + "]",
-          question: c.name,
-          type: "text",
+          question: c.name + ". (Valor mínino: " + c.min + ", Valor máximo: " + c.max + ".)",
+          min: c.min,
+          max: c.max,
+          type: "number",
           placeHolder: "Tu respuesta",
           required: true,
           hex: "#b03404",
@@ -1202,6 +1206,34 @@ const CulturalAssetForm = () => {
           </SingleQuestion>
         );
         break;
+      case "number":
+        content = (
+          <SingleQuestion>
+            <Grid container direction={"column"}>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={question.color} fontWeight={"bolder"}>
+                  {" "}
+                  {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                <Input
+                  type="number"
+                  name={question.name}
+                  {...register(question.name, 
+                    { 
+                      required: question.required, 
+                      min : question.min, 
+                      max : question.max
+                    })}
+                  fullWidth
+                  placeholder={question.placeHolder}
+                ></Input>
+              </Grid>
+            </Grid>
+          </SingleQuestion>
+        );
+        break;
       case "mapPick":
         content = (
           <SingleQuestion>
@@ -1428,7 +1460,9 @@ const CulturalAssetForm = () => {
                   onChange={question.onChange}
                   input={<OutlinedInput label="Tag" />}
                   renderValue={(selected) =>
-                    selected.map((x) => x.name).join(", ")
+                    (selected.length > 7) ? 
+                          selected.slice(0,6).map((x) => x.name).join(", ") : 
+                          selected.map((x) => x.name).join(", ")
                   }
                 >
                   {question.options.map((option) => (

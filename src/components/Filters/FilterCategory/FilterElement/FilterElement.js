@@ -17,11 +17,8 @@ const theme = createTheme({
 const boxCardStyle = {};
 
 const FilterElement = (props) => {
-
-
   const name = props.name;
   const sections = props.sections;
-
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -75,9 +72,14 @@ const FilterElement = (props) => {
           content={name}
           textAlign="center"
         ></Paragraph>
-        <Modal sx= {{border: "none"}} open={open} onClose={handleClose}>
+        <Modal sx={{ border: "none" }} open={open} onClose={handleClose}>
           <Box sx={style}>
-            <Grid sx= {{border: "none"}} container direction={"col"} justifyContent="center">
+            <Grid
+              sx={{ border: "none" }}
+              container
+              direction={"col"}
+              justifyContent="center"
+            >
               <Box>
                 <Subtitle
                   color="#025928"
@@ -114,9 +116,21 @@ const FilterElement = (props) => {
                         id={section.objectName.toLowerCase().trim()}
                         onChange={selectOnChange}
                       >
-                        {section.values.map((value) => (
-                          <option key={index} value = {value.id}>{value.name}</option>
-                        ))}
+                        {section.values
+                          .sort(function (a, b) {
+                            if (a.name < b.name) {
+                              return -1;
+                            }
+                            if (a.name > b.name) {
+                              return 1;
+                            }
+                            return 0;
+                          })
+                          .map((value, index) => (
+                            <option key={index} value={value.id}>
+                              {value.name}
+                            </option>
+                          ))}
                       </select>
                     </Grid>
                   </Grid>
@@ -128,12 +142,11 @@ const FilterElement = (props) => {
               <Box
                 paddingTop={"5%"}
                 minWidth={1}
-                sx ={{
-                  display : "flex",
-                  justifyContent :"center",
-                  alignItems : "center"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-                
               >
                 <Button
                   sx={{
@@ -157,7 +170,5 @@ const FilterElement = (props) => {
     </ThemeProvider>
   );
 };
-
-
 
 export default FilterElement;
