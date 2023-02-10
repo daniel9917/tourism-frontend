@@ -7,6 +7,8 @@ import {
   RadioGroup,
   Button,
   Typography,
+  ListItemText,
+  OutlinedInput,
 } from "@mui/material";
 import React, { useState } from "react";
 import {
@@ -22,9 +24,10 @@ import { useForm } from "react-hook-form";
 import Title from "../../../components/Fonts/Title";
 import axios from "axios";
 import InputMap from "../../../components/Maps/InputMap";
+import "./CulturalAssetForm.css";
 
-import urls from "../../../urls.json";
 import Header from "../../Header/Header";
+import { CheckBox } from "@mui/icons-material";
 
 const formBuilderAPI__URL =
   process.env.REACT_APP_BASE_ASSET_URL + "/form-builder";
@@ -32,6 +35,7 @@ const formBuilderAPI__URL =
 const theme = createTheme({
   typography: {
     fontFamily: ["Raleway"].join(","),
+    fontWeight: "bold",
   },
 });
 
@@ -128,12 +132,15 @@ const CulturalAssetForm = () => {
       name: `${value.name}`,
       value: `${value.id}`,
       groupId: `${value.groupId}`,
+      min: `${value.min}`,
+      max: `${value.max}`
     };
   });
 
   const munList = municipalitiess.data.values.map((value) => {
     return {
       name: `${value.name}`,
+      parentLocationId: `${value.parentLocationId}`,
       value: `${value.id}`,
     };
   });
@@ -141,6 +148,7 @@ const CulturalAssetForm = () => {
   const depList = departmentss.data.values.map((value) => {
     return {
       name: `${value.name}`,
+      parentLocationId: `${value.parentLocationId}`,
       value: `${value.id}`,
     };
   });
@@ -291,13 +299,12 @@ const CulturalAssetForm = () => {
     }
   );
 
-  // const  List = .data.values.map((value) => {
-  //   return {
-  //     name: `${value.name}`,
-  //     value: `${value.id}`,
-  //   }
-  // });;
-
+  const [selectedAssetCommunitites, setSelectedAssetCommunitites] = useState(
+    []
+  );
+  const [selectedSubtype, setSelectedSubtype] = useState("");
+  const [selectedMun, setSelectedMun] = useState("");
+  const [selectedDep, setSelectedDep] = useState("");
   const [municipalities, setMunicipalities] = useState(munList);
   const [departments, setDepartments] = useState(depList);
   const [ethnicities, setEthnicities] = useState(ethList);
@@ -341,7 +348,7 @@ const CulturalAssetForm = () => {
   const updatedLocationObject = (locationDTO) => {
     //Ordering for assetts, this must match the Value in the database.
     setLocationObject(locationDTO);
-    console.log(locationDTO);
+    // console.log(locationDTO);
   };
 
   const getBasicQuestions = () => {
@@ -365,6 +372,8 @@ const CulturalAssetForm = () => {
       {
         name: "imageList",
         question: "Imagenes del activo cultural",
+        instructions:
+          "Por favor haga click en el boton 'choose files' para subir las imagenes y luego click en 'Cargar Imagenes' para guardar las imagenes en el sistema. Imagenes con tamaño máximo de 1MB.",
         type: "multiImage",
         hex: "#b03404",
         rgb: [224, 220, 220],
@@ -377,7 +386,7 @@ const CulturalAssetForm = () => {
     const generatilitiesQuestions = [
       {
         name: "name",
-        question: " Nombre del activo cultural o recurso turístico",
+        question: " Nombre del activo cultural",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -400,29 +409,46 @@ const CulturalAssetForm = () => {
         name: "subtypeId",
         question: "Subtipo",
         type: "selectList",
+        value: selectedSubtype,
+        onChange: (evt) => {
+          console.log(evt.target);
+          setSelectedSubtype(evt.target.value);
+        },
         options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
-        required: true,
-        color: "#b03404",
-      },
-      {
-        name: "municipalityId",
-        question: "Municipio",
-        type: "selectList",
-        options: ["Municipio 1", "Municipio 2", "Municipio 3"],
         required: true,
         color: "#b03404",
       },
       {
         name: "departmentId",
         question: "Departamento",
+        value: selectedDep,
         type: "selectList",
         options: ["Departamento 1", "Departamento 2", "Departamento 3"],
+        required: true,
+        color: "#b03404",
+        onChange: (evt) => {
+          setMunicipalities(
+            munList.filter((mun) => mun.parentLocationId === evt.target.value)
+          );
+          setSelectedDep(evt.target.value);
+        },
+      },
+      {
+        name: "municipalityId",
+        question: "Municipio",
+        value: selectedMun,
+        type: "selectList",
+        options: ["Municipio 1", "Municipio 2", "Municipio 3"],
+        onChange: (evt) => {
+          console.log(evt.target);
+          setSelectedMun(evt.target.value);
+        },
         required: true,
         color: "#b03404",
       },
       {
         name: "Ubicacion",
-        question: "Ubicacion del activo o recurso",
+        question: "Ubicacion del activo cultural",
         type: "mapPick",
         required: true,
         hex: "#b03404",
@@ -431,7 +457,8 @@ const CulturalAssetForm = () => {
       },
       {
         name: "locationDetail",
-        question: "Detalle de la ubicación",
+        question:
+          "Detalle de la ubicación, indicar dirección o indicaciones de llegada.",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -441,7 +468,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "description",
-        question: "Descripción del activo o recurso",
+        question: "Descripción del activo cultural",
         type: "text",
         placeHolder: "Tu respuesta",
         required: true,
@@ -603,10 +630,20 @@ const CulturalAssetForm = () => {
         color: "#b03404",
       },
       {
-        name: "reservationLink",
-        question: "Nombre de la reserva y link",
+        name: "reservationName",
+        question: "Nombre de la reserva",
         type: "text",
-        placeHolder: "Tu rewspuesta",
+        placeHolder: "Tu respuesta",
+        required: false,
+        hex: "#b03404",
+        rgb: [224, 220, 220],
+        color: "#b03404",
+      },
+      {
+        name: "reservationLink",
+        question: "Link de la reserva",
+        type: "text",
+        placeHolder: "Tu respuesta",
         required: false,
         hex: "#b03404",
         rgb: [224, 220, 220],
@@ -634,7 +671,7 @@ const CulturalAssetForm = () => {
       {
         name: "links",
         question:
-          "Link música, documentales, películas que lo describen o lo usan",
+          "Link música, documentales, películas que lo describen o lo usan (por favor ingresar links separados por comas).",
         type: "text",
         placeHolder: "Tu respuesta",
         required: false,
@@ -683,7 +720,8 @@ const CulturalAssetForm = () => {
         name: "assetCommunities",
         codeName: "shc",
         question: "Cuales pueblos o etnias lo comparten?",
-        type: "checkBoxx",
+        type: "multiSelect",
+        value: selectedAssetCommunitites,
         options: [
           "Achagua (Achagua, ajagua, xagua, gente del rio.)",
           "Ambaló",
@@ -701,6 +739,21 @@ const CulturalAssetForm = () => {
           "Técnicas y tradiciones fabricación objetos artesanales",
           "Ninguna",
         ],
+        onChange: (event) => {
+          const {
+            target: { value },
+          } = event;
+          const preventDuplicate = value.filter(
+            (v, i, a) => a.findIndex((t) => t === v) === i
+          );
+          setSelectedAssetCommunitites(
+            // On autofill we get a the stringified value.
+            typeof preventDuplicate === "string"
+              ? preventDuplicate.split(",")
+              : preventDuplicate
+          );
+          console.log(event.target.value);
+        },
         required: true,
         hex: "#b03404",
         rgb: [224, 220, 220],
@@ -734,8 +787,10 @@ const CulturalAssetForm = () => {
       .map((c, index) => {
         return {
           name: "criteria[" + index + "]",
-          question: c.name,
-          type: "text",
+          question: c.name + ". (Valor mínino: " + c.min + ", Valor máximo: " + c.max + ".)",
+          min: c.min,
+          max: c.max,
+          type: "number",
           placeHolder: "Tu respuesta",
           required: true,
           hex: "#b03404",
@@ -754,7 +809,7 @@ const CulturalAssetForm = () => {
         options: groups,
         onChange: (evt) => {
           setCriteriaQuestions(getCriteriaQuestions(evt.target.value));
-          console.log(criteriaQuestions);
+          // console.log(criteriaQuestions);
         },
         required: true,
         color: "#b03404",
@@ -1075,7 +1130,7 @@ const CulturalAssetForm = () => {
 
   const handleImageList = (evt) => {
     setImageList(evt.target.files);
-    console.log(imageList);
+    // console.log(imageList);
   };
 
   const fileToBase64 = (files) => {
@@ -1090,11 +1145,17 @@ const CulturalAssetForm = () => {
       });
 
     Array.prototype.forEach.call(files, async (file) => {
-      const fileBase64 = await toBase64(file);
-      setImagenes(images);
-      images.push(fileBase64);
+      try {
+        if (file.size > 1024000) {
+          throw new Error("Tamaño inválido de la imágen. 1MB máx.");
+        }
+        const fileBase64 = await toBase64(file);
+        setImagenes(images);
+        images.push(fileBase64);
+      } catch (e) {
+        alert(e);
+      }
     });
-    console.log(imagenes);
     return images;
   };
 
@@ -1145,6 +1206,34 @@ const CulturalAssetForm = () => {
           </SingleQuestion>
         );
         break;
+      case "number":
+        content = (
+          <SingleQuestion>
+            <Grid container direction={"column"}>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={question.color} fontWeight={"bolder"}>
+                  {" "}
+                  {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                <Input
+                  type="number"
+                  name={question.name}
+                  {...register(question.name, 
+                    { 
+                      required: question.required, 
+                      min : question.min, 
+                      max : question.max
+                    })}
+                  fullWidth
+                  placeholder={question.placeHolder}
+                ></Input>
+              </Grid>
+            </Grid>
+          </SingleQuestion>
+        );
+        break;
       case "mapPick":
         content = (
           <SingleQuestion>
@@ -1177,6 +1266,11 @@ const CulturalAssetForm = () => {
                 <Typography color={question.color} fontWeight={"bolder"}>
                   {" "}
                   {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#000000"} fontWeight={"bold"}>
+                  {question.instructions}
                 </Typography>
               </Grid>
               <br></br>
@@ -1254,9 +1348,6 @@ const CulturalAssetForm = () => {
                         control={
                           <Radio
                             {...register(question.name, { required: true })}
-                            onClick={() => {
-                              console.log(register.selectTest);
-                            }}
                             color="success"
                           />
                         }
@@ -1289,9 +1380,6 @@ const CulturalAssetForm = () => {
                         control={
                           <Radio
                             {...register(question.name, { required: true })}
-                            onClick={() => {
-                              console.log(register.selectTest);
-                            }}
                             color="success"
                           />
                         }
@@ -1321,17 +1409,70 @@ const CulturalAssetForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Select
-                  value={register.selectTest}
-                  onChange={handleChange}
+                  value={question.value}
                   fullWidth
-                  {...register(question.name, { required: true })}
+                  {...register(question.name, {
+                    onChange: question.onChange,
+                    required: true,
+                  })}
                   color="success"
                 >
-                  {question.options.map((option) => {
-                    return (
-                      <MenuItem value={option.value}>{option.name}</MenuItem>
-                    );
-                  })}
+                  {question.options
+                    .sort(function (a, b) {
+                      if (a.name < b.name) {
+                        return -1;
+                      }
+                      if (a.name > b.name) {
+                        return 1;
+                      }
+                      return 0;
+                    })
+                    .map((option) => {
+                      return (
+                        <MenuItem value={option.value}>{option.name}</MenuItem>
+                      );
+                    })}
+                </Select>
+              </Grid>
+            </Grid>
+          </SingleQuestion>
+        );
+        break;
+      case "multiSelect":
+        content = (
+          <SingleQuestion>
+            <Grid container direction={"column"}>
+              <Grid
+                color={question.color}
+                sx={{ paddingTop: "2%" }}
+                item
+                xs={12}
+              >
+                <Typography fontWeight={"bolder"}>
+                  {question.question}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                <Select
+                  multiple
+                  fullWidth
+                  value={question.value}
+                  onChange={question.onChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) =>
+                    (selected.length > 7) ? 
+                          selected.slice(0,6).map((x) => x.name).join(", ") : 
+                          selected.map((x) => x.name).join(", ")
+                  }
+                >
+                  {question.options.map((option) => (
+                    <MenuItem key={option.id} value={option}>
+                      <Checkbox
+                        checked={selectedAssetCommunitites.indexOf(option) > -1}
+                      />
+                      <ListItemText primary={option.name} />
+                    </MenuItem>
+                  ))}
                 </Select>
               </Grid>
             </Grid>
@@ -1869,7 +2010,7 @@ const CulturalAssetForm = () => {
   };
 
   function formatculturalAssetRequest(body) {
-    let culturalAsset = {};
+    var culturalAsset = {};
     culturalAsset.departmentId = body.departmentId;
     culturalAsset.municipalityId = body.municipalityId;
     culturalAsset.subtypeId = body.subtypeId;
@@ -1894,6 +2035,7 @@ const CulturalAssetForm = () => {
     culturalAsset.unescoRegistry = body.unescoRegistry;
     culturalAsset.tourismPermit = body.tourismPermit;
     culturalAsset.partOfNaturalReservation = body.partOfNaturalReservation;
+    culturalAsset.reservationName = body.reservationName;
     culturalAsset.reservationLink = body.reservationLink;
     culturalAsset.onGoingRecognition = body.onGoingRecognition;
     culturalAsset.links = body.links.split(",");
@@ -1914,7 +2056,6 @@ const CulturalAssetForm = () => {
 
     culturalAsset.alternateNames = body.alternateNames.split(",");
 
-
     if (body.assetManifestations) {
       culturalAsset.assetManifestations = body.assetManifestations.map(
         (assetManifestationId) => {
@@ -1931,13 +2072,14 @@ const CulturalAssetForm = () => {
       },
     ];
 
-    if (!body.assetCommunities){
-      alert('Seleccione al menos una comunidad etnica asociada al activo');
+    console.log(selectedAssetCommunitites);
+    if (selectedAssetCommunitites.size < 1) {
+      alert("Seleccione al menos una comunidad etnica asociada al activo");
     }
-    culturalAsset.assetCommunities = body.assetCommunities.map(
+    culturalAsset.assetCommunities = selectedAssetCommunitites.map(
       (assetCommunityId) => {
         return {
-          communityId: assetCommunityId,
+          communityId: assetCommunityId.value,
         };
       }
     );
@@ -2088,16 +2230,16 @@ const CulturalAssetForm = () => {
     });
 
     let fullRecList = [];
-    if (body.quality){
+    if (body.quality) {
       fullRecList.concat(body.quality);
     }
-    if (body.wellness){
+    if (body.wellness) {
       fullRecList.concat(body.wellness);
     }
-    if (body.economic){
+    if (body.economic) {
       fullRecList.concat(body.economic);
     }
-    culturalAsset.assetRecommendationList =  fullRecList.map((r) => {
+    culturalAsset.assetRecommendationList = fullRecList.map((r) => {
       return {
         recommendationId: r,
       };
@@ -2105,11 +2247,6 @@ const CulturalAssetForm = () => {
 
     return culturalAsset;
   }
-
-  const handleChange = (evt) => {
-    console.log(evt);
-    console.log(getValues());
-  };
 
   function getBackgroudOpacity(opacity, rgb) {
     var bg = "rgba(" + [rgb, opacity].join(",") + ")";
@@ -2130,21 +2267,16 @@ const CulturalAssetForm = () => {
             <Container>
               <Box paddingTop={"3%"}>
                 <Title
-                  size="extra"
+                  size="large"
+                  shadow="bottom-left"
                   color="#ffffff"
                   textAlign="center"
-                  titleName="Activos culturales y recursos turisticos"
+                  titleName="Formulario de activos culturales"
                 ></Title>
               </Box>
 
               <Box paddingTop={"3%"}>
                 {getBasicQuestions().map((question) => {
-                  return getQuestion(question);
-                })}
-              </Box>
-
-              <Box paddingTop={"3%"}>
-                {getFileQuestions().map((question) => {
                   return getQuestion(question);
                 })}
               </Box>
@@ -2162,6 +2294,11 @@ const CulturalAssetForm = () => {
                 <Box
                   sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
                 ></Box>
+              </Box>
+              <Box paddingTop={"3%"}>
+                {getFileQuestions().map((question) => {
+                  return getQuestion(question);
+                })}
               </Box>
               <Box paddingTop={"3%"}>
                 {getGeneralitiesQuestions().map((question) => {
@@ -2188,8 +2325,6 @@ const CulturalAssetForm = () => {
                   return getQuestion(question);
                 })}
               </Box>
-
-              {/*************************************/}
 
               <Box paddingTop={"5%"}>
                 <Title
@@ -2334,7 +2469,7 @@ const CulturalAssetForm = () => {
                   type="submit"
                 >
                   <Title
-                    titleName="Enviar formulario"
+                    titleName="Guardar Activo Cultural"
                     size="medium"
                     color="#ffffff"
                   ></Title>

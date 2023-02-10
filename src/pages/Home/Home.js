@@ -17,14 +17,14 @@ const Home = () => {
   //Array that holds the contents of the cards of the home page
   const cardContents = [
     {
-      title: "Consulta de Activos Culturales",
+      title: "Visualizar activos",
       link : "/list",
-      imgSrc : "https://i.imgur.com/ABIjoz5.png",
+      imgSrc : "https://i.imgur.com/Zb85TBy.jpg",
       color : "#088c4c",
       description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
     {
-      title: "Formulario de Activos Culturales",
+      title: "Vincular activos",
       imgSrc : "https://i.imgur.com/guzB9Lh.jpg",
       link : "/asset",
       color : "#088c4c",
@@ -32,18 +32,18 @@ const Home = () => {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
     {
-      title: "Turismo 5.0",
-      imgSrc : "https://i.imgur.com/UckvW9F.jpg",
+      title: "Reconozcamos los impactos tan chéveres del turismo en donde vivimos.",
+      imgSrc : "https://i.imgur.com/9zDA2lh.jpg",
+      link : "/impact",
       color : "#088c4c",
-      link : "",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
     {
-      title: "Impactos del turismo en el destino",
-      imgSrc : "https://i.imgur.com/m1dkfEA.jpg",
-      link : "/impact",
+      title: "¿Soy un turista consciente?",
+      imgSrc : "https://i.imgur.com/smaXMOR.jpg",
       color : "#088c4c",
+      link : "",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     }
@@ -82,7 +82,7 @@ const Home = () => {
         </Grid>
       </Grid>
       <Grid item key={"footer"} sx={gridItemSx} xs={12}>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
       </Grid>
     </Grid>
   );
