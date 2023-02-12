@@ -138,6 +138,7 @@ const TourismImpactForm = () => {
   const ethngList = ethnicGroupRequest.data.values.map((value) => {
     return {
       name: `${value.name}`,
+      communityTypeId : `${value.communityTypeId}`,
       value: `${value.id}`,
     };
   });
@@ -303,6 +304,10 @@ const TourismImpactForm = () => {
         type: "radioSelectt",
         options: ethnicities,
         required: true,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setEhtnicGroup(ethngList.filter(eg => eg.communityTypeId === evt.target.value));
+        },
         color: "darkgreen",
       },
       {
@@ -745,17 +750,14 @@ const TourismImpactForm = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
-                <RadioGroup name="radioTest">
+                <RadioGroup onChange={question.onChange} name="radioTest">
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
                         value={option.value}
                         control={
                           <Radio
-                            {...register(question.name, { required: true })}
-                            onClick={() => {
-                              console.log(register.selectTest);
-                            }}
+                            {...register(question.name, { required: true })}                            
                             color="success"
                           />
                         }

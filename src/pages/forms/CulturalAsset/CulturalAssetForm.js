@@ -163,6 +163,7 @@ const CulturalAssetForm = () => {
   const ethngList = ehtnicGroups.data.values.map((value) => {
     return {
       name: `${value.name}`,
+      communityTypeId : `${value.communityTypeId}`,
       value: `${value.id}`,
     };
   });
@@ -299,9 +300,7 @@ const CulturalAssetForm = () => {
     }
   );
 
-  const [selectedAssetCommunitites, setSelectedAssetCommunitites] = useState(
-    []
-  );
+  const [selectedAssetCommunities, setSelectedAssetCommunities] = useState([]);
   const [selectedSubtype, setSelectedSubtype] = useState("");
   const [selectedMun, setSelectedMun] = useState("");
   const [selectedDep, setSelectedDep] = useState("");
@@ -501,6 +500,10 @@ const CulturalAssetForm = () => {
         question: "Tipo de comunidad étnica con la que se relaciona?",
         type: "radioSelectt",
         options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setEhtnicGroup(ethngList.filter(eg => eg.communityTypeId === evt.target.value));
+        },
         required: true,
         color: "#b03404",
       },
@@ -721,7 +724,7 @@ const CulturalAssetForm = () => {
         codeName: "shc",
         question: "Cuales pueblos o etnias lo comparten?",
         type: "multiSelect",
-        value: selectedAssetCommunitites,
+        value: selectedAssetCommunities,
         options: [
           "Achagua (Achagua, ajagua, xagua, gente del rio.)",
           "Ambaló",
@@ -746,7 +749,7 @@ const CulturalAssetForm = () => {
           const preventDuplicate = value.filter(
             (v, i, a) => a.findIndex((t) => t === v) === i
           );
-          setSelectedAssetCommunitites(
+          setSelectedAssetCommunities(
             // On autofill we get a the stringified value.
             typeof preventDuplicate === "string"
               ? preventDuplicate.split(",")
@@ -1468,7 +1471,7 @@ const CulturalAssetForm = () => {
                   {question.options.map((option) => (
                     <MenuItem key={option.id} value={option}>
                       <Checkbox
-                        checked={selectedAssetCommunitites.indexOf(option) > -1}
+                        checked={selectedAssetCommunities.indexOf(option) > -1}
                       />
                       <ListItemText primary={option.name} />
                     </MenuItem>
@@ -2072,11 +2075,10 @@ const CulturalAssetForm = () => {
       },
     ];
 
-    console.log(selectedAssetCommunitites);
-    if (selectedAssetCommunitites.size < 1) {
+    if (selectedAssetCommunities.size < 1) {
       alert("Seleccione al menos una comunidad etnica asociada al activo");
     }
-    culturalAsset.assetCommunities = selectedAssetCommunitites.map(
+    culturalAsset.assetCommunities = selectedAssetCommunities.map(
       (assetCommunityId) => {
         return {
           communityId: assetCommunityId.value,
