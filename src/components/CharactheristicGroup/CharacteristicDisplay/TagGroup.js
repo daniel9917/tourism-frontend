@@ -2,6 +2,7 @@ import React from "react";
 import { Box, ThemeProvider, createTheme, Grid } from "@mui/material";
 import Paragraph from "../../Fonts/Paragraph";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Assignment from "@mui/icons-material/Assignment";
 import {
   AddSharp,
   BoltSharp,
@@ -49,8 +50,8 @@ const getIcon = (objectName) => {
       return <ArrowDropDownIcon sx={iconSx} />;
     case "Ubicacion":
       return <LocationOnSharp sx={iconSx} />;
-    case "Naturaleza":
-      return <ForestSharp sx={iconSx} />;
+    case "Naturaleza del activo":      
+      return <Assignment sx={iconSx} />;
     case "Estado":
       return <AddSharp sx={iconSx} />;
     case "Acceso":

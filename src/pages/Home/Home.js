@@ -17,19 +17,19 @@ const Home = () => {
   //Array that holds the contents of the cards of the home page
   const cardContents = [
     {
-      title: "Visualizar activos",
-      link : "/list",
-      imgSrc : "https://i.imgur.com/Zb85TBy.jpg",
-      color : "#088c4c",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
       title: "Vincular activos",
       imgSrc : "https://i.imgur.com/guzB9Lh.jpg",
       link : "/asset",
       color : "#088c4c",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      title: "Visualizar activos",
+      link : "/list",
+      imgSrc : "https://i.imgur.com/Zb85TBy.jpg",
+      color : "#088c4c",
+      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
     {
       title: "Reconozcamos los impactos tan chéveres del turismo en donde vivimos.",

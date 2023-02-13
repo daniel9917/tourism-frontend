@@ -451,7 +451,7 @@ const TourismImpactForm = () => {
     {
       name: "touristSpotted",
       codeName: "ts",
-      question: "Cuando veo un rutista en mi ciudad o municipio",
+      question: "Cuando veo un turista en mi ciudad o municipio",
       type: "checkBox",
       options: [
         "Me siento inseguro",
@@ -1048,8 +1048,10 @@ const TourismImpactForm = () => {
                                   <input
                                     type="radio"
                                     name={question.codeName}
+                                    style = {{ "width": "1.5em",  "height" : "1.5em"}}
                                     {...register(
-                                      question.codeName + "." + index
+                                      question.codeName + "." + index, 
+                                      { required: question.required }
                                     )}
                                     value={i}
                                     color="success"
@@ -1144,9 +1146,11 @@ const TourismImpactForm = () => {
                                 return (
                                   <input
                                     type="radio"
+                                    style = {{ "width": "1.5em",  "height" : "1.5em"}}
                                     name={question.codeName}
                                     {...register(
-                                      question.codeName + "." + index
+                                      question.codeName + "." + index,
+                                      { required: question.required }
                                     )}
                                     value={3 - i}
                                     color="success"

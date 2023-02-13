@@ -93,7 +93,7 @@ const RadarChart = (props) => {
 
   let data = {
     labels: factor.characteristicList.map((characteristic, index) => {
-      return "Caracteristica " + (index + 1);
+      return "Criterio " + (index + 1);
     }),
     datasets: [
       {
@@ -154,7 +154,7 @@ const RadarChart = (props) => {
         size="1.5rem"
         color="#B54815"
         textAlign="center"
-        titleName="Caracteristicas"
+        titleName="Criterios"
       ></Title>
       <ol>
         {factor.characteristicList.map((characteristic, index) => {

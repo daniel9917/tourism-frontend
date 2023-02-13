@@ -81,7 +81,7 @@ const CulturalAssetDetail = () => {
   console.log(assetDetaill);
 
   if (isFetched) {
-    
+    console.log(assetDetaill);
     const dataDTOList = assetDetaill.dataDTOList;
     const maturityDTO = assetDetaill.maturityDTO.values[0];
 
@@ -166,7 +166,7 @@ const CulturalAssetDetail = () => {
               shadow="2px 2px 6px black"
               color="#025928"
               size="1.3rem"
-              content="Otros, Nombres, Diferentes"
+              content={assetDetaill.alternateNames ? assetDetaill.alternateNames: ""}
             ></Paragraph>
           </Box>
           {/* Asset characteristics */}

@@ -7,6 +7,7 @@ import {
   RadioGroup,
   Button,
   Typography,
+  TextField,
   ListItemText,
   OutlinedInput,
 } from "@mui/material";
@@ -27,7 +28,6 @@ import InputMap from "../../../components/Maps/InputMap";
 import "./CulturalAssetForm.css";
 
 import Header from "../../Header/Header";
-import { CheckBox } from "@mui/icons-material";
 
 const formBuilderAPI__URL =
   process.env.REACT_APP_BASE_ASSET_URL + "/form-builder";
@@ -373,6 +373,7 @@ const CulturalAssetForm = () => {
         question: "Imagenes del activo cultural",
         instructions:
           "Por favor haga click en el boton 'choose files' para subir las imagenes y luego click en 'Cargar Imagenes' para guardar las imagenes en el sistema. Imagenes con tamaño máximo de 1MB.",
+        id: "image-files",
         type: "multiImage",
         hex: "#b03404",
         rgb: [224, 220, 220],
@@ -501,8 +502,9 @@ const CulturalAssetForm = () => {
         type: "radioSelectt",
         options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
         onChange: (evt) => {
-          console.log(evt.target.value);
-          setEhtnicGroup(ethngList.filter(eg => eg.communityTypeId === evt.target.value));
+          setEhtnicGroup(
+            ethngList.filter((eg) => eg.communityTypeId === evt.target.value)
+          );
         },
         required: true,
         color: "#b03404",
@@ -790,7 +792,13 @@ const CulturalAssetForm = () => {
       .map((c, index) => {
         return {
           name: "criteria[" + index + "]",
-          question: c.name + ". (Valor mínino: " + c.min + ", Valor máximo: " + c.max + ".)",
+          question:
+            c.name +
+            ". (Valor mínino: " +
+            c.min +
+            ", Valor máximo: " +
+            c.max +
+            ".)",
           min: c.min,
           max: c.max,
           type: "number",
@@ -1223,12 +1231,11 @@ const CulturalAssetForm = () => {
                 <Input
                   type="number"
                   name={question.name}
-                  {...register(question.name, 
-                    { 
-                      required: question.required, 
+                  {...register(question.name, {
+                    required: question.required,
                       min : question.min, 
                       max : question.max
-                    })}
+                  })}
                   fullWidth
                   placeholder={question.placeHolder}
                 ></Input>
@@ -1295,10 +1302,19 @@ const CulturalAssetForm = () => {
                   ></Input> */}
                 <input
                   accept="image/*"
-                  id="image-files"
+                  id={question.id}
                   multiple
                   type={"file"}
                   onChange={handleImageList}
+                />
+                <input
+                  type="button"
+                  onClick={() => {
+                    document.getElementById(question.id).value = [];
+                    setImageList([]);
+                    setImagenes([]);
+                  }}
+                  value="Eliminar imagenes"
                 />
                 <input
                   type="button"
@@ -1581,6 +1597,7 @@ const CulturalAssetForm = () => {
                                 // console.log(i + option.value);
                                 return (
                                   <input
+                                  style = {{ "width": "1.5em",  "height" : "1.5em"}}
                                     type="radio"
                                     name={question.codeName}
                                     {...register(
@@ -1968,6 +1985,17 @@ const CulturalAssetForm = () => {
                       </Grid>
                     );
                   })}
+                  <Grid item>
+                    <FormControlLabel
+                      control={<Checkbox color="success" width = {"100%"} />}
+                      label={
+                        <TextField
+                          fullWidth
+                          label="¿Otro?, ¿Cuál?"
+                        />
+                      }
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -2057,7 +2085,7 @@ const CulturalAssetForm = () => {
 
     culturalAsset.locationObject = location;
 
-    culturalAsset.alternateNames = body.alternateNames.split(",");
+    culturalAsset.alternateNames = body.alternateNames;
 
     if (body.assetManifestations) {
       culturalAsset.assetManifestations = body.assetManifestations.map(
