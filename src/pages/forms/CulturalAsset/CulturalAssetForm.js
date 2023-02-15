@@ -20,6 +20,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import Paragraph from "../../../components/Fonts/Paragraph";
 import SingleQuestion from "../FormComponents/SingleQuestion";
 import { useForm } from "react-hook-form";
 import Title from "../../../components/Fonts/Title";
@@ -66,6 +67,15 @@ const manifestationss = await getManifestations;
 
 const getGroups = axios.get(`${formBuilderAPI__URL}/Group`);
 const groupss = await getGroups;
+
+const getTypes = axios.get(`${formBuilderAPI__URL}/Type`);
+const typess = await getTypes;
+
+const getCategories = axios.get(`${formBuilderAPI__URL}/Category`);
+const categoriess = await getCategories;
+
+const getPatrimonies = axios.get(`${formBuilderAPI__URL}/Patrimony`);
+const patrimoniess = await getPatrimonies;
 
 const getSports = axios.get(`${formBuilderAPI__URL}/Sport`);
 const sportss = await getSports;
@@ -172,6 +182,7 @@ const CulturalAssetForm = () => {
     return {
       name: `${value.name}`,
       value: `${value.id}`,
+      typeId: `${value.typeId}`,
     };
   });
 
@@ -186,6 +197,30 @@ const CulturalAssetForm = () => {
     return {
       name: `${value.name}`,
       value: `${value.id}`,
+    };
+  });
+
+  const typeList = typess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+      categoryId: `${value.categoryId}`,
+    };
+  });
+
+  const categoryList = categoriess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+      patrimonyId: `${value.patrimonyId}`,
+    };
+  });
+
+  const patrimonyList = patrimoniess.data.values.map((value) => {
+    return {
+      name: `${value.name}`,
+      value: `${value.id}`,
+      assetGroupId: `${value.assetGroupId}`,
     };
   });
 
@@ -300,6 +335,9 @@ const CulturalAssetForm = () => {
     }
   );
 
+  const [selectedGroup, setSelectedGroup] = useState(
+    {name : "No hay un grupo seleccionado. Por favor elija un subtipo valido."}
+  );
   const [selectedAssetCommunities, setSelectedAssetCommunities] = useState([]);
   const [selectedSubtype, setSelectedSubtype] = useState("");
   const [selectedMun, setSelectedMun] = useState("");
@@ -411,8 +449,22 @@ const CulturalAssetForm = () => {
         type: "selectList",
         value: selectedSubtype,
         onChange: (evt) => {
-          console.log(evt.target);
+          let typeId = subtypeList.filter(
+            (s) => s.value === evt.target.value
+          )[0].typeId;
+          let categoryId = typeList.filter((t) => t.value === typeId)[0]
+            .categoryId;
+          let patrimonyId = categoryList.filter(
+            (c) => c.value === categoryId
+          )[0].patrimonyId;
+          let groupId = patrimonyList.filter((p) => p.value === patrimonyId)[0]
+            .assetGroupId;
+          // Filtering questions using group id
+          setCriteriaQuestions(getCriteriaQuestions(groupId));
+          // Obtaining selected subtype
           setSelectedSubtype(evt.target.value);
+          // Obtaining selected group for rendering          
+          setSelectedGroup(groupList.filter(g => g.value === groupId)[0]);
         },
         options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
         required: true,
@@ -813,17 +865,24 @@ const CulturalAssetForm = () => {
 
   const getQualityQuestions = () => {
     const qualityQuestions = [
+      // {
+      //   name: "groupId",
+      //   question: "En qué grupo se clasifica el activo cultural?",
+      //   type: "radioSelectt",
+      //   options: groups,
+      //   onChange: (evt) => {
+      //     setCriteriaQuestions(getCriteriaQuestions(evt.target.value));
+      //     // console.log(criteriaQuestions);
+      //   },
+      //   required: true,
+      //   color: "#b03404",
+      // },
       {
-        name: "groupId",
-        question: "En qué grupo se clasifica el activo cultural?",
-        type: "radioSelectt",
-        options: groups,
-        onChange: (evt) => {
-          setCriteriaQuestions(getCriteriaQuestions(evt.target.value));
-          // console.log(criteriaQuestions);
-        },
-        required: true,
+        name: "selectedGroup",
+        question: "Grupo en el que se clasifica el activo cultural",
+        type: "label",
         color: "#b03404",
+        value: selectedGroup.name,
       },
       // {
       //   name: "criteria1",
@@ -1194,6 +1253,29 @@ const CulturalAssetForm = () => {
   const getQuestion = (question) => {
     let content = "";
     switch (question.type) {
+      case "label":
+        content = (
+          <SingleQuestion>
+            <Grid container direction={"column"}>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={question.color} fontWeight={"bolder"}>
+                  {" "}
+                  {question.question}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                <Paragraph
+                  color="#000000"
+                  padding="5px"
+                  bold
+                  content={question.value}
+                  size="1.7rem"
+                ></Paragraph>
+              </Grid>
+            </Grid>
+          </SingleQuestion>
+        );
+        break;
       case "text":
         content = (
           <SingleQuestion>
@@ -1987,13 +2069,8 @@ const CulturalAssetForm = () => {
                   })}
                   <Grid item>
                     <FormControlLabel
-                      control={<Checkbox color="success" width = {"100%"} />}
-                      label={
-                        <TextField
-                          fullWidth
-                          label="¿Otro?, ¿Cuál?"
-                        />
-                      }
+                      control={<Checkbox color="success" width={"100%"} />}
+                      label={<TextField fullWidth label="¿Otro?, ¿Cuál?" />}
                     />
                   </Grid>
                 </Grid>
