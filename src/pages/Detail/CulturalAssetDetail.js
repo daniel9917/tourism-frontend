@@ -12,6 +12,7 @@ import urls from "../../urls.json";
 import ImpactTab from "../../components/Tab/ImpactTab";
 import { useParams } from "react-router";
 import { useEffect } from "react";
+import BarChart from "../../components/Charts/BarChart";
 
 const carouselImgSx = {
   maxWidth: "100%",
@@ -34,9 +35,8 @@ const imgBox = {
 };
 
 const mainBoxSx = {
-  //   background: "#ffffff",
-  minHeight: "100vh ",
-  backgroundImage: "url(" + imgUrl + ")",
+    background: "#a2e4f3",
+  // backgroundImage: "url(" + imgUrl + ")",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
 };
@@ -44,7 +44,7 @@ const mainBoxSx = {
 const contentBoxSx = {
   minHeight: "100vh ",
   width: "100%",
-  background: "#ffffff",
+  background: "#CCF5AB",
 };
 
 const otherNamesBoxSx = {
@@ -77,13 +77,14 @@ const CulturalAssetDetail = () => {
     fetchData();
   }, []);
 
-  console.log("dynamic detail");
-  console.log(assetDetaill);
 
   if (isFetched) {
     console.log(assetDetaill);
     const dataDTOList = assetDetaill.dataDTOList;
     const maturityDTO = assetDetaill.maturityDTO.values[0];
+    const typologyDTO = {objectName : 'typology', values :assetDetaill.typologyDTO.values[0]};
+    const assetCriteriaList = { objectName : 'criteria', values : assetDetaill.assetCriteriaList};
+
 
     return (
       <ThemeProvider theme={theme}>
@@ -145,14 +146,14 @@ const CulturalAssetDetail = () => {
           </Container>
         </Box>
         {/** Asset detail */}
-        <Box ref={ref} sx={{ contentBoxSx }}>
+        <Box ref={ref} sx={contentBoxSx}>
           <Title
             padding="3%"
             size="extra"
             shadow="lighter-gray"
             color="#025928"
             textAlign="center"
-            titleName="Descripcion del activo"
+            titleName="Descripción del activo"
           ></Title>
           <Box sx={otherNamesBoxSx}>
             <Paragraph
@@ -175,7 +176,8 @@ const CulturalAssetDetail = () => {
           </Container>
           <br></br>
           <br></br>
-
+          <BarChart data = {typologyDTO}></BarChart>
+          <BarChart data = {assetCriteriaList}></BarChart>
           {/* Asset Impact  */}
           <Box>
             <Title

@@ -335,6 +335,7 @@ const CulturalAssetForm = () => {
     }
   );
 
+  const [selectedGroupId, setSelectedGroupId] = useState('');
   const [selectedGroup, setSelectedGroup] = useState(
     {name : "No hay un grupo seleccionado. Por favor elija un subtipo valido."}
   );
@@ -435,7 +436,7 @@ const CulturalAssetForm = () => {
       {
         name: "alternateNames",
         question:
-          "Por cuál otro nombre se conoce? (Ingresar nombres separados por comas)",
+          "¿Por cuál otro nombre se conoce? (Ingresar nombres separados por comas)",
         type: "text",
         placeHolder: "Tu respuesta",
         required: false,
@@ -465,6 +466,7 @@ const CulturalAssetForm = () => {
           setSelectedSubtype(evt.target.value);
           // Obtaining selected group for rendering          
           setSelectedGroup(groupList.filter(g => g.value === groupId)[0]);
+          setSelectedGroupId(groupId);
         },
         options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
         required: true,
@@ -500,7 +502,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "Ubicacion",
-        question: "Ubicacion del activo cultural",
+        question: "Ubicación del activo cultural",
         type: "mapPick",
         required: true,
         hex: "#b03404",
@@ -550,7 +552,7 @@ const CulturalAssetForm = () => {
     const characteristicsQuestions = [
       {
         name: "assetCommunitiesTypes",
-        question: "Tipo de comunidad étnica con la que se relaciona?",
+        question: "¿Con qué tipo de comunidad étnica con la que se relaciona?",
         type: "radioSelectt",
         options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
         onChange: (evt) => {
@@ -563,7 +565,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "inmaterialManifestation",
-        question: "Es una manifestación Cultural Inmaterial?",
+        question: "¿Es una manifestación Cultural Inmaterial?",
         type: "radioSelectt",
         options: [
           {
@@ -580,7 +582,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "cosmogony",
-        question: "Es sagrado o tiene interpretación cosmogónica?",
+        question: "¿Es sagrado o tiene interpretación cosmogónica?",
         type: "radioSelectt",
         options: [
           {
@@ -597,7 +599,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "cosmogonyDescription",
-        question: "Por qué es sagrado o tiene interpretación cosmogónica?",
+        question: "¿Por qué es sagrado o tiene interpretación cosmogónica?",
         type: "text",
         placeHolder: "Es sagrado o tiene interpretacion cosmogonica, ya que...",
         required: false,
@@ -608,7 +610,7 @@ const CulturalAssetForm = () => {
       {
         name: "assetManifestations",
         codeName: "btmt",
-        question: "A cuál tipo de manifestación pertenece? ",
+        question: "¿A cuál tipo de manifestación pertenece? ",
         type: "checkBoxx",
         options: [
           "Actos festivos y lúdicos",
@@ -634,7 +636,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "safeguardingRegistry",
-        question: "Registrado en salvaguardia?",
+        question: "¿Registrado en salvaguardia?",
         type: "radioSelectt",
         // options: ["Si", "No"],
         options: [
@@ -652,7 +654,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "unescoRegistry",
-        question: "Reconocido UNESCO ?",
+        question: "¿Reconocido UNESCO ?",
         type: "radioSelectt",
         // options: ["Si", "No"],
         options: [
@@ -670,7 +672,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "partOfNaturalReservation",
-        question: "Se encuentra en una reservas natural?",
+        question: "¿Se encuentra en una reserva natural?",
         type: "radioSelectt",
         // options: ["Si", "No"],
         options: [
@@ -709,7 +711,7 @@ const CulturalAssetForm = () => {
       {
         name: "onGoingRecognition",
         question:
-          "Se está tramitando algún reconocimiento sobre el activo cultural?",
+          "¿Se está tramitando algún reconocimiento sobre el activo cultural?",
         type: "radioSelectt",
         // options: ["Si", "No"],
         options: [
@@ -739,7 +741,7 @@ const CulturalAssetForm = () => {
       {
         name: "tourismPermit",
         question:
-          "Está permitido el turismo en este lugar o con la  participación de este activo cultural?",
+          "¿Está permitido el turismo en este lugar o con la  participación de este activo cultural?",
         type: "radioSelectt",
         options: ["Si", "No", "N/A"],
         options: [
@@ -776,7 +778,7 @@ const CulturalAssetForm = () => {
       {
         name: "assetCommunities",
         codeName: "shc",
-        question: "Cuales pueblos o etnias lo comparten?",
+        question: "¿Cuáles pueblos o etnias lo comparten?",
         type: "multiSelect",
         value: selectedAssetCommunities,
         options: [
@@ -1064,7 +1066,7 @@ const CulturalAssetForm = () => {
     },
     {
       name: "dateEvent",
-      question: "Si es evento, cual es la fecha?",
+      question: "¿Si es evento, cual es la fecha?",
       type: "date",
       required: false,
       hex: "#b03404",
@@ -1119,7 +1121,7 @@ const CulturalAssetForm = () => {
     {
       name: "basicServices",
       codeName: "bscs",
-      question: "Servicios basicos",
+      question: "Servicios básicos",
       type: "checkBoxx",
       options: publicService,
       required: true,
@@ -1166,7 +1168,7 @@ const CulturalAssetForm = () => {
     {
       name: "economic",
       codeName: "ecos",
-      question: "Situacion economica",
+      question: "Situación economica",
       type: "checkBoxx",
       options: economicRecommendations,
       required: true,
@@ -2119,6 +2121,10 @@ const CulturalAssetForm = () => {
 
   function formatculturalAssetRequest(body) {
     var culturalAsset = {};
+    // console.log(body);
+    console.log(critList);
+    console.log(criteriaQuestions);
+    console.log(selectedSubtype);
     culturalAsset.departmentId = body.departmentId;
     culturalAsset.municipalityId = body.municipalityId;
     culturalAsset.subtypeId = body.subtypeId;
@@ -2194,13 +2200,13 @@ const CulturalAssetForm = () => {
     let fullAccessList = [];
 
     if (body.maritimeAccess) {
-      fullAccessList.concat(body.maritimeAccess);
+      fullAccessList = fullAccessList.concat(body.maritimeAccess);
     }
     if (body.aerialAccess) {
-      fullAccessList.concat(body.aerialAccess);
+      fullAccessList = fullAccessList.concat(body.aerialAccess);
     }
     if (body.terrestrialAccess) {
-      fullAccessList.concat(body.terrestrialAccess);
+      fullAccessList = fullAccessList.concat(body.terrestrialAccess);
     }
 
     culturalAsset.assetAccessList = fullAccessList.map((accessId) => {
@@ -2212,25 +2218,28 @@ const CulturalAssetForm = () => {
     //Formating sports in request
     culturalAsset.assetSportList = body.sp
       .map((s) => {
-        if (s[0] === "0") {
-          return s.substring(1, s.length);
-        }
+          return {
+              sportId : s.substring(1, s.length),
+              score : s[0]
+            };
       })
       .filter((element) => {
         return element !== undefined;
       })
-      .map((sportId) => {
+      .map((sport) => {
         return {
-          sportId: sportId,
+          sportId: sport.sportId,
+          score : sport.score
         };
       });
 
     //Formating offers in request
     const offerTour = body.tr
       .map((s) => {
-        if (s[0] === "0") {
-          return s.substring(1, s.length);
-        }
+        return {
+          offerId :s.substring(1, s.length),
+          score : s[0]
+        };
       })
       .filter((element) => {
         return element !== undefined;
@@ -2238,9 +2247,10 @@ const CulturalAssetForm = () => {
 
     const offerFolk = body.folk
       .map((s) => {
-        if (s[0] === "0") {
-          return s.substring(1, s.length);
-        }
+        return {
+          offerId :s.substring(1, s.length),
+          score : s[0]
+        };
       })
       .filter((element) => {
         return element !== undefined;
@@ -2248,9 +2258,10 @@ const CulturalAssetForm = () => {
 
     const offerOtherServices = body.os
       .map((s) => {
-        if (s[0] === "0") {
-          return s.substring(1, s.length);
-        }
+          return {
+            offerId :s.substring(1, s.length),
+            score : s[0]
+          };
       })
       .filter((element) => {
         return element !== undefined;
@@ -2258,9 +2269,10 @@ const CulturalAssetForm = () => {
 
     let fullOfferList = [...offerOtherServices, ...offerFolk, ...offerTour];
 
-    culturalAsset.assetOfferList = fullOfferList.map((offerId) => {
+    culturalAsset.assetOfferList = fullOfferList.map((offer) => {
       return {
-        offerId: offerId,
+        offerId: offer.offerId,
+        score : offer.score
       };
     });
 
@@ -2275,6 +2287,7 @@ const CulturalAssetForm = () => {
         return element !== undefined;
       });
 
+    culturalAsset.assetVulnerabilityList = vulnerabilitiesLists;
     culturalAsset.assetVulnerabilityList = vulnerabilitiesLists.map(
       (vulnerabilityId) => {
         return {
@@ -2286,16 +2299,18 @@ const CulturalAssetForm = () => {
     //Formating nature in request
     const fullNatureList = body.nat
       .map((s) => {
-        if (s[0] === "0") {
-          return s.substring(1, s.length);
-        }
+          return {
+            natureId : s.substring(1, s.length),
+            score : s[0]
+          };
       })
       .filter((element) => {
         return element !== undefined;
       });
-    culturalAsset.assetNatureList = fullNatureList.map((natureId) => {
+    culturalAsset.assetNatureList = fullNatureList.map((nature) => {
       return {
-        natureId: natureId,
+        natureId: nature.natureId,
+        score : nature.score
       };
     });
 
@@ -2319,7 +2334,7 @@ const CulturalAssetForm = () => {
       );
     }
 
-    let currentCritList = critList.filter((c) => c.groupId === body.groupId);
+    let currentCritList = critList.filter((c) => c.groupId === selectedGroupId);
 
     culturalAsset.assetCriteriaList = body.criteria
       .filter((c) => !(c === ""))
@@ -2337,14 +2352,15 @@ const CulturalAssetForm = () => {
     });
 
     let fullRecList = [];
+
     if (body.quality) {
-      fullRecList.concat(body.quality);
+      fullRecList = fullRecList.concat(body.quality);
     }
     if (body.wellness) {
-      fullRecList.concat(body.wellness);
+      fullRecList = fullRecList.concat(body.wellness);
     }
     if (body.economic) {
-      fullRecList.concat(body.economic);
+      fullRecList = fullRecList.concat(body.economic);
     }
     culturalAsset.assetRecommendationList = fullRecList.map((r) => {
       return {
@@ -2352,6 +2368,8 @@ const CulturalAssetForm = () => {
       };
     });
 
+
+    console.log(culturalAsset);
     return culturalAsset;
   }
 

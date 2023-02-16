@@ -43,7 +43,7 @@ const elementBoxSx = {
 
 const iconSx = { 
   color: "#ffffff", 
-  fontSize: "50px" 
+  fontSize: "40px" 
 };
 
 const getIcon = (objectName) => {
@@ -72,23 +72,23 @@ const CharacteristicGroup = (props) => {
     return <h1></h1>;
   }
 
-  const getGroupType = (element) => {
+  const getGroupType = (element, index) => {
     switch (element.objectName) {
       case "Recomendaciones de Visita":
-        return <ListGroup data ={element}></ListGroup>
+        return <ListGroup key = {index} data ={element}></ListGroup>
       case "Comunidades Etnicas":
-        return <ListGroup data ={element}></ListGroup>
+        return <ListGroup key = {index} data ={element}></ListGroup>
       default:
-        return <TagGroup data = {element}></TagGroup>;
+        return <TagGroup key = {index} data = {element}></TagGroup>;
     }
   }
 
   return (
     <ThemeProvider theme={theme}>
-      {data.map((element) => {
+      {data.map((element, index) => {
         // console.log(element);
         return (
-          getGroupType(element)
+          getGroupType(element, index)
           // <TagGroup data = {element}></TagGroup>
         //   <Box sx={{ marginTop: "2%", marginBottom: "2%" }}>
         //     <Box sx={titleBoxSx}>

@@ -58,7 +58,6 @@ function App() {
 
   const rootBoxSx = {
     background: "linear-gradient(to top, #085c2c, #08a45c)",
-    height: "100vh",
   };
 
   const filterSections = ["Ubicacion", "Categoria", "Clasificacion"];
@@ -91,7 +90,7 @@ function App() {
 
   return (
     // <ThemeProvider theme={theme}>
-    <Box maxWidth={1} maxHeight={1} sx={rootBoxSx}>
+    <Box maxWidth={1}  sx={rootBoxSx}>
       {/* <CulturalAssetListing></CulturalAssetListing> */}
       {/* <Home></Home> */}
       {/* <Header></Header> */}

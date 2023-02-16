@@ -501,7 +501,7 @@ const TourismImpactForm = () => {
     {
       name: "hostSuggestion",
       question:
-        "Qué sugiere usted para que las tradiciones, cultura, cosmogonía y forma de vida, sean respetadas y conservadas ante la visita de turistas?",
+        "¿Qué sugiere usted para que las tradiciones, cultura, cosmogonía y forma de vida, sean respetadas y conservadas ante la visita de turistas?",
       type: "text",
       placeHolder: "Tu respuesta",
       required: true,
@@ -512,7 +512,7 @@ const TourismImpactForm = () => {
     {
       name: "municipalityLacks",
       question:
-        "Qué hace falta en su municipio o ciudad para que el turismo mejore?",
+        "¿Qué hace falta en su municipio o ciudad para que el turismo mejore?",
       type: "text",
       placeHolder: "Tu respuesta",
       required: true,
@@ -523,7 +523,7 @@ const TourismImpactForm = () => {
     {
       name: "hostTourismSectorParticipation",
       codeName: "htsp",
-      question: "Es usted parte del sector turístico de su municipio?",
+      question: "¿Es usted parte del sector turístico de su municipio?",
       type: "checkBoxx",
       options: tourismSector,
       required: true,

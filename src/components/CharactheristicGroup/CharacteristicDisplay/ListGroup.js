@@ -90,11 +90,12 @@ const ListGroup = (props) => {
             </Box>
           </Box>
           <Container>
-          {element.values.map((el) => {
+          {element.values.map((el, index) => {
             return (
               <Grid container direction = {"column"}>
                 <Grid item>
                 <Paragraph
+                  key = {index}
                   color="#ffffff"
                   padding="5px"
                   bold
@@ -104,10 +105,11 @@ const ListGroup = (props) => {
                 </Grid>
                 <Grid item>
                 <ul>
-                  {el.values.map((value) => {
+                  {el.values.map((value, indexx) => {
                     return (
                       <li>
                         <Paragraph
+                          key = {index + indexx}
                           color="#ffffff"
                           padding="5px"
                           content={value}

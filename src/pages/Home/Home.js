@@ -32,7 +32,7 @@ const Home = () => {
       description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     },
     {
-      title: "Reconozcamos los impactos tan chéveres del turismo en donde vivimos.",
+      title: "Reconozcamos los impactos del turismo en donde vivimos.",
       imgSrc : "https://i.imgur.com/9zDA2lh.jpg",
       link : "/impact",
       color : "#088c4c",

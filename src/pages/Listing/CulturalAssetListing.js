@@ -95,7 +95,7 @@ const CulturalAssetListing = () => {
       .then(
         (result) => {
           setAssets(result.data);
-          console.log("printing result data : " + result.data);
+          // console.log("printing result data : " + result.data);
         },
         (error) => {
           console.log(error);
@@ -229,13 +229,15 @@ const CulturalAssetListing = () => {
       <Box sx={resultBox} xs={12}>
         <Grid container direction={"row"} justifyContent="space-evenly">
           {assets.map((element, index) => {
+            console.log(element);
             return (
               <CardElement
                 key={index + element.name}
                 link = {'/asset-detail/'+element.id}
                 item
                 color={"#025928"}
-                imgSrc={minSrcUrl}
+                // imgSrc={minSrcUrl}
+                imgSrc={(element.imageList && element.imageList.length) > 0 ? element.imageList[0].imageBlob : ""}
                 title={element.name}
               ></CardElement>
             );

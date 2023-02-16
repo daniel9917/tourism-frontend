@@ -11,9 +11,9 @@ const ImpactTab = (props) => {
       tabTitle: ft.name,
       content:<Box sx = {{display : "flex", justifyContent : "center"}}>{ (
         
-          ft.factorList.map((factor) => {
+          ft.factorList.map((factor, index) => {
             {
-              return <RadarChart data={factor}></RadarChart>;
+              return <RadarChart  key = {index} data={factor}></RadarChart>;
             }
           })
       )
