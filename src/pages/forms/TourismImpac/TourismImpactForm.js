@@ -26,6 +26,7 @@ import { ExpandMoreRounded } from "@mui/icons-material";
 import axios from "axios";
 import urls from "../../../urls.json";
 import Header from "../../Header/Header";
+import { useNavigate } from "react-router-dom";
 
 const formBuilderAPI__URL =
   process.env.REACT_APP_BASE_ASSET_URL + "/form-builder";
@@ -111,6 +112,7 @@ const tourismSectorRequest = await getTourismSector;
 
 const TourismImpactForm = () => {
   const initialAssetList = initialAssetsRequest.data;
+  // console.log(process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters");
 
   const munList = municipalitiesRequest.data.values.map((value) => {
     return {
@@ -138,7 +140,7 @@ const TourismImpactForm = () => {
   const ethngList = ethnicGroupRequest.data.values.map((value) => {
     return {
       name: `${value.name}`,
-      communityTypeId : `${value.communityTypeId}`,
+      communityTypeId: `${value.communityTypeId}`,
       value: `${value.id}`,
     };
   });
@@ -235,9 +237,33 @@ const TourismImpactForm = () => {
 
   const [isFetched, setIsFetched] = useState(false);
   // const [assets, setAssets] = useState([]);
-  const [assets, setAssets] = useState(initialAssetList);
+  const [assets, setAssets] = useState([]);
   const [selectedAssets, setSelectedAssets] = useState([]);
-  const [url, setUrl] = useState("");
+  const [changed, setChanged] = useState(false);
+  const [url, setUrl] = useState(
+    process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"
+  );
+
+  useEffect(() => {
+    async function fetchData() {
+      if (!(url === process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters")) {
+        const response = await fetch(url);
+        response.json().then((response) => {
+          // console.log(response);
+          alert("assets updated");
+          setAssets(response.data ? response.data : []);
+          setIsFetched(true);
+        });
+      }
+    }
+    fetchData();
+  }, [url]);
+
+  const navigate = useNavigate();
+
+  const refreshPage = () => {
+    navigate(0);
+  };
 
   const getBasicQuestions = () => {
     let basicQuestions = [
@@ -269,15 +295,17 @@ const TourismImpactForm = () => {
         type: "selectList",
         options: departments,
         onChange: (evt) => {
+          // console.log(assets);
           setMunicipalities(
             munList.filter((ca) => ca.parentLocationId === evt.target.value)
           );
-          setUrl(
-            `${
-              process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"
-            }?location=${evt.target.value}`
-          );
-          console.log(assets);
+          var u =
+            process.env.REACT_APP_BASE_ASSET_URL +
+            "/list-by-filters?" +
+            "location=" +
+            evt.target.value;
+          // console.log(u);
+          setUrl(u);
         },
         required: true,
         color: "darkgreen",
@@ -288,12 +316,13 @@ const TourismImpactForm = () => {
         type: "selectList",
         options: municipalities,
         onChange: (evt) => {
-          setUrl(
-            `${
-              process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"
-            }?location=${evt.target.value}`
-          );
-          console.log(assets);
+          var u =
+            process.env.REACT_APP_BASE_ASSET_URL +
+            "/list-by-filters?" +
+            "location=" +
+            evt.target.value;
+          // console.log(u);
+          setUrl(u);
         },
         required: true,
         color: "darkgreen",
@@ -305,8 +334,10 @@ const TourismImpactForm = () => {
         options: ethnicities,
         required: true,
         onChange: (evt) => {
-          console.log(evt.target.value);
-          setEhtnicGroup(ethngList.filter(eg => eg.communityTypeId === evt.target.value));
+          // console.log(evt.target.value);
+          setEhtnicGroup(
+            ethngList.filter((eg) => eg.communityTypeId === evt.target.value)
+          );
         },
         color: "darkgreen",
       },
@@ -314,30 +345,27 @@ const TourismImpactForm = () => {
         name: "ethnicity",
         question: "¿A qué pueblo pertenece?",
         onChange: (evt) => {
-          console.log(evt.target.value);
+          // console.log(evt.target.value);
           // console.log(assets);
-
-          console.log(
-            assets.data.filter((asset) =>
-              asset.assetCommunities
-                .map((assetCommunity) => assetCommunity.communityId)
-                .includes(evt.target.value)
-            )
-          );
-
-          setSelectedAssets(
-            assets.data.filter((asset) =>
-              asset.assetCommunities
-                .map((assetCommunity) => assetCommunity.communityId)
-                .includes(evt.target.value)
-            )
-          );
+          // console.log(
+          //   assets.data.filter((asset) =>
+          //     asset.assetCommunities
+          //       .map((assetCommunity) => assetCommunity.communityId)
+          //       .includes(evt.target.value)
+          //   )
+          // );
+          // setSelectedAssets(
+          //   assets.data.filter((asset) =>
+          //     asset.assetCommunities
+          //       .map((assetCommunity) => assetCommunity.communityId)
+          //       .includes(evt.target.value)
+          //   )
+          // );
           // assets.data.map(
           //   asset => {
           //     console.log(asset);
           //   }
           // );
-
           // assets.data.filter(
           //   asset => asset.assetCommunitites.map(assetCommunity => {assetCommunity.communityId}).includes("")
           // )
@@ -540,17 +568,23 @@ const TourismImpactForm = () => {
       question: "Usted conoce estos activos culturales de su region?",
       type: "dimensionCriteria",
       criteria: ["Si", "No"],
-      options: selectedAssets && selectedAssets.length > 0
-      ? selectedAssets.map((a) => {
-          return {
-            name: a.id,
-            value: a.name,
-          };
-        })
-      : [{
-        name : "",
-        value : 0
-      }],
+      options: assets.map((a) => {
+        return {
+          name: a.id,
+          value: a.name,
+        };
+      }),
+      // options: selectedAssets && selectedAssets.length > 0
+      // ? selectedAssets.map((a) => {
+      //     return {
+      //       name: a.id,
+      //       value: a.name,
+      //     };
+      //   })
+      // : [{
+      //   name : "",
+      //   value : 0
+      // }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -563,17 +597,23 @@ const TourismImpactForm = () => {
         "En su conocimiento, alguno de estos activos culturales es sagrado?",
       type: "dimensionCriteria",
       criteria: ["Si", "No", "No se"],
-      options: selectedAssets && selectedAssets.length > 0
-      ? selectedAssets.map((a) => {
-          return {
-            name: a.id,
-            value: a.name,
-          };
-        })
-      : [{
-        name : "",
-        value : 0
-      }],
+      options: assets.map((a) => {
+        return {
+          name: a.id,
+          value: a.name,
+        };
+      }),
+      // options: selectedAssets && selectedAssets.length > 0
+      // ? selectedAssets.map((a) => {
+      //     return {
+      //       name: a.id,
+      //       value: a.name,
+      //     };
+      //   })
+      // : [{
+      //   name : "",
+      //   value : 0
+      // }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -596,17 +636,23 @@ const TourismImpactForm = () => {
         "Ha mejorado su aspecto",
         "Ninguno",
       ],
-      options: selectedAssets && selectedAssets.length > 0
-      ? selectedAssets.map((a) => {
-          return {
-            name: a.id,
-            value: a.name,
-          };
-        })
-      : [{
-        name : "",
-        value : 0
-      }],
+      options: assets.map((a) => {
+        return {
+          name: a.id,
+          value: a.name,
+        };
+      }),
+      // options: selectedAssets && selectedAssets.length > 0
+      // ? selectedAssets.map((a) => {
+      //     return {
+      //       name: a.id,
+      //       value: a.name,
+      //     };
+      //   })
+      // : [{
+      //   name : "",
+      //   value : 0
+      // }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -629,17 +675,23 @@ const TourismImpactForm = () => {
         "Se ha dañado su aspecto",
         "Ninguno",
       ],
-      options: selectedAssets && selectedAssets.length > 0
-      ? selectedAssets.map((a) => {
-          return {
-            name: a.id,
-            value: a.name,
-          };
-        })
-      : [{
-        name : "",
-        value : 0
-      }],
+      options: assets.map((a) => {
+        return {
+          name: a.id,
+          value: a.name,
+        };
+      }),
+      // options: selectedAssets && selectedAssets.length > 0
+      // ? selectedAssets.map((a) => {
+      //     return {
+      //       name: a.id,
+      //       value: a.name,
+      //     };
+      //   })
+      // : [{
+      //   name : "",
+      //   value : 0
+      // }],
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -652,17 +704,23 @@ const TourismImpactForm = () => {
         "Según su opinión, ¿estos activos culturales pueden ser usados como atractivos turísticos?",
       type: "dimensionCriteria",
       criteria: ["Si", "No", "Tal vez"],
-      options: selectedAssets && selectedAssets.length > 0
-        ? selectedAssets.map((a) => {
-            return {
-              name: a.id,
-              value: a.name,
-            };
-          })
-        : [{
-          name : "",
-          value : 0
-        }],
+      // options: selectedAssets && selectedAssets.length > 0
+      //   ? selectedAssets.map((a) => {
+      //       return {
+      //         name: a.id,
+      //         value: a.name,
+      //       };
+      //     })
+      //   : [{
+      //     name : "",
+      //     value : 0
+      //   }],
+      options: assets.map((a) => {
+        return {
+          name: a.id,
+          value: a.name,
+        };
+      }),
       required: true,
       hex: "#e0dcdc",
       rgb: [224, 220, 220],
@@ -757,7 +815,7 @@ const TourismImpactForm = () => {
                         value={option.value}
                         control={
                           <Radio
-                            {...register(question.name, { required: true })}                            
+                            {...register(question.name, { required: true })}
                             color="success"
                           />
                         }
@@ -790,9 +848,6 @@ const TourismImpactForm = () => {
                         control={
                           <Radio
                             {...register(question.name, { required: true })}
-                            onClick={() => {
-                              console.log(register.selectTest);
-                            }}
                             color="success"
                           />
                         }
@@ -824,7 +879,6 @@ const TourismImpactForm = () => {
                 <Select
                   value={register.selectTest}
                   fullWidth
-                  onChange={question.onChange}
                   {...register(question.name, {
                     onChange: question.onChange,
                   })}
@@ -1048,9 +1102,9 @@ const TourismImpactForm = () => {
                                   <input
                                     type="radio"
                                     name={question.codeName}
-                                    style = {{ "width": "1.5em",  "height" : "1.5em"}}
+                                    style={{ width: "1.5em", height: "1.5em" }}
                                     {...register(
-                                      question.codeName + "." + index, 
+                                      question.codeName + "." + index,
                                       { required: question.required }
                                     )}
                                     value={i}
@@ -1146,7 +1200,7 @@ const TourismImpactForm = () => {
                                 return (
                                   <input
                                     type="radio"
-                                    style = {{ "width": "1.5em",  "height" : "1.5em"}}
+                                    style={{ width: "1.5em", height: "1.5em" }}
                                     name={question.codeName}
                                     {...register(
                                       question.codeName + "." + index,
@@ -1513,6 +1567,7 @@ const TourismImpactForm = () => {
     axios.post(process.env.REACT_APP_BASE_HOST_URL, host).then((res) => {
       console.log(res);
       alert("Successfully posted host");
+      refreshPage();
     });
   };
 
@@ -1522,22 +1577,11 @@ const TourismImpactForm = () => {
     return bg;
   }
 
-  async function fetchData() {
-    console.log(url);
-    const response = await fetch(url);
-    response.json().then((response) => {
-      setAssets(response);
-      setIsFetched(true);
-    });
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (isFetched) {
-    console.log(assets);
-  }
+  // if (isFetched) {
+  //   console.log(assets);
+  // }
+  // console.log(initialAssetList);
+  console.log(assets);
 
   return (
     <ThemeProvider theme={theme}>
@@ -1727,7 +1771,7 @@ const TourismImpactForm = () => {
                 })}
               </Box>
 
-              {selectedAssets.length > 0 && (
+              {assets.length > 0 && (
                 <Box>
                   <Box paddingTop={"3%"}>
                     <Title

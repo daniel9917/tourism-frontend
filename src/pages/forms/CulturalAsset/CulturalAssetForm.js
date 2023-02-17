@@ -27,6 +27,8 @@ import Title from "../../../components/Fonts/Title";
 import axios from "axios";
 import InputMap from "../../../components/Maps/InputMap";
 import "./CulturalAssetForm.css";
+import { useNavigate } from "react-router-dom";
+
 
 import Header from "../../Header/Header";
 
@@ -382,6 +384,12 @@ const CulturalAssetForm = () => {
   const [imagenes, setImagenes] = useState([]);
 
   const [criteriaQuestions, setCriteriaQuestions] = useState([]);
+
+  const navigate = useNavigate();
+
+  const refreshPage = () => {
+    navigate(0);
+  };
 
   const updatedLocationObject = (locationDTO) => {
     //Ordering for assetts, this must match the Value in the database.
@@ -2109,8 +2117,9 @@ const CulturalAssetForm = () => {
       headers: headers,
       data: asset,
     }).then((res) => {
-      console.log(res);
+      console.log(res);      
       alert("Successfully posted host");
+      refreshPage();
     });
 
     // axios.post(urls.baseAssetURL, asset).then((res) => {

@@ -35,8 +35,9 @@ const imgBox = {
 };
 
 const mainBoxSx = {
-    background: "#a2e4f3",
+  background: "#a2e4f3",
   // backgroundImage: "url(" + imgUrl + ")",
+  minHeight : "100vh",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
 };
@@ -60,12 +61,14 @@ const CulturalAssetDetail = () => {
   const [isFetched, setIsFetched] = useState(false);
 
   const ref = useRef(null);
-    const onClickScroll = () => {
-      ref.current?.scrollIntoView({ behavior: "smooth" });
-    };
+  const onClickScroll = () => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   async function fetchData() {
-    const response = await fetch(`${process.env.REACT_APP_BASE_ASSET_URL}/${assetId}`);
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_ASSET_URL}/${assetId}`
+    );
     // const response = await fetch(`${urls.baseAssetURL}/${assetId}`);
     response.json().then((response) => {
       setAssetDetaill(response);
@@ -77,14 +80,18 @@ const CulturalAssetDetail = () => {
     fetchData();
   }, []);
 
-
   if (isFetched) {
     console.log(assetDetaill);
     const dataDTOList = assetDetaill.dataDTOList;
     const maturityDTO = assetDetaill.maturityDTO.values[0];
-    const typologyDTO = {objectName : 'typology', values :assetDetaill.typologyDTO.values[0]};
-    const assetCriteriaList = { objectName : 'criteria', values : assetDetaill.assetCriteriaList};
-
+    const typologyDTO = {
+      objectName: "typology",
+      values: assetDetaill.typologyDTO.values[0],
+    };
+    const assetCriteriaList = {
+      objectName: "criteria",
+      values: assetDetaill.assetCriteriaList.slice(0, assetDetaill.assetCriteriaList.length - 1),
+    };
 
     return (
       <ThemeProvider theme={theme}>
@@ -100,14 +107,7 @@ const CulturalAssetDetail = () => {
               textAlign="center"
               titleName={assetDetaill.name}
             ></Title>
-            <Box sx={{ paddingTop: "5%" }}>
-              <Paragraph
-                size="normal"
-                color="#194A47"
-                content={assetDetaill.description}
-                textAlign="center"
-              ></Paragraph>
-            </Box>
+
             {/* Gallery Caroussel */}
             <Box sx={{ paddingTop: "5%" }} height="70%">
               <Carousel
@@ -167,7 +167,17 @@ const CulturalAssetDetail = () => {
               shadow="2px 2px 6px black"
               color="#025928"
               size="1.3rem"
-              content={assetDetaill.alternateNames ? assetDetaill.alternateNames: ""}
+              content={
+                assetDetaill.alternateNames ? assetDetaill.alternateNames : ""
+              }
+            ></Paragraph>
+          </Box>
+          <Box sx={{ paddingTop: "5%" }}>
+            <Paragraph
+              size="normal"
+              color="#194A47"
+              content={assetDetaill.description}
+              textAlign="center"
             ></Paragraph>
           </Box>
           {/* Asset characteristics */}
@@ -176,8 +186,8 @@ const CulturalAssetDetail = () => {
           </Container>
           <br></br>
           <br></br>
-          <BarChart data = {typologyDTO}></BarChart>
-          <BarChart data = {assetCriteriaList}></BarChart>
+          <BarChart data={typologyDTO}></BarChart>
+          <BarChart data={assetCriteriaList}></BarChart>
           {/* Asset Impact  */}
           <Box>
             <Title
