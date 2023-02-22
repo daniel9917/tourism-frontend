@@ -25,6 +25,12 @@ const theme = createTheme({
   },
 });
 
+const barBoxSx = {
+  background: "#D9D9D9",
+  "border-radius": "20px",
+  padding: "20px",
+};
+
 const imgUrl =
   "https://wallpapercrafter.com/sizes/1920x1080/142984-Colombia-mountains-clouds-sunlight-forest-landscape-trees.jpg";
 
@@ -37,7 +43,7 @@ const imgBox = {
 const mainBoxSx = {
   background: "#a2e4f3",
   // backgroundImage: "url(" + imgUrl + ")",
-  minHeight : "100vh",
+  minHeight: "100vh",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
 };
@@ -90,7 +96,10 @@ const CulturalAssetDetail = () => {
     };
     const assetCriteriaList = {
       objectName: "criteria",
-      values: assetDetaill.assetCriteriaList.slice(0, assetDetaill.assetCriteriaList.length - 1),
+      values: assetDetaill.assetCriteriaList.slice(
+        0,
+        assetDetaill.assetCriteriaList.length - 1
+      ),
     };
 
     return (
@@ -107,6 +116,23 @@ const CulturalAssetDetail = () => {
               textAlign="center"
               titleName={assetDetaill.name}
             ></Title>
+            <Box sx={otherNamesBoxSx}>
+              <Paragraph
+                bold
+                color="#025928"
+                size="1.3rem"
+                content="Otros Nombres: "
+              ></Paragraph>
+              <Paragraph
+                fontStyle="italic"
+                shadow="2px 2px 6px black"
+                color="#025928"
+                size="1.3rem"
+                content={
+                  assetDetaill.alternateNames ? assetDetaill.alternateNames : ""
+                }
+              ></Paragraph>
+            </Box>
 
             {/* Gallery Caroussel */}
             <Box sx={{ paddingTop: "5%" }} height="70%">
@@ -155,39 +181,46 @@ const CulturalAssetDetail = () => {
             textAlign="center"
             titleName="Descripción del activo"
           ></Title>
-          <Box sx={otherNamesBoxSx}>
-            <Paragraph
-              bold
-              color="#025928"
-              size="1.3rem"
-              content="Otros Nombres: "
-            ></Paragraph>
-            <Paragraph
-              fontStyle="italic"
-              shadow="2px 2px 6px black"
-              color="#025928"
-              size="1.3rem"
-              content={
-                assetDetaill.alternateNames ? assetDetaill.alternateNames : ""
-              }
-            ></Paragraph>
-          </Box>
           <Box sx={{ paddingTop: "5%" }}>
-            <Paragraph
-              size="normal"
-              color="#194A47"
-              content={assetDetaill.description}
-              textAlign="center"
-            ></Paragraph>
+            <Container>
+              <Paragraph
+                size="normal"
+                color="#194A47"
+                content={assetDetaill.description}
+                textAlign="center"
+              ></Paragraph>
+            </Container>
           </Box>
           {/* Asset characteristics */}
           <Container sx={{ paddingTop: "2%" }}>
             <CharacteristicGroup data={dataDTOList}></CharacteristicGroup>
+            <Container sx={barBoxSx}>
+              <Title
+                padding="3%"
+                size="big"
+                shadow="lighter-gray"
+                color="#f9f9f9"
+                textAlign="center"
+                titleName="Tipolología del activo"
+              ></Title>
+              <BarChart data={typologyDTO}></BarChart>
+            </Container>
+            <br></br>
+            <br></br>
+            <Container sx={barBoxSx}>
+              <Title
+                padding="3%"
+                size="big"
+                shadow="lighter-gray"
+                color="#f9f9f9"
+                textAlign="center"
+                titleName="Criterios de calidad"
+              ></Title>
+              <BarChart data={assetCriteriaList}></BarChart>
+            </Container>
           </Container>
           <br></br>
           <br></br>
-          <BarChart data={typologyDTO}></BarChart>
-          <BarChart data={assetCriteriaList}></BarChart>
           {/* Asset Impact  */}
           <Box>
             <Title
@@ -196,7 +229,7 @@ const CulturalAssetDetail = () => {
               shadow="2px 5px 7px grey"
               color="#e35934"
               textAlign="center"
-              titleName="Impactos sobre la comunidades"
+              titleName="Impactos sobre la comunidad del destino"
             ></Title>
           </Box>
 

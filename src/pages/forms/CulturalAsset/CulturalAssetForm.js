@@ -145,7 +145,7 @@ const CulturalAssetForm = () => {
       value: `${value.id}`,
       groupId: `${value.groupId}`,
       min: `${value.min}`,
-      max: `${value.max}`
+      max: `${value.max}`,
     };
   });
 
@@ -175,7 +175,7 @@ const CulturalAssetForm = () => {
   const ethngList = ehtnicGroups.data.values.map((value) => {
     return {
       name: `${value.name}`,
-      communityTypeId : `${value.communityTypeId}`,
+      communityTypeId: `${value.communityTypeId}`,
       value: `${value.id}`,
     };
   });
@@ -337,10 +337,10 @@ const CulturalAssetForm = () => {
     }
   );
 
-  const [selectedGroupId, setSelectedGroupId] = useState('');
-  const [selectedGroup, setSelectedGroup] = useState(
-    {name : "No hay un grupo seleccionado. Por favor elija un subtipo valido."}
-  );
+  const [selectedGroupId, setSelectedGroupId] = useState("");
+  const [selectedGroup, setSelectedGroup] = useState({
+    name: "No hay un grupo seleccionado. Por favor elija un subtipo valido.",
+  });
   const [selectedAssetCommunities, setSelectedAssetCommunities] = useState([]);
   const [selectedSubtype, setSelectedSubtype] = useState("");
   const [selectedMun, setSelectedMun] = useState("");
@@ -472,8 +472,8 @@ const CulturalAssetForm = () => {
           setCriteriaQuestions(getCriteriaQuestions(groupId));
           // Obtaining selected subtype
           setSelectedSubtype(evt.target.value);
-          // Obtaining selected group for rendering          
-          setSelectedGroup(groupList.filter(g => g.value === groupId)[0]);
+          // Obtaining selected group for rendering
+          setSelectedGroup(groupList.filter((g) => g.value === groupId)[0]);
           setSelectedGroupId(groupId);
         },
         options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
@@ -585,6 +585,9 @@ const CulturalAssetForm = () => {
             value: false,
           },
         ],
+        onChange: (evt) => {
+          console.log(evt.target.value);
+        },
         required: true,
         color: "#b03404",
       },
@@ -1206,6 +1209,7 @@ const CulturalAssetForm = () => {
 
   const loadImages = () => {
     console.log(fileToBase64(imageList));
+    alert("Imagenes cargadas");
   };
 
   const handleImageList = (evt) => {
@@ -1325,8 +1329,8 @@ const CulturalAssetForm = () => {
                   name={question.name}
                   {...register(question.name, {
                     required: question.required,
-                      min : question.min, 
-                      max : question.max
+                    min: question.min,
+                    max: question.max,
                   })}
                   fullWidth
                   placeholder={question.placeHolder}
@@ -1571,9 +1575,12 @@ const CulturalAssetForm = () => {
                   onChange={question.onChange}
                   input={<OutlinedInput label="Tag" />}
                   renderValue={(selected) =>
-                    (selected.length > 7) ? 
-                          selected.slice(0,6).map((x) => x.name).join(", ") : 
-                          selected.map((x) => x.name).join(", ")
+                    selected.length > 7
+                      ? selected
+                          .slice(0, 6)
+                          .map((x) => x.name)
+                          .join(", ")
+                      : selected.map((x) => x.name).join(", ")
                   }
                 >
                   {question.options.map((option) => (
@@ -1689,7 +1696,7 @@ const CulturalAssetForm = () => {
                                 // console.log(i + option.value);
                                 return (
                                   <input
-                                  style = {{ "width": "1.5em",  "height" : "1.5em"}}
+                                    style={{ width: "1.5em", height: "1.5em" }}
                                     type="radio"
                                     name={question.codeName}
                                     {...register(
@@ -2077,12 +2084,6 @@ const CulturalAssetForm = () => {
                       </Grid>
                     );
                   })}
-                  <Grid item>
-                    <FormControlLabel
-                      control={<Checkbox color="success" width={"100%"} />}
-                      label={<TextField fullWidth label="¿Otro?, ¿Cuál?" />}
-                    />
-                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
@@ -2117,7 +2118,7 @@ const CulturalAssetForm = () => {
       headers: headers,
       data: asset,
     }).then((res) => {
-      console.log(res);      
+      console.log(res);
       alert("Successfully posted host");
       refreshPage();
     });
@@ -2227,10 +2228,10 @@ const CulturalAssetForm = () => {
     //Formating sports in request
     culturalAsset.assetSportList = body.sp
       .map((s) => {
-          return {
-              sportId : s.substring(1, s.length),
-              score : s[0]
-            };
+        return {
+          sportId: s.substring(1, s.length),
+          score: s[0],
+        };
       })
       .filter((element) => {
         return element !== undefined;
@@ -2238,7 +2239,7 @@ const CulturalAssetForm = () => {
       .map((sport) => {
         return {
           sportId: sport.sportId,
-          score : sport.score
+          score: sport.score,
         };
       });
 
@@ -2246,8 +2247,8 @@ const CulturalAssetForm = () => {
     const offerTour = body.tr
       .map((s) => {
         return {
-          offerId :s.substring(1, s.length),
-          score : s[0]
+          offerId: s.substring(1, s.length),
+          score: s[0],
         };
       })
       .filter((element) => {
@@ -2257,8 +2258,8 @@ const CulturalAssetForm = () => {
     const offerFolk = body.folk
       .map((s) => {
         return {
-          offerId :s.substring(1, s.length),
-          score : s[0]
+          offerId: s.substring(1, s.length),
+          score: s[0],
         };
       })
       .filter((element) => {
@@ -2267,10 +2268,10 @@ const CulturalAssetForm = () => {
 
     const offerOtherServices = body.os
       .map((s) => {
-          return {
-            offerId :s.substring(1, s.length),
-            score : s[0]
-          };
+        return {
+          offerId: s.substring(1, s.length),
+          score: s[0],
+        };
       })
       .filter((element) => {
         return element !== undefined;
@@ -2281,37 +2282,37 @@ const CulturalAssetForm = () => {
     culturalAsset.assetOfferList = fullOfferList.map((offer) => {
       return {
         offerId: offer.offerId,
-        score : offer.score
+        score: offer.score,
       };
     });
 
     //Formating vulnerabilities in request
     const vulnerabilitiesLists = body.vuln
       .map((s) => {
-        if (s[0] === "0") {
-          return s.substring(1, s.length);
-        }
+        return {
+          vulnerabilityId: s.substring(1, s.length),
+          score: s[0],
+        };
       })
       .filter((element) => {
         return element !== undefined;
+      })
+      .map((vulnerability) => {
+        return {
+          vulnerabilityId: vulnerability.vulnerabilityId,
+          score: vulnerability.score,
+        };
       });
 
     culturalAsset.assetVulnerabilityList = vulnerabilitiesLists;
-    culturalAsset.assetVulnerabilityList = vulnerabilitiesLists.map(
-      (vulnerabilityId) => {
-        return {
-          vulnerabilityId: vulnerabilityId,
-        };
-      }
-    );
 
     //Formating nature in request
     const fullNatureList = body.nat
       .map((s) => {
-          return {
-            natureId : s.substring(1, s.length),
-            score : s[0]
-          };
+        return {
+          natureId: s.substring(1, s.length),
+          score: s[0],
+        };
       })
       .filter((element) => {
         return element !== undefined;
@@ -2319,7 +2320,7 @@ const CulturalAssetForm = () => {
     culturalAsset.assetNatureList = fullNatureList.map((nature) => {
       return {
         natureId: nature.natureId,
-        score : nature.score
+        score: nature.score,
       };
     });
 
@@ -2376,7 +2377,6 @@ const CulturalAssetForm = () => {
         recommendationId: r,
       };
     });
-
 
     console.log(culturalAsset);
     return culturalAsset;
@@ -2439,7 +2439,6 @@ const CulturalAssetForm = () => {
                   return getQuestion(question);
                 })}
               </Box>
-
               <Box paddingTop={"5%"}>
                 <Title
                   shadow="bottom-left"

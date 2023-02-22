@@ -41,8 +41,27 @@ const getTypologyData = (obj) => {
 };
 
 const getLabels = (obj) => {
-  return obj.map((o) => o.objectName);
+  return obj.map((o) => getActualLabel(o.objectName));
 };
+
+const getActualLabel = (str) => {
+  switch (str) {
+    case "Nature" :
+      return "Total Naturaleza";
+    case "DEPORTES ACUÁTICOS":
+      return "Total Deportes Acuáticos";
+    case "DEPORTES AVENTURA" :
+      return "Total Deportes Aventura";      
+    case "recorridos_turisticos" :
+      return "Total Oferta Recorridos Turísticos";  
+    case "folklore" :
+      return "Total Oferta Folklore";
+    case "otros_servicios" :
+      return "Total Otros Servicios";
+    default :
+      return "Criterio";
+  }
+}
 
 const getCriteriaData = (obj) => {
   //   return obj.map((ob) =>

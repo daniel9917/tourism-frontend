@@ -24,7 +24,6 @@ ChartJS.register(
   Legend
 );
 
-
 const cardBoxSx = {
   // margin: "1%",
   width: "30%",
@@ -35,11 +34,10 @@ const cardBoxSx = {
   flexDirection: "column",
 };
 
-
 const getTotalScores = (factorTypeList) => {
-  return factorTypeList.map((factorType) => {
-    return (
-      factorType.factorList
+  return factorTypeList
+    .map((factorType) => {
+      return factorType.factorList
         .map((factor) => {
           return (
             factor.characteristicList
@@ -50,16 +48,27 @@ const getTotalScores = (factorTypeList) => {
         })
         .filter((value) => {
           return !Number.isNaN(value);
-        })
-    )
-    return "";
-  }).flat(1);
+        });
+      return "";
+    })
+    .flat(1);
 };
 
 const getLabels = (factorTypeList) => {
-  return factorTypeList.map((ft) => ft.factorList.map( f => {
-    return f.name;
-  })).flat(1).filter(o => !((o === "COSMOGONY AND TRADITION") || (o === "ACCEPTANCE AND PARTICIPATION")));
+  return factorTypeList
+    .map((ft) =>
+      ft.factorList.map((f) => {
+        return f.name;
+      })
+    )
+    .flat(1)
+    .filter(
+      (o) =>
+        !(
+          o === "COSMOGONY AND TRADITION" ||
+          o === "ACCEPTANCE AND PARTICIPATION"
+        )
+    );
 };
 
 const RadarChart = (props) => {
@@ -68,7 +77,7 @@ const RadarChart = (props) => {
       labels: getLabels(props.data),
       datasets: [
         {
-          label : "Impacto Acumulado",
+          label: "Impacto Acumulado",
           data: getTotalScores(props.data),
           backgroundColor: [
             "rgb(255, 99, 132)",
@@ -82,11 +91,13 @@ const RadarChart = (props) => {
         },
       ],
     };
-    return <Box sx = {cardBoxSx}>
-      <Box sx={{ display: "block", width: "100%" }}>
-        <PolarArea data={data}></PolarArea>
+    return (
+      <Box sx={cardBoxSx}>
+        <Box sx={{ display: "block", width: "100%" }}>
+          <PolarArea data={data}></PolarArea>
+        </Box>
       </Box>
-    </Box>;
+    );
   }
 
   const factor = props.data;
@@ -128,6 +139,46 @@ const RadarChart = (props) => {
         return "Relación con el turista";
       case "COMMUNITY SHOULD DEFINE":
         return "Los miembros de la comunidad deberian participar en definir";
+      case "REST":
+        return "Descanso";
+      case "TRANSIT":
+        return "Tránsito";
+      case "CULTURAL RESPECT":
+        return "Respeto Cultural";
+      case "ACCULTURATION":
+        return "Aculturación";
+      case "DISPLACEMENT":
+        return "Desplazamiento";
+      case "SOCIAL RESPECT":
+        return "Respeto Social";
+      case "SECURITY":
+        return "Seguridad";
+      case "DRUG ADDICTION":
+        return "Drogadicción";
+      case "PROSTITUTION":
+        return "Prostitución";
+      case "BEGGING":
+        return "Mendicidad";
+      case "CULTURAL MODIFICATION":
+        return "MOdificación Cultural";
+      case "SACRED RESPECT":
+        return "Respeto Sagrado";
+      case "REJECT MOCK":
+        return "Burla o rechazo";
+      case "TRADITIONAL USE":
+        return "Usos Tradicionales";
+      case "LINGUISTIC LOSS":
+        return "Pérdida lingüística";
+      case "COMMODIFICATION":
+        return "Mercantilización";
+      case "ACCEPTANCE":
+        return "Aceptación";
+      case "BENEFIT":
+        return "Beneficio";
+      case "PRICES":
+        return "Precios";
+      case "TOURIST CONDUCT":
+        return "Conducta del turista";
       default:
         return "Impacto";
     }
