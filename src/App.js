@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
 import CulturalAssetForm from "./pages/forms/CulturalAsset/CulturalAssetForm";
+import CulturalAssetUpdate from "./pages/forms/CulturalAsset/update/CulturalAssetUpdate";
 import Home from "./pages/Home/Home";
 import CulturalAssetListing from "./pages/Listing/CulturalAssetListing";
 import FilterGroup from "./components/Filters/FilterGroup/FilterGroup";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
       path : "/asset",
       element : <CulturalAssetForm></CulturalAssetForm>
+    },
+    {
+      path : "/asset/:assetId",
+      element : <CulturalAssetUpdate></CulturalAssetUpdate>
     },
     {
       path : "/asset-detail/:assetId",

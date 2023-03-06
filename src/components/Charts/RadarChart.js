@@ -32,6 +32,7 @@ const cardBoxSx = {
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
+  flexWrap: "wrap",
 };
 
 const getTotalScores = (factorTypeList) => {
@@ -41,7 +42,11 @@ const getTotalScores = (factorTypeList) => {
         .map((factor) => {
           return (
             factor.characteristicList
-              .map((cl) => cl.averageCharacteristicScore)
+              .map((cl) =>
+                isNaN(+cl.averageCharacteristicScore)
+                  ? 0
+                  : +cl.averageCharacteristicScore
+              )
               .reduce((partialSum, a) => partialSum + a, 0) /
             factor.characteristicList.length
           );
@@ -49,7 +54,6 @@ const getTotalScores = (factorTypeList) => {
         .filter((value) => {
           return !Number.isNaN(value);
         });
-      return "";
     })
     .flat(1);
 };
@@ -58,7 +62,7 @@ const getLabels = (factorTypeList) => {
   return factorTypeList
     .map((ft) =>
       ft.factorList.map((f) => {
-        return f.name;
+        return getActualName(f.name);
       })
     )
     .flat(1)
@@ -71,14 +75,55 @@ const getLabels = (factorTypeList) => {
     );
 };
 
+
+const getActualName = (str) => {
+  switch (str) {
+    case "SOCIAL RELATIONSHIPS":
+      return "Relaciones Sociales";
+    case "PERSONAL SECURITY":
+      return "Seguridad Personal";
+    case "COSMOGONY TRADITION":
+      return "Cosmogonía y tradición";
+    case "PARTICIPATION":
+      return "Participación";
+    default:
+      return str;
+  }
+};
+
+const options = {
+  scales: {
+    r: {
+      min: 0,
+      max: 3,
+      beginAtZero: true,
+    },
+  },
+};
+
 const RadarChart = (props) => {
   if (props.cummulative) {
+    const a = getTotalScores(props.data);
+    const numParts = 4;
+    const partSize = Math.ceil(a.length / numParts);
+
+    const parts = [];
+
+    for (let i = 0; i < numParts; i++) {
+      const start = i * partSize;
+      const end = start + partSize;
+      parts.push(a.slice(start, end));
+    }
+
+    const aData = parts.map((p) => {
+      return p.map((num) => num).reduce((a, b) => a + b, 0) / 5;
+    });
     let data = {
-      labels: getLabels(props.data),
+      labels: props.labels,
       datasets: [
         {
           label: "Impacto Acumulado",
-          data: getTotalScores(props.data),
+          data: aData,
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(175, 192, 192)",
@@ -91,6 +136,7 @@ const RadarChart = (props) => {
         },
       ],
     };
+
     return (
       <Box sx={cardBoxSx}>
         <Box sx={{ display: "block", width: "100%" }}>
@@ -150,7 +196,7 @@ const RadarChart = (props) => {
       case "DISPLACEMENT":
         return "Desplazamiento";
       case "SOCIAL RESPECT":
-        return "Respeto Social";
+        return "Resentimiento Social";
       case "SECURITY":
         return "Seguridad";
       case "DRUG ADDICTION":
@@ -160,7 +206,7 @@ const RadarChart = (props) => {
       case "BEGGING":
         return "Mendicidad";
       case "CULTURAL MODIFICATION":
-        return "MOdificación Cultural";
+        return "Modificación Cultural";
       case "SACRED RESPECT":
         return "Respeto Sagrado";
       case "REJECT MOCK":
@@ -197,8 +243,8 @@ const RadarChart = (props) => {
       ></Title>
       <br></br>
 
-      <Box sx={{ display: "block", width: "100%" }}>
-        <Radar data={data} options={{}} />
+      <Box sx={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+        <Radar data={data} options={options} />
       </Box>
       <br></br>
       <Title

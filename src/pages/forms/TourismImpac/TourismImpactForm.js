@@ -1008,18 +1008,18 @@ const TourismImpactForm = () => {
   ];
 
   const communityMemberOpinion = [
-    {
-      name: "communityShouldDefine",
-      codeName: "csd",
-      question: "Creo que la comunidad del destino debe participar en definir",
-      type: "dimensionCriteriaa",
-      criteria: ["Si", "No", "Tal vez"],
-      options: communityShouldDefine,
-      required: true,
-      hex: "#e0dcdc",
-      rgb: [224, 220, 220],
-      color: "darkgreen",
-    },
+    // {
+    //   name: "communityShouldDefine",
+    //   codeName: "csd",
+    //   question: "Creo que la comunidad del destino debe participar en definir",
+    //   type: "dimensionCriteriaa",
+    //   criteria: ["Si", "No", "Tal vez"],
+    //   options: communityShouldDefine,
+    //   required: true,
+    //   hex: "#e0dcdc",
+    //   rgb: [224, 220, 220],
+    //   color: "darkgreen",
+    // },
     {
       name: "hostSuggestion",
       question:
@@ -1090,7 +1090,7 @@ const TourismImpactForm = () => {
       question:
         "En su conocimiento, alguno de estos activos culturales es sagrado?",
       type: "dimensionCriteria",
-      criteria: ["Si", "No", "No se"],
+      criteria: ["Si", "No", "No lo sé"],
       options: assets.map((a) => {
         return {
           name: a.id,
@@ -1750,18 +1750,22 @@ const TourismImpactForm = () => {
                       {question.question}{" "}
                     </Typography>
                   </Grid>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
                   <Grid item xs={12}>
                     <Grid container>
-                      <Grid item xs={4}></Grid>
-                      <Grid container justifyContent={"space-around"} xs={8}>
+                      <Grid item xs={2}></Grid>
+                      <Grid container justifyContent={"space-around"} xs={10}>
                         {question.criteria.map((c) => {
                           return (
                             <Grid
                               xs={Math.floor(12 / question.criteria.length)}
                               item
                             >
-                              <Typography
-                                fontWeight={100}
+                              <Typography                                
+                                fontWeight={"bolder"}
                                 color={"#7c8484"}
                                 fontSize={"1rem"}
                               >
@@ -1773,6 +1777,8 @@ const TourismImpactForm = () => {
                       </Grid>
                     </Grid>
                   </Grid>
+                  <br></br>
+                  <br></br>
                   <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                     {question.options.map((option, index) => {
                       return (
@@ -1783,10 +1789,10 @@ const TourismImpactForm = () => {
                           minWidth="100%"
                           alignItems={"center"}
                         >
-                          <Grid item xs={4}>
-                            <Typography>{option.value}</Typography>
+                          <Grid item xs={2}>
+                            <Typography >{option.value}</Typography>
                           </Grid>
-                          <Grid item xs={8}>
+                          <Grid item xs={10}>
                             <Grid
                               container
                               justifyContent={"space-around"}
@@ -2193,15 +2199,15 @@ const TourismImpactForm = () => {
     };
 
     // COMMUNITY SHOULD DEFINE
-    let communityShouldDefineFactor = {
-      factorId: "761d43c6-7292-11ed-a1eb-0242ac120002",
-      characteristicScoreList: communityShouldDefine.map((sr, index) => {
-        return {
-          characteristicId: sr.value,
-          score: +data.csd[index],
-        };
-      }),
-    };
+    // let communityShouldDefineFactor = {
+    //   factorId: "761d43c6-7292-11ed-a1eb-0242ac120002",
+    //   characteristicScoreList: communityShouldDefine.map((sr, index) => {
+    //     return {
+    //       characteristicId: sr.value,
+    //       score: +data.csd[index],
+    //     };
+    //   }),
+    // };
 
     // let qualityOfLifeFactorType = {
     //   factorTypeId: "db181048-725c-11ed-a1eb-0242ac120002",
@@ -2222,10 +2228,10 @@ const TourismImpactForm = () => {
     //   factorList: [accessToGoodsFactor],
     // };
 
-    let touristRelationshipFactoryType = {
-      factorTypeId: "ecc1ebfc-725c-11ed-a1eb-0242ac120002",
-      factorList: [communityShouldDefineFactor],
-    };
+    // let touristRelationshipFactoryType = {
+    //   factorTypeId: "ecc1ebfc-725c-11ed-a1eb-0242ac120002",
+    //   factorList: [communityShouldDefineFactor],
+    // };
 
     // NEW FACTOR TYPES
     let socialRelationshipsFactorType = {
@@ -2277,7 +2283,7 @@ const TourismImpactForm = () => {
         // qualityOfLifeFactorType,
         // wellnessSustainabilityFactoryType,
         // economicSituationFactoryType,
-        touristRelationshipFactoryType,
+        // touristRelationshipFactoryType,
         socialRelationshipsFactorType,
         personalSecurityFactorType,
         comsogonyTraditionFactorType,
@@ -2286,13 +2292,15 @@ const TourismImpactForm = () => {
     };
     host.maturity = maturity;
 
-    host.hostTourismSectorList = data.hostTourismSectorParticipation.map(
-      (htsp) => {
-        return {
-          tourismSectorId: htsp,
-        };
-      }
-    );
+    if (data.hostTourismSectorParticipation) {
+      host.hostTourismSectorList = data.hostTourismSectorParticipation.map(
+        (htsp) => {
+          return {
+            tourismSectorId: htsp,
+          };
+        }
+      );
+    }
 
     console.log(host);
 
@@ -2304,7 +2312,7 @@ const TourismImpactForm = () => {
   const postHost = (host) => {
     axios.post(process.env.REACT_APP_BASE_HOST_URL, host).then((res) => {
       console.log(res);
-      alert("Successfully posted host");
+      alert("Impactos sobre activos cultural registrado!");
       refreshPage();
     });
   };

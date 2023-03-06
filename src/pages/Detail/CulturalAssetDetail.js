@@ -181,16 +181,6 @@ const CulturalAssetDetail = () => {
             textAlign="center"
             titleName="Descripción del activo"
           ></Title>
-          <Box sx={{ paddingTop: "5%" }}>
-            <Container>
-              <Paragraph
-                size="normal"
-                color="#194A47"
-                content={assetDetaill.description}
-                textAlign="center"
-              ></Paragraph>
-            </Container>
-          </Box>
           {/* Asset characteristics */}
           <Container sx={{ paddingTop: "2%" }}>
             <CharacteristicGroup data={dataDTOList}></CharacteristicGroup>
@@ -234,7 +224,7 @@ const CulturalAssetDetail = () => {
           </Box>
 
           <Box sx={{ background: "#B54815" }}>
-            <ImpactTab data={maturityDTO.factorTypeList}></ImpactTab>
+            <ImpactTab data={maturityDTO.factorTypeList.filter(ft => !(ft.name === "BEHAVIOUR LIKE HOST"))}></ImpactTab>
           </Box>
         </Box>
       </ThemeProvider>
