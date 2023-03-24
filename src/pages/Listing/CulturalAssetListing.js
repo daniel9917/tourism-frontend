@@ -90,7 +90,7 @@ const filterObjects = [
   },
   {
     name: "Clasificación",
-    sections: ["Tipo", "Subtipo", "Manifestacion", "Patrimonio", "Categoria"],
+    sections: ["Tipo", "Subtipo", "Manifestacion", "Patrimonio", "Grupo"],
   },
 ];
 
@@ -161,22 +161,21 @@ const CulturalAssetListing = () => {
   };
 
   const addParams = (param) => {
-    var jsonString = JSON.stringify(param);
-    console.log(JSON.parse(jsonString));
     var matchFound = false;
-    for (let index = 0; index < filterParams.length; index++) {
-      if (filterParams[index].name == param.name) {
+    var list = filterParams;
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].name == param.name) {
         matchFound = true;
-        filterParams[index].params = param.params;
-        setFilterParams(filterParams);
+        list[index].params = param.params;
+        setFilterParams(list);
         break;
       }
     }
     if (!matchFound) {
-      filterParams.push(param);
-      setFilterParams(filterParams);
+      list.push(param);
+      setFilterParams(list);
     }
-    console.log(filterParams);
+    console.log(list);
   };
 
   return (
@@ -201,57 +200,23 @@ const CulturalAssetListing = () => {
                   filterObjects={getFilterObjects()}
                   onSelectFilters={addParams}
                   onApplyFilters={getAssets}
+                  onDeleteFilters={() => setFilterParams([])}
                   filterBy={filterParams}
                 ></FilterGroup>
               </Grid>
             </Box>
-            {/* <Box sx={mapBox}>
-              <Grid
-                container
-                direction={"col"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <img
-                  src={mapImgUrl}
-                  style={{
-                    width: "90%",
-                    height: "auto",
-                  }}
-                />
-              </Grid>
-            </Box>
-            <Box sx={descriptionBox}>
-              <Grid
-                direction={"col"}
-                alignItems="center"
-                justifyContent={"center"}
-                maxWidth={"80%"}
-              >
-                <Subtitle
-                  color="#025928"
-                  fontSize="big"
-                  shadowType="light"
-                  content="Mapa de activos"
-                ></Subtitle>
-                <Paragraph
-                  padding={{ top: "5%" }}
-                  content="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "
-                  color="#025928"
-                ></Paragraph>
-              </Grid>
-            </Box> */}
             {/* Result box */}
             <Box sx={resultBoxx}>
               <Grid container direction={"row"} justifyContent="space-evenly">
                 {assets.map((element, index) => {
-                  console.log(element);
+                  // console.log(element);
                   return (
                     <CardElement
                       key={index + element.name}
                       link={"/asset-detail/" + element.id}
                       item
                       color={"#025928"}
+                      fontSize ={"1.5rem"}
                       // imgSrc={minSrcUrl}
                       imgSrc={
                         (element.imageList && element.imageList.length) > 0

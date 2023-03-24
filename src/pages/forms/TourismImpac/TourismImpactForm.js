@@ -1500,7 +1500,8 @@ const TourismImpactForm = () => {
                                     type="radio"
                                     name={question.codeName + "." + index}
                                     {...register(
-                                      question.codeName + "." + index
+                                      question.codeName + "." + index,
+                                      { required: question.required }
                                     )}
                                     value={i}
                                     color="success"

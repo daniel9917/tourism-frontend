@@ -22,14 +22,14 @@ const Home = () => {
       link : "/asset",
       color : "#088c4c",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "",
     },
     {
       title: "Visualizar activos",
       link : "/list",
       imgSrc : "https://i.imgur.com/Zb85TBy.jpg",
       color : "#088c4c",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      description:"",
     },
     {
       title: "Reconozcamos los impactos del turismo en donde vivimos.",
@@ -37,7 +37,7 @@ const Home = () => {
       link : "/impact",
       color : "#088c4c",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "",
     },
     {
       title: "¿Soy un turista consciente?",
@@ -45,7 +45,7 @@ const Home = () => {
       color : "#088c4c",
       link : "",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "",
     }
   ];
 

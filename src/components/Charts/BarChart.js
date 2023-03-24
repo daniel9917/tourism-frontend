@@ -33,11 +33,7 @@ ChartJS.register(
 );
 
 const getTypologyData = (obj) => {
-  return obj.map((ob) =>
-    ob.values
-      .map((o) => o.values[0])
-      .reduce((partialSum, a) => partialSum + a, 0)
-  );
+  return obj.map(ob => ob.values.filter(o => o.values[0] === 0).length);
 };
 
 const getLabels = (obj) => {

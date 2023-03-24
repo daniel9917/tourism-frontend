@@ -125,13 +125,10 @@ const RadarChart = (props) => {
           label: "Impacto Acumulado",
           data: aData,
           backgroundColor: [
-            "rgb(255, 99, 132)",
-            "rgb(175, 192, 192)",
-            "rgb(85, 92, 192)",
-            "rgb(45, 12, 192)",
-            "rgb(220, 19, 192)",
-            "rgb(201, 153, 207)",
-            "rgb(54, 162, 235)",
+            "rgb(63, 181, 63)",
+            "rgb(181, 181, 63)",
+            "rgb(127, 191, 63)",
+            "rgb(239, 191, 46)",
           ],
         },
       ],
@@ -140,7 +137,7 @@ const RadarChart = (props) => {
     return (
       <Box sx={cardBoxSx}>
         <Box sx={{ display: "block", width: "100%" }}>
-          <PolarArea data={data}></PolarArea>
+          <PolarArea data={data} options = {options}></PolarArea>
         </Box>
       </Box>
     );

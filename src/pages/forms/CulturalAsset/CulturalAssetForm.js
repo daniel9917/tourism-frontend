@@ -416,7 +416,7 @@ const CulturalAssetForm = () => {
     return [
       {
         name: "imageList",
-        question: "Imagenes del activo cultural",
+        question: "Imágenes del activo cultural",
         instructions:
           "Por favor haga click en el boton 'choose files' para subir las imagenes y luego click en 'Cargar Imagenes' para guardar las imagenes en el sistema. Imagenes con tamaño máximo de 1MB.",
         id: "image-files",
@@ -861,8 +861,7 @@ const CulturalAssetForm = () => {
             question : c.name,
             min: c.min,
             max: c.max,
-            // onChange : (evt) => {if (![6,12,18,30].includes(evt.target.value)){alert("Por favor seleccione uno de estos valores. Local (6), Regional (12), Nacional (18), Internacional (30)")}},
-            pattern : '/6|12|18|30/g',
+            pattern : /^(6|12|18|30)$/,
             type: "number",
             placeHolder: "Tu respuesta",
             required: true,
@@ -895,18 +894,6 @@ const CulturalAssetForm = () => {
 
   const getQualityQuestions = () => {
     const qualityQuestions = [
-      // {
-      //   name: "groupId",
-      //   question: "En qué grupo se clasifica el activo cultural?",
-      //   type: "radioSelectt",
-      //   options: groups,
-      //   onChange: (evt) => {
-      //     setCriteriaQuestions(getCriteriaQuestions(evt.target.value));
-      //     // console.log(criteriaQuestions);
-      //   },
-      //   required: true,
-      //   color: "#b03404",
-      // },
       {
         name: "selectedGroup",
         question: "Grupo en el que se clasifica el activo cultural",
@@ -914,94 +901,6 @@ const CulturalAssetForm = () => {
         color: "#b03404",
         value: selectedGroup.name,
       },
-      // {
-      //   name: "criteria1",
-      //   question:
-      //     "Criterio 1: PI-Colectiva(14); PM-Estado de Conservación(21); FE-Organización del evento(30); GE-Pertinencia(10); SN-Sin Contaminación del Aire(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "criteria2",
-      //   question:
-      //     "Criterio 2: PI-Tradicional(14); PM-Constitución del Bien(21); FE-Beneficios Socioculturales para la Comunidad(20); GE-Representatividad(10); SN-Sin Contaminación del Agua(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "criteria3",
-      //   question:
-      //     "Criterio 3: PI-Anónima(14); PM-Representatividad General(28); FE-Beneficios Económicos Locales(20); GE-Relevancia(10); SN-Sin Contaminación Visual(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "criteria4",
-      //   question:
-      //     "Criterio 4: PI-Espontánea(14); PM-N/A; FE-N/A; GE-Naturaleza e identidad colectiva(10); SN-Estado de Conservación(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "criteria5",
-      //   question:
-      //     "Criterio 5: PI-Popular(14); PM-N/A; FE-N/A; GE-Vigencia(10); SN-Sin Contaminación Sonora(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "criteria6",
-      //   question:
-      //     "Criterio 6: PI-N/A; PM-N/A; FE-N/A; GE-Equidad(10); SN-Diversidad(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "criteria7",
-      //   question:
-      //     "Criterio 7: PI-N/A; PM-N/A; FE-N/A; GE-Responsabilidad(10); SN-Singularidad(10)",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
-      // {
-      //   name: "potential",
-      //   question:
-      //     "Potencial; Local (6), Departamental (12), Nacional (18), Continental (24), Global (30)? Escriba el número",
-      //   type: "text",
-      //   placeHolder: "Tu respuesta",
-      //   required: true,
-      //   hex: "#b03404",
-      //   rgb: [224, 220, 220],
-      //   color: "#b03404",
-      // },
     ];
 
     return qualityQuestions.map((basicQuestion) => {
@@ -1324,6 +1223,7 @@ const CulturalAssetForm = () => {
                   {...register(question.name, { required: question.required })}
                   fullWidth
                   placeholder={question.placeHolder}
+                  sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
                 ></Input>
               </Grid>
             </Grid>
@@ -1345,11 +1245,12 @@ const CulturalAssetForm = () => {
                   type="number"
                   name={question.name}
                   {...register(question.name, {
-                    pattern : question.pattern ? question.pattern : "*",
+                    pattern : question.pattern ? question.pattern : "",
                     required: question.required,
                     min: question.min,
                     max: question.max,
                   })}
+                  sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
                   onChange={question.onChange}
                   fullWidth
                   placeholder={question.placeHolder}
@@ -1454,6 +1355,7 @@ const CulturalAssetForm = () => {
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Input
                   type="date"
+                  sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
                   name={question.name}
                   {...register(question.name, { required: question.required })}
                   fullWidth
@@ -1485,7 +1387,11 @@ const CulturalAssetForm = () => {
                             color="success"
                           />
                         }
-                        label={option}
+                        label={
+                          <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                            {option}
+                          </Typography>
+                        }
                       />
                     );
                   })}
@@ -1517,7 +1423,12 @@ const CulturalAssetForm = () => {
                             color="success"
                           />
                         }
-                        label={option.name}
+                        label={
+                          <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                            {option.name}
+                          </Typography>
+                        }
+                        // label={option.name}
                       />
                     );
                   })}
@@ -1607,7 +1518,12 @@ const CulturalAssetForm = () => {
                       <Checkbox
                         checked={selectedAssetCommunities.indexOf(option) > -1}
                       />
-                      <ListItemText primary={option.name} />
+                      <ListItemText primary={
+                        <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                          {option.name}
+                        </Typography>
+                        } 
+                      />
                     </MenuItem>
                   ))}
                 </Select>
@@ -1703,7 +1619,7 @@ const CulturalAssetForm = () => {
                           alignItems={"center"}
                         >
                           <Grid item xs={4}>
-                            <Typography>{option.name}</Typography>
+                            <Typography sx={{ fontWeight: "bold", fontSize: "1.2rem" }} >{option.name}</Typography>
                           </Grid>
                           <Grid item xs={8}>
                             <Grid
@@ -2098,7 +2014,11 @@ const CulturalAssetForm = () => {
                               {...register(question.name, { max: 3 })}
                             />
                           }
-                          label={option.name}
+                          
+                          label={
+                            <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
+                              {option.name}
+                            </Typography>}
                         />
                       </Grid>
                     );

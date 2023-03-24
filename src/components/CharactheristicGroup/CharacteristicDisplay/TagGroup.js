@@ -33,6 +33,7 @@ const contentBoxSx = {
 };
 
 const elementBoxSx = {
+  maxWidth : "100%",
   background: "#025928",
   display: "flex",
   borderRadius: "5px",
@@ -126,7 +127,7 @@ const TagGroup = (props) => {
                   padding="5px"
                   style="italic"
                   color="#ffffff"
-                  content={item.values.map(v => v.replace("¿", "")).map(v => v.replace("?", "")).join(",")}
+                  content={item.values.map(v => v.replace("¿", "")).map(v => v.replace("?", "")).join(",  ")}
                 ></Paragraph>
               </Box>
             );

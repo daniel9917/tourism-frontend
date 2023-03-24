@@ -644,7 +644,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
     return [
       {
         name: "imageList",
-        question: "Imagenes del activo cultural",
+        question: "Imágenes del activo cultural",
         instructions:
           "Por favor haga click en el boton 'choose files' para subir las imagenes y luego click en 'Cargar Imagenes' para guardar las imagenes en el sistema. Imagenes con tamaño máximo de 1MB.",
         id: "image-files",
@@ -721,6 +721,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
           setSelectedGroupId(groupId);
         },
         options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
+        warning : "POR FAVOR VUELVA A SELECCIONAR EL SUBTIPO",
         required: true,
         color: "#b03404",
       },
@@ -731,6 +732,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
         value: selectedDep,
         type: "selectList",
         options: ["Departamento 1", "Departamento 2", "Departamento 3"],
+        warning : "POR FAVOR VUELVA A SELECCIONAR EL DEPARTAMENTO",
         required: true,
         color: "#b03404",
         onChange: (evt) => {
@@ -747,6 +749,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
         id: "municipalityId",
         type: "selectList",
         options: ["Municipio 1", "Municipio 2", "Municipio 3"],
+        warning : "POR FAVOR VUELVA A SELECCIONAR EL MUNICIPIO",
         onChange: (evt) => {
           console.log(evt.target);
           setSelectedMun(evt.target.value);
@@ -1214,7 +1217,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
             question : c.name,
             min: c.min,
             max: c.max,
-            pattern : '/6|12|18|30/g',
+            pattern : /^(6|12|18|30)$/,
             type: "number",
             placeHolder: "Tu respuesta",
             required: true,
@@ -1375,6 +1378,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
       id: "accessDetail",
       question: "Acceso",
       type: "radioSelect",
+      warning : "Por favor vuelva a seleccionar el acceso.",
       options: [
         "Libre",
         "Restringido",
@@ -1753,6 +1757,8 @@ const [selectedLinks, setSelectedLinks] = useState("");
                   type="number"
                   name={question.name}
                   {...register(question.name, {
+                    onChange : question.onChange,
+                    pattern : question.pattern ? question.pattern : "",
                     required: question.required,
                     min: question.min,
                     max: question.max,
@@ -1883,6 +1889,10 @@ const [selectedLinks, setSelectedLinks] = useState("");
                   {question.question}{" "}
                 </Typography>
               </Grid>
+              {question.warning ? 
+                <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#000000"} fontWeight={"bolder"}>{question.warning}</Typography>
+              </Grid> : <br></br>}
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
                 <RadioGroup
                   name="radioTest"
@@ -1965,6 +1975,10 @@ const [selectedLinks, setSelectedLinks] = useState("");
                   {question.question}
                 </Typography>
               </Grid>
+              {question.warning ? 
+                <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#F31B1B"} fontWeight={"bolder"}>{question.warning}</Typography>
+              </Grid> : <br></br>}
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Select
                   id={question.id}
@@ -2742,6 +2756,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
     culturalAsset.subtypeId = body.subtypeId;
     culturalAsset.groupId = selectedGroup.value;
     culturalAsset.name = body.name;
+    culturalAsset.assetCommunityType = body.assetCommunitiesTypes;
 
     //Date event set up
     if (!(body.dateEvent === "")) {
@@ -3305,7 +3320,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
                   shadow="bottom-left"
                   color="#ffffff"
                   textAlign="center"
-                  titleName="USTED VA ACTUALIZAR EL ACTIVO CULTURAL, DEBE LLENAR TODOS LOS CAMPOS Y REVISARLOS"
+                  titleName="USTED VA ACTUALIZAR EL ACTIVO CULTURAL, DEBE DILIGENCIAR TODOS LOS CAMPOS Y REVISARLOS"
                 ></Title>
               </Box>
               <br></br>
@@ -3321,7 +3336,7 @@ const [selectedLinks, setSelectedLinks] = useState("");
                   shadow="bottom-left"
                   color="#ffffff"
                   textAlign="center"
-                  titleName="Actualizacion de activos culturales"
+                  titleName="Actualización de activos culturales"
                 ></Title>
               </Box>
 
@@ -3434,15 +3449,6 @@ const [selectedLinks, setSelectedLinks] = useState("");
                   return getQuestion(question);
                 })}
               </Box>
-              <Box paddingTop={"5%"}>
-                <Title
-                  shadow=""
-                  textAlign="center"
-                  color="#000000"
-                  size="1.5rem"
-                  titleName="Por favor vuelva a ingresar los valores para los criterios de calidad."
-                />
-              </Box>
               <Box paddingTop={"3%"}>
                 {criteriaQuestions.map((question) => {
                   return getQuestion(question);
@@ -3485,16 +3491,6 @@ const [selectedLinks, setSelectedLinks] = useState("");
                 ></Box>
               </Box>
               
-              <Box paddingTop={"5%"}>
-                <Title
-                  shadow=""
-                  textAlign="center"
-                  color="#000000"
-                  size="1.5rem"
-                  titleName="Por favor vuelva a seleccionar el acceso."
-                />
-              </Box>
-
               <Box paddingTop={"3%"}>
                 {accessRoute.map((question) => {
                   return getQuestion(question);

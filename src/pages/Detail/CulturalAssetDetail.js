@@ -60,7 +60,7 @@ const otherNamesBoxSx = {
   display: "flex",
 };
 
-const CulturalAssetDetail = () => {
+function CulturalAssetDetail () {
   const { assetId } = useParams();
 
   const [assetDetaill, setAssetDetaill] = useState({});
@@ -232,4 +232,4 @@ const CulturalAssetDetail = () => {
   }
 };
 
-export default CulturalAssetDetail;
+export default React.memo(CulturalAssetDetail);
