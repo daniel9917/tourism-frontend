@@ -209,7 +209,6 @@ const CulturalAssetListing = () => {
             <Box sx={resultBoxx}>
               <Grid container direction={"row"} justifyContent="space-evenly">
                 {assets.map((element, index) => {
-                  // console.log(element);
                   return (
                     <CardElement
                       key={index + element.name}
@@ -217,7 +216,6 @@ const CulturalAssetListing = () => {
                       item
                       color={"#025928"}
                       fontSize ={"1.5rem"}
-                      // imgSrc={minSrcUrl}
                       imgSrc={
                         (element.imageList && element.imageList.length) > 0
                           ? element.imageList[0].imageBlob
@@ -232,28 +230,6 @@ const CulturalAssetListing = () => {
           </Grid>
         </Box>
       </Box>
-      {/* <Box sx={resultBox} xs={12}>
-        <Grid container direction={"row"} justifyContent="space-evenly">
-          {assets.map((element, index) => {
-            console.log(element);
-            return (
-              <CardElement
-                key={index + element.name}
-                link={"/asset-detail/" + element.id}
-                item
-                color={"#025928"}
-                // imgSrc={minSrcUrl}
-                imgSrc={
-                  (element.imageList && element.imageList.length) > 0
-                    ? element.imageList[0].imageBlob
-                    : ""
-                }
-                title={element.name}
-              ></CardElement>
-            );
-          })}
-        </Grid>
-      </Box> */}
     </ThemeProvider>
   );
 };
