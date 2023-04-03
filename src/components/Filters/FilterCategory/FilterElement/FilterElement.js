@@ -1,5 +1,5 @@
-import { React, useState } from "react";
-import { Box, Grid, Modal } from "@mui/material";
+import { React, useEffect, useState } from "react";
+import { Box, Grid, Modal, Select, MenuItem } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -19,8 +19,17 @@ const boxCardStyle = {};
 const FilterElement = (props) => {
   const name = props.name;
   const sections = props.sections;
+  const selected = props.selected;
 
   const [open, setOpen] = useState(false);
+  const [changedOnes, setChangedOnes] = useState([]);
+
+  useEffect(() => {
+    if (open) {
+      setChangedOnes(selected);
+    }
+  }, [open])
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -29,19 +38,61 @@ const FilterElement = (props) => {
     filtervalues.set(element.objectName.toLowerCase(), "");
   });
 
+  const getName = (id) => {
+    return []
+      .concat(
+        ...sections.map((s) => {
+          return s.values.map((v) => {
+            if (v.id === id) {
+              return { yes: true, name: s.objectName };
+            }
+          });
+        })
+      )
+      .filter(function (el) {
+        return el != null;
+      })[0].name.toLowerCase();
+  };
+
   const selectOnChange = (event) => {
+    var newValues = changedOnes;
+    let json = {
+      name: getName(event.target.value),
+      value: event.target.value,
+    };
+
+    if (newValues.length > 0) {
+      let existent = false;
+      newValues = changedOnes.map((c) => {
+        if (c.name == json.name) {
+          existent = true;
+          return json;
+        }
+        return c;
+      });
+      if (!existent) {
+        newValues.push(json);
+      }
+    } else {
+      newValues.push(json);
+    }
+
+    setChangedOnes(newValues);
+    console.log(newValues);
     filtervalues.set(event.target.id, event.target.value);
   };
 
   const handleClick = () => {
-    var jsonData = {};
-    var columnName = name;
-    jsonData[columnName] = Object.fromEntries(filtervalues);
-
+    var json = Object.fromEntries(filtervalues);
+    changedOnes.forEach (c => {
+      json[c.name] = c.value;
+    })
+    console.log(json);
     props.onFormAccept({
       name: name,
-      params: Object.fromEntries(filtervalues),
+      params: json,
     });
+
     // console.log( {
     //     'name' : name,
     //     'params' : Object.fromEntries(filtervalues)
@@ -107,7 +158,7 @@ const FilterElement = (props) => {
                       ></Paragraph>
                     </Grid>
                     <Grid item>
-                      <select
+                      {/* <select
                         style={{
                           borderColor: "transparent",
                           minHeight: "30px",
@@ -131,7 +182,32 @@ const FilterElement = (props) => {
                               {value.name}
                             </option>
                           ))}
-                      </select>
+                      </select> */}
+                      <Select
+                        sx={{
+                          borderColor: "transparent",
+                          minHeight: "30px",
+                          borderRadius: "5px",
+                        }}
+                        id={section.objectName.toLowerCase().trim()}
+                        onChange={selectOnChange}
+                      >
+                        {section.values
+                          .sort(function (a, b) {
+                            if (a.name < b.name) {
+                              return -1;
+                            }
+                            if (a.name > b.name) {
+                              return 1;
+                            }
+                            return 0;
+                          })
+                          .map((value, index) => (
+                            <MenuItem key={index} value={value.id}>
+                              {value.name}
+                            </MenuItem>
+                          ))}
+                      </Select>
                     </Grid>
                   </Grid>
                 ))}

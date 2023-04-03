@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import RadarChart from "../Charts/RadarChart";
 import "./ImpactTab.css";
 
@@ -9,17 +9,19 @@ const ImpactTab = (props) => {
     return {
       id: index,
       tabTitle: ft.name,
-      content:<Box sx = {{display : "flex", justifyContent : "center"}}>{ (
+      content:<Box sx = {{display : "flex", justifyContent : "center", flexWrap : "wrap"  }}>{ (
         
-          ft.factorList.map((factor) => {
+          ft.factorList.map((factor, index) => {
             {
-              return <RadarChart data={factor}></RadarChart>;
+              return <RadarChart sx = {{padding : "5px"}} key = {index} data={factor}></RadarChart>;
             }
           })
       )
         }</Box>
     };
   });
+
+  const labels = ["Relaciones Sociales","Seguridad Personal","Cosmogonía y tradición","Participación"];
 
 
   const tass = [
@@ -30,7 +32,7 @@ const ImpactTab = (props) => {
       title: "Impacto General",
       content: (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {<RadarChart cummulative data={props.data}></RadarChart>}
+          {<RadarChart cummulative data={props.data} labels = {labels}></RadarChart>}
         </Box>
       ),
     },
@@ -38,34 +40,8 @@ const ImpactTab = (props) => {
 
 
 
-  const [currentTab, setCurrentTab] = useState("1");
-  const tabs = [
-    {
-      id: 1,
-      tabTitle: "Tab 1",
-      title: "Title 1",
-      content:
-        "Las tabs se generan automáticamente a partir de un array de objetos, el cual tiene las propiedades: id, tabTitle, title y content.",
-    },
-    {
-      id: 2,
-      tabTitle: "Tab 2",
-      title: "Title 2",
-      content: "Contenido de tab 2.",
-    },
-    {
-      id: 3,
-      tabTitle: "Tab 3",
-      title: "Title 3",
-      content: "Contenido de tab 3.",
-    },
-    {
-      id: 4,
-      tabTitle: "Tab 4",
-      title: "Title 4",
-      content: "Contenido de tab 4.",
-    },
-  ];
+  const [currentTab, setCurrentTab] = useState("0");
+  
 
   const handleTabClick = (e) => {
     setCurrentTab(e.target.id);
@@ -92,14 +68,14 @@ const ImpactTab = (props) => {
       </div>
       <div className="content">
         {tass.map((tab, i) => (
-          <div key={i}>
+          <Grid container>
             {currentTab === `${tab.id}` && (
-              <div>
+              <Grid item key={i} xs = {12}>
                 <p className="title">{tab.title}</p>
-                <p>{tab.content}</p>
-              </div>
+                {tab.content}
+              </Grid>
             )}
-          </div>
+          </Grid>
         ))}
       </div>
     </div>

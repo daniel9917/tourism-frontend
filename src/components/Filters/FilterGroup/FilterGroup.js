@@ -27,6 +27,7 @@ const FilterGroup = (props) => {
   // console.log(filterSections);
 
   const applyFilters = props.onApplyFilters;
+  const deleteFilters = props.onDeleteFilters;
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,6 +58,7 @@ const FilterGroup = (props) => {
                 key ={index+section.objectName}
                 name={section.objectName}
                 sections={section.values}
+                selected={[]}
                 onFormAccept={props.onSelectFilters}
               ></FilterElement>
             ))}
@@ -76,6 +78,24 @@ const FilterGroup = (props) => {
               >
                 <Title
                     titleName="Aplicar filtros"
+                    size="1.1rem"
+                    color="#ffffff"
+                  ></Title>
+              </Button>
+            </Grid>
+            <br></br>
+            <Grid container justifyContent="center" alignItems={"center"}>
+              <Button
+                sx={{
+                  background: "#E7625F",
+                  textTransform: "initial",
+                  width: "70%",
+                  borderRadius : "20px 20px 20px 20px"
+                }}
+                onClick={deleteFilters}
+              >
+                <Title
+                    titleName="Borrar filtros"
                     size="1.1rem"
                     color="#ffffff"
                   ></Title>

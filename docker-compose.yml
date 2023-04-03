@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+
+  reactapp:
+    image: reactapp:react
+    container_name: tourism_frontend
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    command : npm run start

@@ -5,5 +5,7 @@
     "tipo" : "type",
     "manifestacion" : "manifestation",
     "comunidad" : "community",
-    "grupo etnico" : "community_type"
+    "grupo etnico" : "community_type",
+    "patrimonio" : "patrimony",
+    "grupo" : "asset_group"
 } 

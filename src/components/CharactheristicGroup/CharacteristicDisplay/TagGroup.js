@@ -2,6 +2,7 @@ import React from "react";
 import { Box, ThemeProvider, createTheme, Grid } from "@mui/material";
 import Paragraph from "../../Fonts/Paragraph";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Assignment from "@mui/icons-material/Assignment";
 import {
   AddSharp,
   BoltSharp,
@@ -19,7 +20,7 @@ const theme = createTheme({
 
 const titleBoxSx = {
   display: "flex",
-  background: "#ffffff",
+  background: "#03A65A",
   width: "fit-content",
   borderRadius: "10px",
 };
@@ -32,6 +33,7 @@ const contentBoxSx = {
 };
 
 const elementBoxSx = {
+  maxWidth : "100%",
   background: "#025928",
   display: "flex",
   borderRadius: "5px",
@@ -39,7 +41,7 @@ const elementBoxSx = {
 };
 
 const iconSx = {
-  color: "#0F9E4A",
+  color: "#ffffff",
   fontSize: "50px",
 };
 
@@ -49,8 +51,8 @@ const getIcon = (objectName) => {
       return <ArrowDropDownIcon sx={iconSx} />;
     case "Ubicacion":
       return <LocationOnSharp sx={iconSx} />;
-    case "Naturaleza":
-      return <ForestSharp sx={iconSx} />;
+    case "Naturaleza del activo":      
+      return <Assignment sx={iconSx} />;
     case "Estado":
       return <AddSharp sx={iconSx} />;
     case "Acceso":
@@ -62,6 +64,25 @@ const getIcon = (objectName) => {
   }
 };
 
+const getName = (objectName) => {
+  switch (objectName) {
+    case "Clasificacion":
+      return "Clasificación";
+    case "Ubicacion":
+      return "Ubicación";
+    case "Naturaleza del activo":      
+      return "Naturaleza del activo";
+    case "Estado":
+      return "Estado";
+    case "Acceso":
+      return "Acceso";
+    case "Cosmogonia":
+      return "Cosmogonia";
+    default:
+      return objectName;
+  }
+};
+
 const TagGroup = (props) => {
   const element = props.data;
   return (
@@ -70,7 +91,6 @@ const TagGroup = (props) => {
         <Box sx={titleBoxSx}>
           <Box
             style={{
-              background: "#ffffff",
               width: "fit-content",
               borderRadius: "50%",
             }}
@@ -79,10 +99,10 @@ const TagGroup = (props) => {
             {/* <ArrowDropDownIcon sx={{ color: "#ffffff", fontSize: "50px" }} /> */}
           </Box>
           <Paragraph
-            color="#0F9E4A"
+            color="#ffffff"
             padding="5px"
             bold
-            content={element.objectName}
+            content={getName(element.objectName)}
             size="1.7rem"
           ></Paragraph>
         </Box>
@@ -92,9 +112,9 @@ const TagGroup = (props) => {
           direction="row"
           justifyContent={"flex-start"}
         >
-          {element.values.map((item) => {
+          {element.values.map((item, index) => {
             return (
-              <Box sx={elementBoxSx}>
+              <Box key = {index} sx={elementBoxSx}>
                 <Paragraph
                   size="1.3rem"
                   padding="5px"
@@ -107,7 +127,7 @@ const TagGroup = (props) => {
                   padding="5px"
                   style="italic"
                   color="#ffffff"
-                  content={item.values.join(",")}
+                  content={item.values.map(v => v.replace("¿", "")).map(v => v.replace("?", "")).join(",  ")}
                 ></Paragraph>
               </Box>
             );

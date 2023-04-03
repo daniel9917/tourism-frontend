@@ -2,6 +2,7 @@ import React from "react";
 import { Box, ThemeProvider, createTheme, Grid } from "@mui/material";
 import Paragraph from "../Fonts/Paragraph";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import Assignment from "@mui/icons-material/Assignment";
 import {
   AddSharp,
   BoltSharp,
@@ -42,7 +43,7 @@ const elementBoxSx = {
 
 const iconSx = { 
   color: "#ffffff", 
-  fontSize: "50px" 
+  fontSize: "40px" 
 };
 
 const getIcon = (objectName) => {
@@ -51,8 +52,8 @@ const getIcon = (objectName) => {
       return <ArrowDropDownIcon sx={iconSx} />;
     case "Ubicacion":
       return <LocationOnSharp sx={iconSx} />;
-    case "Naturaleza":
-      return <ForestSharp sx={iconSx} />;
+    case "Naturaleza del activo":      
+      return <Assignment sx={iconSx} />;
     case "Estado":
       return <AddSharp sx={iconSx} />;
     case "Acceso":
@@ -71,23 +72,23 @@ const CharacteristicGroup = (props) => {
     return <h1></h1>;
   }
 
-  const getGroupType = (element) => {
+  const getGroupType = (element, index) => {
     switch (element.objectName) {
       case "Recomendaciones de Visita":
-        return <ListGroup data ={element}></ListGroup>
+        return <ListGroup key = {index} data ={element}></ListGroup>
       case "Comunidades Etnicas":
-        return <ListGroup data ={element}></ListGroup>
+        return <ListGroup key = {index} data ={element}></ListGroup>
       default:
-        return <TagGroup data = {element}></TagGroup>;
+        return <TagGroup key = {index} data = {element}></TagGroup>;
     }
   }
 
   return (
     <ThemeProvider theme={theme}>
-      {data.map((element) => {
+      {data.map((element, index) => {
         // console.log(element);
         return (
-          getGroupType(element)
+          getGroupType(element, index)
           // <TagGroup data = {element}></TagGroup>
         //   <Box sx={{ marginTop: "2%", marginBottom: "2%" }}>
         //     <Box sx={titleBoxSx}>

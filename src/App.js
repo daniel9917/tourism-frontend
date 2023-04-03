@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import TourismImpactForm from "./pages/forms/TourismImpac/TourismImpactForm";
 import CulturalAssetForm from "./pages/forms/CulturalAsset/CulturalAssetForm";
+import CulturalAssetUpdate from "./pages/forms/CulturalAsset/update/CulturalAssetUpdate";
 import Home from "./pages/Home/Home";
 import CulturalAssetListing from "./pages/Listing/CulturalAssetListing";
 import FilterGroup from "./components/Filters/FilterGroup/FilterGroup";
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
       path : "/asset",
       element : <CulturalAssetForm></CulturalAssetForm>
+    },
+    {
+      path : "/asset/:assetId",
+      element : <CulturalAssetUpdate></CulturalAssetUpdate>
     },
     {
       path : "/asset-detail/:assetId",
@@ -58,7 +63,6 @@ function App() {
 
   const rootBoxSx = {
     background: "linear-gradient(to top, #085c2c, #08a45c)",
-    height: "100vh",
   };
 
   const filterSections = ["Ubicacion", "Categoria", "Clasificacion"];
@@ -91,7 +95,7 @@ function App() {
 
   return (
     // <ThemeProvider theme={theme}>
-    <Box maxWidth={1} maxHeight={1} sx={rootBoxSx}>
+    <Box maxWidth={1}  sx={rootBoxSx}>
       {/* <CulturalAssetListing></CulturalAssetListing> */}
       {/* <Home></Home> */}
       {/* <Header></Header> */}

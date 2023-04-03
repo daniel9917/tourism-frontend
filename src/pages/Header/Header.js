@@ -81,7 +81,7 @@ const Header = (props) => {
             fontSize={subtitleSx.t2}
             // padding={{ right: "6%", top: "0.6%" }}
             color={subtitleSx.color}
-            content="Iniciar sesion"
+            content=""
           />
         </Box>
         {/* <Grid sx={{ height: "100%" }} container direction={"row"}>

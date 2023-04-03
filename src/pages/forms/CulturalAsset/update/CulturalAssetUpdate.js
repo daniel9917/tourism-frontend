@@ -7,7 +7,6 @@ import {
   RadioGroup,
   Button,
   Typography,
-  TextField,
   ListItemText,
   OutlinedInput,
 } from "@mui/material";
@@ -20,16 +19,16 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import Paragraph from "../../../components/Fonts/Paragraph";
-import SingleQuestion from "../FormComponents/SingleQuestion";
+import Paragraph from "../../../../components/Fonts/Paragraph";
+import SingleQuestion from "../../FormComponents/SingleQuestion";
 import { useForm } from "react-hook-form";
-import Title from "../../../components/Fonts/Title";
+import Title from "../../../../components/Fonts/Title";
 import axios from "axios";
-import InputMap from "../../../components/Maps/InputMap";
-import "./CulturalAssetForm.css";
-import { useNavigate } from "react-router-dom";
+import InputMap from "../../../../components/Maps/InputMap";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-import Header from "../../Header/Header";
+import Header from "../../../Header/Header";
 
 const formBuilderAPI__URL =
   process.env.REACT_APP_BASE_ASSET_URL + "/form-builder";
@@ -130,7 +129,27 @@ const getEconomicRecommendationss = axios.get(
 );
 const economicRecommendationss = await getEconomicRecommendationss;
 
-const CulturalAssetForm = () => {
+const CulturalAssetUpdate = () => {
+  const { assetId } = useParams();
+
+  const [assetDetaill, setAssetDetaill] = useState({});
+  const [isFetched, setIsFetched] = useState(false);
+
+  async function fetchData() {
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_ASSET_URL}/${assetId}`
+    );
+    // const response = await fetch(`${urls.baseAssetURL}/${assetId}`);
+    response.json().then((response) => {
+      setAssetDetaill(response);
+      setIsFetched(true);
+    });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const vulnList = vulnerabilities.data.values.map((value) => {
     return {
       name: `${value.name}`,
@@ -336,14 +355,9 @@ const CulturalAssetForm = () => {
     }
   );
 
-  const [selectedGroupId, setSelectedGroupId] = useState("");
-  const [selectedGroup, setSelectedGroup] = useState({
-    name: "No hay un grupo seleccionado. Por favor elija un subtipo valido.",
-  });
-  const [selectedAssetCommunities, setSelectedAssetCommunities] = useState([]);
-  const [selectedSubtype, setSelectedSubtype] = useState("");
-  const [selectedMun, setSelectedMun] = useState("");
-  const [selectedDep, setSelectedDep] = useState("");
+  const [updateAsset, setUpdateAsset] = useState({});
+
+
   const [municipalities, setMunicipalities] = useState(munList);
   const [departments, setDepartments] = useState(depList);
   const [ethnicities, setEthnicities] = useState(ethList);
@@ -396,10 +410,224 @@ const CulturalAssetForm = () => {
     // console.log(locationDTO);
   };
 
+
+  //UPDATE ASSET 
+
+    
+const [selectedName, setSelectedName] = useState("");
+  
+const [selectedAlternateNames, setSelectedAlternateNames] = useState("");
+
+const [selectedLocationDetail, setSelectedLocationDetail] = useState("");
+
+const [selectedDescription, setSelectedDescription] = useState("");
+
+const [selectedCosmogonyDescription, setSelectedCosmogonyDescription] = useState("");
+
+const [selectedReservationName, setSelectedReservationName] = useState("");
+
+const [selectedReservationLink, setSelectedReservationLink] = useState("");
+
+const [selectedLinks, setSelectedLinks] = useState("");
+
+
+  const [assetLocationObject, setAssetLocationObject] = useState()
+  
+  const [selectedGroupId, setSelectedGroupId] = useState("");
+  const [selectedGroup, setSelectedGroup] = useState({
+    name: "No hay un grupo seleccionado. Por favor elija un subtipo valido.",
+  });
+  const [selectedAssetCommunities, setSelectedAssetCommunities] = useState([]);
+  const [selectedSubtype, setSelectedSubtype] = useState("");
+  const [selectedMun, setSelectedMun] = useState("");
+  const [selectedDep, setSelectedDep] = useState("");
+
+  const [selectedAssetCommunityType, setSelectedAssetCommunityType] =
+    useState("");
+  const [selectedInmaterialManifestation, setSelectedInmaterialManifestation] =
+    useState("");
+
+  const [selectedCosmogony, setSelectedCosmogony] = useState("");
+  const [selectedUnescoRegistry, setSelectedUnescoRegistry] = useState("");
+  const [selectedSafeguardingRegistry, setSelectedSafeguardingRegistry] =
+    useState("");
+  const [
+    selectedPartOfNaturalReservation,
+    setSelectedPartOfNaturalReservation,
+  ] = useState("");
+  const [selectedOnGoingRecognition, setSelectedOnGoingRecognition] =
+    useState("");
+  const [selectedTourismPermit, setSelectedTourismPermit] = useState("");
+  const [selectedAssetRouteList, setSelectedAssetRouteList] = useState("");
+  const [selectedAccessDetail, setSelectedAccessDetail] = useState("");
+  const [selectedAssetManifestations, setSelectedAssetManifestations] =
+    useState([]);
+
+  const [imgSize, setImgSize] = useState(0);
+
+  const [selectedManifestations, setSelectedManifestations] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedLandAccess, setSelectedLandAccess] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedAerialAccess, setSelectedAerialAccess] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedMaritimeAccess, setSelectedMaritimeAccess] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedBasicServices, setSelectedBasicServices] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedCommunications, setSelectedCommunications] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedQuality, setSelectedQuality] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const [selectedWellnessSustainability, setSelectedWellnessSustainability] =
+    useState([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+
+  const [selectedEconomicRecomendations, setSelectedEconomicRecomendations] =
+    useState([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+  const [date, setDate] = useState("");
+
+  const [selectedVulnerabilities, setSelectedVulnerabilities] = useState([""]*assetVulnerabilityList.length);
+
+  const [selectedNatures, setSelectedNatures] = useState([""]*natureList.length);
+
+  const [selectedSports, setSelectedSports] = useState([""]*sports.length);
+  
+  
+  const [selectedTours, setSelectedTours] = useState([""]*tours.length);
+  const [selectedFolklore, setSelectedFolklore] = useState([""]*folklore.length);
+  const [selectedOtherServices, setSelectedOtherServices] = useState([""]*otherServices.length);
+
   const getBasicQuestions = () => {
     let basicQuestions = [
       {
         name: "email",
+        id: "email",
         question: "Correo",
         type: "email",
         placeHolder: "Tu dirección de correo electrónico",
@@ -421,9 +649,13 @@ const CulturalAssetForm = () => {
           "Por favor haga click en el boton 'choose files' para subir las imagenes y luego click en 'Cargar Imagenes' para guardar las imagenes en el sistema. Imagenes con tamaño máximo de 1MB.",
         id: "image-files",
         type: "multiImage",
+        size : imgSize,
         hex: "#b03404",
         rgb: [224, 220, 220],
         color: "#b03404",
+        onChange : (evt) => {
+          console.log(evt.target.value)
+        }
       },
     ];
   };
@@ -433,7 +665,13 @@ const CulturalAssetForm = () => {
       {
         name: "name",
         question: " Nombre del activo cultural",
+        id: "name",
         type: "text",
+        value : selectedName,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedName(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: true,
         hex: "#b03404",
@@ -442,9 +680,15 @@ const CulturalAssetForm = () => {
       },
       {
         name: "alternateNames",
+        id: "alternateNames",
         question:
           "¿Por cuál otro nombre se conoce? (Ingresar nombres separados por comas)",
         type: "text",
+        value : selectedAlternateNames,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedAlternateNames(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: false,
         hex: "#b03404",
@@ -454,6 +698,7 @@ const CulturalAssetForm = () => {
       {
         name: "subtypeId",
         question: "Subtipo",
+        id: "subtypeId",
         type: "selectList",
         value: selectedSubtype,
         onChange: (evt) => {
@@ -476,15 +721,18 @@ const CulturalAssetForm = () => {
           setSelectedGroupId(groupId);
         },
         options: ["Subtipo 1", "Subtipo 2", "Subtipo 3"],
+        warning : "POR FAVOR VUELVA A SELECCIONAR EL SUBTIPO",
         required: true,
         color: "#b03404",
       },
       {
         name: "departmentId",
         question: "Departamento",
+        id: "departmentId",
         value: selectedDep,
         type: "selectList",
         options: ["Departamento 1", "Departamento 2", "Departamento 3"],
+        warning : "POR FAVOR VUELVA A SELECCIONAR EL DEPARTAMENTO",
         required: true,
         color: "#b03404",
         onChange: (evt) => {
@@ -498,8 +746,10 @@ const CulturalAssetForm = () => {
         name: "municipalityId",
         question: "Municipio",
         value: selectedMun,
+        id: "municipalityId",
         type: "selectList",
         options: ["Municipio 1", "Municipio 2", "Municipio 3"],
+        warning : "POR FAVOR VUELVA A SELECCIONAR EL MUNICIPIO",
         onChange: (evt) => {
           console.log(evt.target);
           setSelectedMun(evt.target.value);
@@ -509,6 +759,7 @@ const CulturalAssetForm = () => {
       },
       {
         name: "Ubicacion",
+        id: "location",
         question: "Ubicación del activo cultural",
         type: "mapPick",
         required: true,
@@ -518,9 +769,15 @@ const CulturalAssetForm = () => {
       },
       {
         name: "locationDetail",
+        id: "locationDetail",
         question:
           "Detalle de la ubicación, indicar dirección o indicaciones de llegada.",
         type: "text",
+        value : selectedLocationDetail,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedLocationDetail(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: true,
         hex: "#b03404",
@@ -530,7 +787,13 @@ const CulturalAssetForm = () => {
       {
         name: "description",
         question: "Descripción del activo cultural",
+        id: "description",
         type: "text",
+        value : selectedDescription,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedDescription(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: true,
         hex: "#b03404",
@@ -559,21 +822,30 @@ const CulturalAssetForm = () => {
     const characteristicsQuestions = [
       {
         name: "assetCommunitiesTypes",
+        id: "assetCommunitiesTypes",
         question: "¿Con qué tipo de comunidad étnica con la que se relaciona?",
+        value: selectedAssetCommunityType,
+        warning : "NO SELECCIONAR SI NO VA A ACTUALIZAR PUEBLOS O ETNIAS QUE LO COMPARTEN",
         type: "radioSelectt",
         options: ["Indígena", "Afrocolombiano", "Raizal", "Rrom", "Ninguna"],
         onChange: (evt) => {
+          console.log(evt);
+          console.log(evt.target.value);
+          setSelectedAssetCommunities([]);
+          setSelectedAssetCommunityType(evt.target.value);
           setEhtnicGroup(
             ethngList.filter((eg) => eg.communityTypeId === evt.target.value)
           );
         },
-        required: true,
+        required : false,
         color: "#b03404",
       },
       {
         name: "inmaterialManifestation",
+        id: "inmaterialManifestation",
         question: "¿Es una manifestación Cultural Inmaterial?",
         type: "radioSelectt",
+        value: selectedInmaterialManifestation,
         options: [
           {
             name: "Si",
@@ -586,14 +858,21 @@ const CulturalAssetForm = () => {
         ],
         onChange: (evt) => {
           console.log(evt.target.value);
+          setSelectedInmaterialManifestation(evt.target.value);
         },
         required: true,
         color: "#b03404",
       },
       {
         name: "cosmogony",
+        id: "cosmogony",
         question: "¿Es sagrado o tiene interpretación cosmogónica?",
         type: "radioSelectt",
+        value: selectedCosmogony,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setSelectedCosmogony(evt.target.value);
+        },
         options: [
           {
             name: "Si",
@@ -609,8 +888,14 @@ const CulturalAssetForm = () => {
       },
       {
         name: "cosmogonyDescription",
+        id: "cosmogonyDescription",
         question: "¿Por qué es sagrado o tiene interpretación cosmogónica?",
         type: "text",
+        value : selectedCosmogonyDescription,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedCosmogonyDescription(evt.target.value);
+        },
         placeHolder: "Es sagrado o tiene interpretacion cosmogonica, ya que...",
         required: false,
         hex: "#b03404",
@@ -619,9 +904,23 @@ const CulturalAssetForm = () => {
       },
       {
         name: "assetManifestations",
+        id: "assetManifestations",
         codeName: "btmt",
+        value: selectedAssetManifestations,
         question: "¿A cuál tipo de manifestación pertenece? ",
         type: "checkBoxx",
+        checkedOnes: selectedManifestations,
+        onChange: (evt) => {
+          // console.log(evt.target.value);
+          let ass = [].concat(selectedManifestations);
+          for (let i = 0; i < manifestations.length; i++) {
+            if (manifestations[i].value === evt.target.value) {
+              ass[i] = !ass[i];
+            }
+            // console.log(ass);
+            setSelectedManifestations(ass);
+          }
+        },
         options: [
           "Actos festivos y lúdicos",
           "Artes populares",
@@ -646,9 +945,14 @@ const CulturalAssetForm = () => {
       },
       {
         name: "safeguardingRegistry",
+        id: "safeguardingRegistry",
         question: "¿Registrado en salvaguardia?",
         type: "radioSelectt",
-        // options: ["Si", "No"],
+        value: selectedSafeguardingRegistry,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setSelectedSafeguardingRegistry(evt.target.value);
+        },
         options: [
           {
             name: "Si",
@@ -664,9 +968,14 @@ const CulturalAssetForm = () => {
       },
       {
         name: "unescoRegistry",
+        id: "unescoRegistry",
         question: "¿Reconocido UNESCO ?",
         type: "radioSelectt",
-        // options: ["Si", "No"],
+        value: selectedUnescoRegistry,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setSelectedUnescoRegistry(evt.target.value);
+        },
         options: [
           {
             name: "Si",
@@ -682,9 +991,14 @@ const CulturalAssetForm = () => {
       },
       {
         name: "partOfNaturalReservation",
+        id: "partOfNaturalReservation",
         question: "¿Se encuentra en una reserva natural?",
         type: "radioSelectt",
-        // options: ["Si", "No"],
+        value: selectedPartOfNaturalReservation,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setSelectedPartOfNaturalReservation(evt.target.value);
+        },
         options: [
           {
             name: "Si",
@@ -700,8 +1014,14 @@ const CulturalAssetForm = () => {
       },
       {
         name: "reservationName",
+        id: "reservationName",
         question: "Nombre de la reserva",
         type: "text",
+        value : selectedReservationName,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedReservationName(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: false,
         hex: "#b03404",
@@ -710,8 +1030,14 @@ const CulturalAssetForm = () => {
       },
       {
         name: "reservationLink",
+        id: "reservationLink",
         question: "Link de la reserva",
         type: "text",
+        value : selectedReservationLink,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedReservationLink(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: false,
         hex: "#b03404",
@@ -720,10 +1046,15 @@ const CulturalAssetForm = () => {
       },
       {
         name: "onGoingRecognition",
+        id: "onGoingRecognition",
         question:
           "¿Se está tramitando algún reconocimiento sobre el activo cultural?",
         type: "radioSelectt",
-        // options: ["Si", "No"],
+        value: selectedOnGoingRecognition,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setSelectedOnGoingRecognition(evt.target.value);
+        },
         options: [
           {
             name: "Si",
@@ -739,9 +1070,15 @@ const CulturalAssetForm = () => {
       },
       {
         name: "links",
+        id: "links",
         question:
           "Link música, documentales, películas que lo describen o lo usan (por favor ingresar links separados por comas).",
         type: "text",
+        value : selectedLinks,
+        onChange : (evt) => {
+          console.log(evt.target.value);
+          setSelectedLinks(evt.target.value);
+        },
         placeHolder: "Tu respuesta",
         required: false,
         hex: "#b03404",
@@ -750,10 +1087,15 @@ const CulturalAssetForm = () => {
       },
       {
         name: "tourismPermit",
+        id: "tourismPermit",
         question:
           "¿Está permitido el turismo en este lugar o con la  participación de este activo cultural?",
         type: "radioSelectt",
-        options: ["Si", "No", "N/A"],
+        value: selectedTourismPermit,
+        onChange: (evt) => {
+          console.log(evt.target.value);
+          setSelectedTourismPermit(evt.target.value);
+        },
         options: [
           {
             name: "Si",
@@ -787,6 +1129,7 @@ const CulturalAssetForm = () => {
     const wellnessQuestions = [
       {
         name: "assetCommunities",
+        id: "assetCommunities",
         codeName: "shc",
         question: "¿Cuáles pueblos o etnias lo comparten?",
         type: "multiSelect",
@@ -830,9 +1173,17 @@ const CulturalAssetForm = () => {
       },
       {
         name: "assetVulnerabilityList",
+        id: "assetVulnerabilityList",
         codeName: "vuln",
         question: "Vulnerabilidad",
-        type: "dimensionCriteriaId",
+        type: "dimensionCriteriaIdU",
+        values : selectedVulnerabilities,
+        onChange : (evt) => {
+          let position = +evt.target.id.replace(/[^0-9]/g,"");
+          let nv = [].concat(selectedVulnerabilities);        
+          nv[position] = evt.target.value;
+          setSelectedVulnerabilities(nv);
+        },
         criteria: ["Si", "No", "Aun no se sabe", "N/A"],
         options: assetVulnerabilityList,
         required: true,
@@ -846,6 +1197,9 @@ const CulturalAssetForm = () => {
       if (basicQuestion.name === "assetCommunities") {
         basicQuestion.options = ehtnicGroup;
       }
+      if (basicQuestion.name === "assetCommunities") {
+        basicQuestion.options = ehtnicGroup;
+      }
       return basicQuestion;
     });
   };
@@ -854,6 +1208,8 @@ const CulturalAssetForm = () => {
     return critList
       .filter((c) => c.groupId === groupId)
       .map((c, index) => {
+
+        
 
         if (c.name.includes("Potencia")){
           return {
@@ -873,6 +1229,7 @@ const CulturalAssetForm = () => {
 
         return {
           name: "criteria[" + index + "]",
+          id: "criteria[" + index + "]",
           question:
             c.name +
             ". (Valor mínino: " +
@@ -896,6 +1253,7 @@ const CulturalAssetForm = () => {
     const qualityQuestions = [
       {
         name: "selectedGroup",
+        id: "selectedGroup",
         question: "Grupo en el que se clasifica el activo cultural",
         type: "label",
         color: "#b03404",
@@ -914,9 +1272,17 @@ const CulturalAssetForm = () => {
   const insideOutsideActivities = [
     {
       name: "assetNatureList",
+      id: "assetNatureList",
       codeName: "nat",
       question: "Naturaleza",
-      type: "dimensionCriteriaId",
+      type: "dimensionCriteriaIdU",
+      values : selectedNatures,
+      onChange : (evt) => {
+        let position = +evt.target.id.replace(/[^0-9]/g,"");
+        let nv = [].concat(selectedNatures);        
+        nv[position] = evt.target.value;
+        setSelectedNatures(nv);
+      },
       criteria: ["Dentro", "Fuera", "N/A"],
       options: natureList,
       required: true,
@@ -926,9 +1292,17 @@ const CulturalAssetForm = () => {
     },
     {
       name: "sports",
+      id: "sports",
       codeName: "sp",
       question: "Deportes / Aventura",
-      type: "dimensionCriteriaId",
+      type: "dimensionCriteriaIdU",
+      values : selectedSports,
+      onChange : (evt) => {
+        let position = +evt.target.id.replace(/[^0-9]/g,"");
+        let nv = [].concat(selectedSports);        
+        nv[position] = evt.target.value;
+        setSelectedSports(nv);
+      },
       criteria: ["Dentro", "Fuera", "N/A"],
       options: sports,
       required: true,
@@ -938,9 +1312,17 @@ const CulturalAssetForm = () => {
     },
     {
       name: "touristicRoutes",
+      id: "touristicRoutes",
       codeName: "tr",
       question: "Recorridos turisticos",
-      type: "dimensionCriteriaId",
+      type: "dimensionCriteriaIdU",
+      values : selectedTours,
+      onChange : (evt) => {
+        let position = +evt.target.id.replace(/[^0-9]/g,"");
+        let nv = [].concat(selectedTours);        
+        nv[position] = evt.target.value;
+        setSelectedTours(nv);
+      },
       criteria: ["Dentro", "Fuera", "N/A"],
       options: tours,
       required: true,
@@ -950,9 +1332,17 @@ const CulturalAssetForm = () => {
     },
     {
       name: "folklore",
+      id: "folklore",
       codeName: "folk",
       question: "Folclore",
-      type: "dimensionCriteriaId",
+      type: "dimensionCriteriaIdU",
+      values : selectedFolklore,
+      onChange : (evt) => {
+        let position = +evt.target.id.replace(/[^0-9]/g,"");
+        let nv = [].concat(selectedFolklore);        
+        nv[position] = evt.target.value;
+        setSelectedFolklore(nv);
+      },
       criteria: ["Dentro", "Fuera", "N/A"],
       options: folklore,
       required: true,
@@ -962,9 +1352,17 @@ const CulturalAssetForm = () => {
     },
     {
       name: "otherServices",
+      id: "otherServices",
       codeName: "os",
       question: "Otros servicios",
-      type: "dimensionCriteriaId",
+      type: "dimensionCriteriaIdU",
+      values : selectedOtherServices,
+      onChange : (evt) => {
+        let position = +evt.target.id.replace(/[^0-9]/g,"");
+        let nv = [].concat(selectedOtherServices);        
+        nv[position] = evt.target.value;
+        setSelectedOtherServices(nv);
+      },
       criteria: ["Dentro", "Fuera", "N/A"],
       options: otherServices,
       required: true,
@@ -977,8 +1375,10 @@ const CulturalAssetForm = () => {
   const accessRoute = [
     {
       name: "accessDetail",
+      id: "accessDetail",
       question: "Acceso",
       type: "radioSelect",
+      warning : "Por favor vuelva a seleccionar el acceso.",
       options: [
         "Libre",
         "Restringido",
@@ -988,12 +1388,21 @@ const CulturalAssetForm = () => {
         "Previo Pago",
         "Con cita previa",
       ],
+      value: selectedAccessDetail,
+      onChange: (evt) => {
+        setSelectedAccessDetail(evt.target.value);
+      },
       required: true,
       color: "#b03404",
     },
     {
       name: "dateEvent",
+      id: "dateEvent",
       question: "¿Si es evento, cual es la fecha?",
+      value: date,
+      onChange: (evt) => {
+        setDate(evt.target.value);
+      },
       type: "date",
       required: false,
       hex: "#b03404",
@@ -1002,9 +1411,22 @@ const CulturalAssetForm = () => {
     },
     {
       name: "landAccess",
+      id: "landAccess",
       codeName: "lnda",
       question: "Acceso terrestre",
       type: "checkBoxx",
+      checkedOnes: selectedLandAccess,
+      onChange: (evt) => {
+        // console.log(evt.target.value);
+        let ass = [].concat(selectedLandAccess);
+        for (let i = 0; i < terrestrialAccess.length; i++) {
+          if (terrestrialAccess[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          // console.log(ass);
+          setSelectedLandAccess(ass);
+        }
+      },
       options: terrestrialAccess,
       required: true,
       hex: "#b03404",
@@ -1013,10 +1435,21 @@ const CulturalAssetForm = () => {
     },
     {
       name: "aerialAccess",
+      id: "aerialAccess",
       codeName: "arla",
       question: "Acceso aereo",
       type: "checkBoxx",
       options: aerialAccess,
+      checkedOnes: selectedAerialAccess,
+      onChange: (evt) => {
+        let ass = [].concat(selectedAerialAccess);
+        for (let i = 0; i < aerialAccess.length; i++) {
+          if (aerialAccess[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          setSelectedAerialAccess(ass);
+        }
+      },
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1024,10 +1457,21 @@ const CulturalAssetForm = () => {
     },
     {
       name: "maritimeAccess",
+      id: "maritimeAccess",
       codeName: "mrta",
       question: "Acceso maritimo",
       type: "checkBoxx",
       options: maritimeAccess,
+      checkedOnes: selectedMaritimeAccess,
+      onChange: (evt) => {
+        let ass = [].concat(selectedMaritimeAccess);
+        for (let i = 0; i < maritimeAccess.length; i++) {
+          if (maritimeAccess[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          setSelectedMaritimeAccess(ass);
+        }
+      },
       required: true,
       hex: "#b03404",
       rgb: [224, 220, 220],
@@ -1035,9 +1479,15 @@ const CulturalAssetForm = () => {
     },
     {
       name: "assetRouteList",
+      id: "assetRouteList",
       codeName: "acsr",
       question: "Rutas de acceso",
       type: "radioSelectt",
+      value: selectedAssetRouteList,
+      onChange: (evt) => {
+        setSelectedAssetRouteList(evt.target.value);
+        console.log(evt.target.value);
+      },
       options: accessRoutes,
       required: false,
       color: "#b03404",
@@ -1047,9 +1497,20 @@ const CulturalAssetForm = () => {
   const assetFacilities = [
     {
       name: "basicServices",
+      id: "basicServices",
       codeName: "bscs",
       question: "Servicios básicos",
       type: "checkBoxx",
+      checkedOnes: selectedBasicServices,
+      onChange: (evt) => {
+        let ass = [].concat(selectedBasicServices);
+        for (let i = 0; i < publicService.length; i++) {
+          if (publicService[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          setSelectedBasicServices(ass);
+        }
+      },
       options: publicService,
       required: true,
       hex: "#b03404",
@@ -1058,9 +1519,20 @@ const CulturalAssetForm = () => {
     },
     {
       name: "communications",
+      id: "communications",
       codeName: "comm",
       question: "Comunicaciones",
       type: "checkBoxx",
+      checkedOnes: selectedCommunications,
+      onChange: (evt) => {
+        let ass = [].concat(selectedCommunications);
+        for (let i = 0; i < communication.length; i++) {
+          if (communication[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          setSelectedCommunications(ass);
+        }
+      },
       options: communication,
       required: true,
       hex: "#b03404",
@@ -1072,9 +1544,20 @@ const CulturalAssetForm = () => {
   const recommendations = [
     {
       name: "quality",
+      id: "quality",
       codeName: "qol",
       question: "Calidad de vida",
       type: "checkBoxx",
+      checkedOnes: selectedQuality,
+      onChange: (evt) => {
+        let ass = [].concat(selectedQuality);
+        for (let i = 0; i < qualityRecommendations.length; i++) {
+          if (qualityRecommendations[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          setSelectedQuality(ass);
+        }
+      },
       options: qualityRecommendations,
       required: true,
       hex: "#b03404",
@@ -1083,9 +1566,21 @@ const CulturalAssetForm = () => {
     },
     {
       name: "wellness",
+      id: "wellness",
       codeName: "wlls",
       question: "Sustentabilidad del Bienestar",
       type: "checkBoxx",
+      checkedOnes: selectedWellnessSustainability,
+      onChange: (evt) => {
+        let ass = [].concat(selectedWellnessSustainability);
+        for (let i = 0; i < wellnessRecommendations.length; i++) {
+          if (wellnessRecommendations[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          // console.log(ass);
+          setSelectedWellnessSustainability(ass);
+        }
+      },
       options: wellnessRecommendations,
       required: true,
       hex: "#b03404",
@@ -1094,9 +1589,20 @@ const CulturalAssetForm = () => {
     },
     {
       name: "economic",
+      id: "economic",
       codeName: "ecos",
       question: "Situación economica",
       type: "checkBoxx",
+      checkedOnes: selectedEconomicRecomendations,
+      onChange: (evt) => {
+        let ass = [].concat(selectedEconomicRecomendations);
+        for (let i = 0; i < economicRecommendations.length; i++) {
+          if (economicRecommendations[i].value === evt.target.value) {
+            ass[i] = !ass[i];
+          }
+          setSelectedEconomicRecomendations(ass);
+        }
+      },
       options: economicRecommendations,
       required: true,
       hex: "#b03404",
@@ -1130,7 +1636,6 @@ const CulturalAssetForm = () => {
 
   const handleImageList = (evt) => {
     setImageList(evt.target.files);
-    // console.log(imageList);
   };
 
   const fileToBase64 = (files) => {
@@ -1151,6 +1656,8 @@ const CulturalAssetForm = () => {
         }
         const fileBase64 = await toBase64(file);
         setImagenes(images);
+        setImgSize(0);
+
         images.push(fileBase64);
       } catch (e) {
         alert(e);
@@ -1218,12 +1725,16 @@ const CulturalAssetForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Input
+                  id={question.id}
                   type="text"
+                  onChange={question.onChange}
                   name={question.name}
-                  {...register(question.name, { required: question.required })}
+                  {...register(question.name, 
+                    { onChange : question.onChange}
+                    )}
                   fullWidth
+                  value={question.value}
                   placeholder={question.placeHolder}
-                  sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
                 ></Input>
               </Grid>
             </Grid>
@@ -1242,16 +1753,16 @@ const CulturalAssetForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Input
+                  id={question.id}
                   type="number"
                   name={question.name}
                   {...register(question.name, {
+                    onChange : question.onChange,
                     pattern : question.pattern ? question.pattern : "",
                     required: question.required,
                     min: question.min,
                     max: question.max,
                   })}
-                  sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
-                  onChange={question.onChange}
                   fullWidth
                   placeholder={question.placeHolder}
                 ></Input>
@@ -1271,14 +1782,10 @@ const CulturalAssetForm = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
-                <InputMap onSetLocation={updatedLocationObject}></InputMap>
-                {/* <Input
-                  type="text"
-                  name={question.name}
-                  {...register(question.name, { required: question.required })}
-                  fullWidth
-                  placeholder={question.placeHolder}
-                ></Input> */}
+                <InputMap
+                  id={question.id}
+                  onSetLocation={updatedLocationObject}
+                ></InputMap>
               </Grid>
             </Grid>
           </SingleQuestion>
@@ -1299,6 +1806,15 @@ const CulturalAssetForm = () => {
                   {question.instructions}
                 </Typography>
               </Grid>
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#eb4034"} fontWeight={"bolder"}>AVISO: Las imagenes que suba aquí, reemplazarán a las imagenes existentes. Si no sube nada, se mantendrán las imágenes actuales.</Typography>
+              </Grid> 
+              
+              {question.size > 0 ? 
+              <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+              <Typography color={"#000000"} fontWeight={"bolder"}>{"Número de imágenes en el sistema: " + question.size}</Typography>
+              </Grid> 
+               : <br></br>}
               <br></br>
               <Grid
                 item
@@ -1309,13 +1825,6 @@ const CulturalAssetForm = () => {
                   justifyContent: "space-evenly",
                 }}
               >
-                {/* <Input
-                    type="text"
-                    name={question.name}
-                    {...register(question.name, { required: question.required })}
-                    fullWidth
-                    placeholder={question.placeHolder}
-                  ></Input> */}
                 <input
                   accept="image/*"
                   id={question.id}
@@ -1354,10 +1863,15 @@ const CulturalAssetForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Input
+                  id={question.id}
                   type="date"
-                  sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
+                  value={question.value}
                   name={question.name}
-                  {...register(question.name, { required: question.required })}
+                  onChange={question.onChange}
+                  {...register(question.name, {
+                    onChange: question.onChange,
+                    required: question.required,
+                  })}
                   fullWidth
                 ></Input>
               </Grid>
@@ -1375,11 +1889,20 @@ const CulturalAssetForm = () => {
                   {question.question}{" "}
                 </Typography>
               </Grid>
+              {question.warning ? 
+                <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#000000"} fontWeight={"bolder"}>{question.warning}</Typography>
+              </Grid> : <br></br>}
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
-                <RadioGroup name="radioTest">
+                <RadioGroup
+                  name="radioTest"
+                  onChange={question.onChange}
+                  value={question.value}
+                >
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
+                        id={question.id}
                         value={option}
                         control={
                           <Radio
@@ -1387,11 +1910,7 @@ const CulturalAssetForm = () => {
                             color="success"
                           />
                         }
-                        label={
-                          <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                            {option}
-                          </Typography>
-                        }
+                        label={option}
                       />
                     );
                   })}
@@ -1411,24 +1930,28 @@ const CulturalAssetForm = () => {
                   {question.question}{" "}
                 </Typography>
               </Grid>
+              {question.warning ? 
+                <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#000000"} fontWeight={"bolder"}>{question.warning}</Typography>
+              </Grid> : <br></br>}
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
-                <RadioGroup onChange={question.onChange} name="radioTest">
+                <RadioGroup
+                  value={question.value}
+                  onChange={question.onChange}
+                  name="radioTest"
+                >
                   {question.options.map((option) => {
                     return (
                       <FormControlLabel
+                        id={question.id}
                         value={option.value}
                         control={
                           <Radio
-                            {...register(question.name, { required: true })}
+                            {...register(question.name, { required: question.required })}
                             color="success"
                           />
                         }
-                        label={
-                          <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                            {option.name}
-                          </Typography>
-                        }
-                        // label={option.name}
+                        label={option.name}
                       />
                     );
                   })}
@@ -1452,11 +1975,17 @@ const CulturalAssetForm = () => {
                   {question.question}
                 </Typography>
               </Grid>
+              {question.warning ? 
+                <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                <Typography color={"#F31B1B"} fontWeight={"bolder"}>{question.warning}</Typography>
+              </Grid> : <br></br>}
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Select
+                  id={question.id}
                   value={question.value}
                   fullWidth
                   {...register(question.name, {
+                    value: question.value,
                     onChange: question.onChange,
                     required: true,
                   })}
@@ -1472,7 +2001,7 @@ const CulturalAssetForm = () => {
                       }
                       return 0;
                     })
-                    .map((option) => {
+                    .map((option, i) => {
                       return (
                         <MenuItem value={option.value}>{option.name}</MenuItem>
                       );
@@ -1499,6 +2028,7 @@ const CulturalAssetForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Select
+                  id={question.id}
                   multiple
                   fullWidth
                   value={question.value}
@@ -1518,12 +2048,7 @@ const CulturalAssetForm = () => {
                       <Checkbox
                         checked={selectedAssetCommunities.indexOf(option) > -1}
                       />
-                      <ListItemText primary={
-                        <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                          {option.name}
-                        </Typography>
-                        } 
-                      />
+                      <ListItemText primary={option.name} />
                     </MenuItem>
                   ))}
                 </Select>
@@ -1544,6 +2069,7 @@ const CulturalAssetForm = () => {
               </Grid>
               <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
                 <Input
+                  id={question.id}
                   type="email"
                   {...register(question.name, { required: question.required })}
                   fullWidth
@@ -1555,7 +2081,7 @@ const CulturalAssetForm = () => {
           </SingleQuestion>
         );
         break;
-      case "dimensionCriteriaId":
+      case "dimensionCriteriaIdU":
         content = (
           <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
             <Grid
@@ -1619,31 +2145,56 @@ const CulturalAssetForm = () => {
                           alignItems={"center"}
                         >
                           <Grid item xs={4}>
-                            <Typography sx={{ fontWeight: "bold", fontSize: "1.2rem" }} >{option.name}</Typography>
+                            <Typography>{option.name}</Typography>
                           </Grid>
                           <Grid item xs={8}>
+                          <RadioGroup
+                            value={question.values}
+                            onChange={question.onChange}
+                            name="radioTest"
+                            > 
                             <Grid
                               container
                               justifyContent={"space-around"}
                               alignContent="center"
                             >
+                              
                               {question.criteria.map((c, i) => {
-                                // console.log(i + option.value);
+                                // console.log(option);
+                                //  console.log(i + option.value);
                                 return (
-                                  <input
-                                    style={{ width: "1.5em", height: "1.5em" }}
-                                    type="radio"
-                                    name={question.codeName}
-                                    {...register(
-                                      question.codeName + "." + index,
-                                      { required: question.required }
-                                    )}
-                                    value={i + option.value}
-                                    color="success"
-                                  />
+                                  // <input
+                                  // <FormControlLabel
+                                  //   id={question.id + "[" + index + "]"}
+                                  //   value={i + option.value}
+                                  //   name={question.codeName}
+                                  //   control={
+                                      <Radio
+                                        // id={question.id + "[" + i + "]"}
+                                        // CAMBIO IMPORTANTE
+                                        // CAMBIO IMPORTANTE
+                                        checked = {question.values[index] === (i + option.value)}
+                                        value={i + option.value}
+                                        id={question.id + "[" + index + "]"}
+                                        style={{ width: "1.5em", height: "1.5em" }}
+                                        // type="radio"
+                                        name={question.codeName}
+                                        {...register(
+                                          question.codeName + "." + index,
+                                          { 
+                                            onChange: question.onChange,
+                                            required: question.required 
+                                          }
+                                        )}
+                                        color="success"
+                                      />
+                                    // }
+                                  // />
                                 );
                               })}
                             </Grid>
+                            </RadioGroup>
+                              
                           </Grid>
                         </Grid>
                       );
@@ -1654,6 +2205,130 @@ const CulturalAssetForm = () => {
             </Grid>
           </Grid>
         );
+        break;
+        case "dimensionCriteriaId":
+          content = (
+            <Grid container spacing={0} minWidth={"100%"} paddingTop={"2%"}>
+              <Grid
+                item
+                xs={12}
+                bgcolor={"#dcdcdc"}
+                borderRadius={"30px"}
+                sx={
+                  !question.opacity
+                    ? null
+                    : {
+                        background: getBackgroudOpacity(
+                          question.opacity,
+                          question.rgb
+                        ),
+                      }
+                }
+              >
+                <Box
+                  paddingTop={"1%"}
+                  alignContent={"center"}
+                  paddingRight={"5%"}
+                  paddingLeft={"5%"}
+                  borderRadius={"50%"}
+                >
+                  <Grid container direction={"row"}>
+                    <Grid sx={{ paddingTop: "2%" }} item xs={12}>
+                      <Typography color={question.color} fontWeight={"bolder"}>
+                        {" "}
+                        {question.question}{" "}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container>
+                        <Grid item xs={4}></Grid>
+                        <Grid container justifyContent={"space-around"} xs={8}>
+                          {question.criteria.map((c) => {
+                            return (
+                              <Typography
+                                fontWeight={800}
+                                color={"#7c8484"}
+                                fontSize={18}
+                                xs={Math.floor(12 / question.criteria.length)}
+                              >
+                                {" "}
+                                {c}{" "}
+                              </Typography>
+                            );
+                          })}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} sx={{ paddingBottom: "2%" }}>
+                      {question.options.map((option, index) => {
+                        return (
+                          <Grid
+                            container
+                            paddingTop={"2%"}
+                            spacing={1}
+                            minWidth="100%"
+                            alignItems={"center"}
+                          >
+                            <Grid item xs={4}>
+                              <Typography>{option.name}</Typography>
+                            </Grid>
+                            <Grid item xs={8}>
+                            <RadioGroup
+                              value={question.values}
+                              onChange={question.onChange}
+                              name="radioTest"
+                              >
+                                
+                              <Grid
+                                container
+                                justifyContent={"space-around"}
+                                alignContent="center"
+                              >
+                                {question.criteria.map((c, i) => {
+                                  // console.log(option);
+                                  //  console.log(i + option.value);
+                                  return (
+                                    // <input
+                                    // <FormControlLabel
+                                    //   id={question.id + "[" + index + "]"}
+                                    //   value={i + option.value}
+                                    //   name={question.codeName}
+                                    //   control={
+                                        <Radio
+                                          // id={question.id + "[" + i + "]"}
+                                          // CAMBIO IMPORTANTE
+                                          // CAMBIO IMPORTANTE
+                                          // checked = {question.values[index] === (i + option.value)}
+                                          value={i + option.value}
+                                          id={question.id + "[" + index + "]"}
+                                          style={{ width: "1.5em", height: "1.5em" }}
+                                          // type="radio"
+                                          name={question.codeName}
+                                          {...register(
+                                            question.codeName + "." + index,
+                                            { 
+                                              onChange: question.onChange,
+                                              required: question.required 
+                                            }
+                                          )}
+                                          color="success"
+                                        />
+                                      // }
+                                    // />
+                                  );
+                                })}
+                              </Grid>
+                              </RadioGroup>
+                            </Grid>
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
+          );
         break;
       case "dimensionCriteria":
         content = (
@@ -1730,6 +2405,7 @@ const CulturalAssetForm = () => {
                               {question.criteria.map((c, i) => {
                                 return (
                                   <input
+                                    id={question.id + "[" + i + "]"}
                                     type="radio"
                                     name={question.codeName}
                                     {...register(
@@ -1827,6 +2503,7 @@ const CulturalAssetForm = () => {
                               {question.criteria.map((c, i) => {
                                 return (
                                   <input
+                                    id={question.id + "[" + i + "]"}
                                     type="radio"
                                     name={question.codeName}
                                     {...register(
@@ -1924,6 +2601,7 @@ const CulturalAssetForm = () => {
                               {question.criteria.map((c, i) => {
                                 return (
                                   <FormControlLabel
+                                    id={question.id + "[" + i + "]"}
                                     value={option.value + ""}
                                     control={
                                       <Checkbox
@@ -1961,12 +2639,12 @@ const CulturalAssetForm = () => {
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
                 <Grid
                   direction={"column"}
-                  // onChange={handleChange}
                 >
                   {question.options.map((option, index) => {
                     return (
                       <Grid item>
                         <FormControlLabel
+                          id={question.id + "[" + index + "]"}
                           value={option + ""}
                           control={
                             <Checkbox
@@ -1999,26 +2677,29 @@ const CulturalAssetForm = () => {
               <Grid item xs={12} sx={{ paddingBottom: "2%", paddingTop: "1%" }}>
                 <Grid
                   direction={"column"}
-                  // onChange={handleChange}
                 >
-                  {question.options.map((option) => {
+                  {question.options.map((option, i) => {
                     return (
                       <Grid item>
                         <FormControlLabel
+                          id={question.id + "[" + i + "]"}
                           value={option.value}
                           control={
                             <Checkbox
+                              checked={
+                                question.checkedOnes
+                                  ? question.checkedOnes[i]
+                                  : false
+                              }
+                              onClick={question.onChange}
+                              id={question.id + "[" + i + "]c"}
                               color="success"
                               xs={6}
                               value={option.value}
                               {...register(question.name, { max: 3 })}
                             />
                           }
-                          
-                          label={
-                            <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}>
-                              {option.name}
-                            </Typography>}
+                          label={option.name}
                         />
                       </Grid>
                     );
@@ -2049,35 +2730,31 @@ const CulturalAssetForm = () => {
       "Content-Type": "application/json",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     };
-    let url = process.env.REACT_APP_BASE_ASSET_URL;
+    let url = process.env.REACT_APP_BASE_ASSET_URL.concat("/"+assetId);
 
     axios({
-      method: "POST",
+      method: "PUT",
       url: url,
       headers: headers,
       data: asset,
     }).then((res) => {
       console.log(res);
-      alert("Activo cultural registrado!");
+      alert("Activo cultural Actualizado!");
       refreshPage();
     });
 
-    // axios.post(urls.baseAssetURL, asset).then((res) => {
-    //   console.log(res);
-    //   alert("Successfully posted host");
-    // });
   };
 
-  function formatculturalAssetRequest(body) {
+  function formatculturalAssetRequest(bod) {
     var culturalAsset = {};
-    // console.log(body);
-    console.log(critList);
-    console.log(criteriaQuestions);
-    console.log(selectedSubtype);
+
+
+    const body = Object.fromEntries(new FormData(document.getElementById("assetForm")));
+
     culturalAsset.departmentId = body.departmentId;
     culturalAsset.municipalityId = body.municipalityId;
     culturalAsset.subtypeId = body.subtypeId;
-    culturalAsset.groupId = body.groupId;
+    culturalAsset.groupId = selectedGroup.value;
     culturalAsset.name = body.name;
     culturalAsset.assetCommunityType = body.assetCommunitiesTypes;
 
@@ -2103,7 +2780,6 @@ const CulturalAssetForm = () => {
     culturalAsset.reservationLink = body.reservationLink;
     culturalAsset.onGoingRecognition = body.onGoingRecognition;
     culturalAsset.links = body.links;
-    culturalAsset.accessDetail = body.accessDetail;    
 
     //Set up of location object for culturalAsset
     let location = {
@@ -2122,7 +2798,8 @@ const CulturalAssetForm = () => {
     culturalAsset.alternateNames = body.alternateNames;
 
     if (body.assetManifestations && body.inmaterialManifestation) {
-      culturalAsset.assetManifestations = body.assetManifestations.map(
+      culturalAsset.assetManifestations = manifestations.map(m => m.value).filter((m,i) => selectedManifestations[i])
+      .map(
         (assetManifestationId) => {
           return {
             manifestationId: assetManifestationId,
@@ -2151,11 +2828,19 @@ const CulturalAssetForm = () => {
     let fullAccessList = [];
 
     if (body.maritimeAccess) {
-      fullAccessList = fullAccessList.concat(body.maritimeAccess);
-    }if (body.aerialAccess) {
-      fullAccessList = fullAccessList.concat(body.aerialAccess);
-    }if (body.landAccess) {
-      fullAccessList = fullAccessList.concat(body.landAccess);
+      fullAccessList = fullAccessList.concat(
+        maritimeAccess.map(m => m.value).filter((m,i) => selectedMaritimeAccess[i])
+        );
+    }
+    if (body.aerialAccess) {
+      fullAccessList = fullAccessList.concat(
+        aerialAccess.map(m => m.value).filter((m,i) => selectedAerialAccess[i])
+        );
+    }
+    if (body.landAccess) {
+      fullAccessList = fullAccessList.concat(
+        terrestrialAccess.map(m => m.value).filter((m,i) => selectedLandAccess[i])
+        );
     }
 
     culturalAsset.assetAccessList = fullAccessList.map((accessId) => {
@@ -2164,8 +2849,10 @@ const CulturalAssetForm = () => {
       };
     });
 
+    console.log(body);    
+
     //Formating sports in request
-    culturalAsset.assetSportList = body.sp
+    culturalAsset.assetSportList = sports.map((s, index) => body['sp.'.concat(index)])
       .map((s) => {
         return {
           sportId: s.substring(1, s.length),
@@ -2183,7 +2870,7 @@ const CulturalAssetForm = () => {
       });
 
     //Formating offers in request
-    const offerTour = body.tr
+    const offerTour = tours.map((s, index) => body['tr.'.concat(index)])
       .map((s) => {
         return {
           offerId: s.substring(1, s.length),
@@ -2194,7 +2881,7 @@ const CulturalAssetForm = () => {
         return element !== undefined;
       });
 
-    const offerFolk = body.folk
+    const offerFolk = folklore.map((s, index) => body['folk.'.concat(index)])
       .map((s) => {
         return {
           offerId: s.substring(1, s.length),
@@ -2205,7 +2892,7 @@ const CulturalAssetForm = () => {
         return element !== undefined;
       });
 
-    const offerOtherServices = body.os
+    const offerOtherServices = otherServices.map((s, index) => body['os.'.concat(index)])
       .map((s) => {
         return {
           offerId: s.substring(1, s.length),
@@ -2226,7 +2913,7 @@ const CulturalAssetForm = () => {
     });
 
     //Formating vulnerabilities in request
-    const vulnerabilitiesLists = body.vuln
+    const vulnerabilitiesLists = assetVulnerabilityList.map((s, index) => body['vuln.'.concat(index)])
       .map((s) => {
         return {
           vulnerabilityId: s.substring(1, s.length),
@@ -2246,7 +2933,7 @@ const CulturalAssetForm = () => {
     culturalAsset.assetVulnerabilityList = vulnerabilitiesLists;
 
     //Formating nature in request
-    const fullNatureList = body.nat
+    const fullNatureList = natureList.map((s, index) => body['nat.'.concat(index)])
       .map((s) => {
         return {
           natureId: s.substring(1, s.length),
@@ -2264,7 +2951,8 @@ const CulturalAssetForm = () => {
     });
 
     if (body.communications) {
-      culturalAsset.assetCommunicationList = body.communications.map(
+      culturalAsset.assetCommunicationList = communication.filter( (wr,i) => selectedCommunications[i]).map (wr => wr.value)
+      .map(
         (communicationId) => {
           return {
             communicationId: communicationId,
@@ -2274,7 +2962,8 @@ const CulturalAssetForm = () => {
     }
 
     if (body.basicServices) {
-      culturalAsset.assetPublicServiceList = body.basicServices.map(
+      culturalAsset.assetPublicServiceList = publicService.filter( (wr,i) => selectedBasicServices[i]).map (wr => wr.value)
+      .map(
         (publicServiceId) => {
           return {
             publicServiceId: publicServiceId,
@@ -2285,7 +2974,7 @@ const CulturalAssetForm = () => {
 
     let currentCritList = critList.filter((c) => c.groupId === selectedGroupId);
 
-    culturalAsset.assetCriteriaList = body.criteria
+    culturalAsset.assetCriteriaList = criteriaQuestions.map((s, index) => bod.criteria[index])
       .filter((c) => !(c === ""))
       .map((c, index) => {
         return {
@@ -2303,13 +2992,20 @@ const CulturalAssetForm = () => {
     let fullRecList = [];
 
     if (body.quality) {
-      fullRecList = fullRecList.concat(body.quality);
+      fullRecList = fullRecList.concat(
+        qualityRecommendations.filter( (wr,i) => selectedQuality[i]).map (wr => wr.value)
+        );
     }
+    
     if (body.wellness) {
-      fullRecList = fullRecList.concat(body.wellness);
+      fullRecList = fullRecList.concat(
+        wellnessRecommendations.filter( (wr,i) => selectedWellnessSustainability[i]).map (wr => wr.value)
+        );
     }
     if (body.economic) {
-      fullRecList = fullRecList.concat(body.economic);
+      fullRecList = fullRecList.concat(
+        economicRecommendations.filter( (wr,i) => selectedEconomicRecomendations[i]).map (wr => wr.value)
+        );
     }
     culturalAsset.assetRecommendationList = fullRecList.map((r) => {
       return {
@@ -2326,25 +3022,321 @@ const CulturalAssetForm = () => {
     return bg;
   }
 
+
+
+
+  const loadAssetDataToForm = () => {
+
+    //  Updating municipality list.
+    setMunicipalities(
+      munList.filter((mun) => mun.parentLocationId === assetDetaill.departmentId)
+    );
+
+    setSelectedName(assetDetaill.name);
+    setSelectedSubtype(assetDetaill.subtypeId);
+
+    setSelectedAlternateNames(assetDetaill.alternateNames);
+
+    setSelectedLocationDetail(assetDetaill.locationDetail);
+
+    setSelectedDescription(assetDetaill.description);
+
+    setSelectedCosmogonyDescription(assetDetaill.cosmogonyDescription);
+
+    setSelectedReservationName(assetDetaill.reservationName);
+
+    setSelectedReservationLink(assetDetaill.reservationLink);
+
+    setSelectedLinks(assetDetaill.links);
+
+    //Set up of location object for culturalAsset
+    setAssetLocationObject( {
+      parentLocationId: !assetDetaill.municipalityId
+        ? assetDetaill.departmentId
+        : assetDetaill.municipalityId,
+      detail: assetDetaill.locationObject.locationDetail,
+      latitude: assetDetaill.locationObject.lat,
+      longitude: assetDetaill.locationObject.lng,
+      name: assetDetaill.name,
+      orderingId: "336e030a-6a7f-11ed-a1eb-0242ac120002",
+    });
+
+
+    let typeId = subtypeList.filter(
+      (s) => s.value === assetDetaill.subtypeId
+    )[0].typeId;
+    let categoryId = typeList.filter((t) => t.value === typeId)[0].categoryId;
+    let patrimonyId = categoryList.filter((c) => c.value === categoryId)[0]
+      .patrimonyId;
+    let groupId = patrimonyList.filter((p) => p.value === patrimonyId)[0]
+      .assetGroupId;
+    // Filtering questions using group id
+    setCriteriaQuestions(getCriteriaQuestions(groupId));
+    // Obtaining selected subtype
+    setSelectedSubtype(assetDetaill.subtypeId);
+    // Obtaining selected group for rendering
+    setSelectedGroup(groupList.filter((g) => g.value === groupId)[0]);
+    setSelectedGroupId(groupId);
+
+    setSelectedMun(assetDetaill.municipalityId);
+    setSelectedDep(assetDetaill.departmentId);
+
+    setImgSize(assetDetaill.imageList ? assetDetaill.imageList.length : 0);
+
+
+
+    setSelectedAssetCommunityType(assetDetaill.assetCommunityType);
+    setSelectedInmaterialManifestation(assetDetaill.inmaterialManifestation);
+    setSelectedCosmogony(assetDetaill.cosmogony);
+    setSelectedSafeguardingRegistry(assetDetaill.safeguardingRegistry);
+    setSelectedUnescoRegistry(assetDetaill.unescoRegistry);
+    setSelectedPartOfNaturalReservation(assetDetaill.partOfNaturalReservation);
+    setSelectedOnGoingRecognition(assetDetaill.onGoingRecognition);
+    setSelectedTourismPermit(assetDetaill.tourismPermit);
+    setSelectedAssetRouteList(assetDetaill.assetRouteList[0].routeId);
+    setSelectedAccessDetail(assetDetaill.accessDetail);
+
+    setSelectedVulnerabilities(
+      assetVulnerabilityList.map(
+        av => {
+          return assetDetaill.assetVulnerabilityList.filter(ao => ao.vulnerabilityId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+    setSelectedNatures(
+      natureList.map(
+        av => {
+          return assetDetaill.assetNatureList.filter(ao => ao.natureId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+    setSelectedSports(
+      sports.map(
+        av => {
+          return assetDetaill.assetSportList.filter(ao => ao.sportId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+     setSelectedTours(
+      tours.map(
+        av => {
+              return assetDetaill.assetOfferList.filter(ao => ao.offerId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+    setSelectedFolklore(
+      tours.map(
+        av => {
+              return assetDetaill.assetOfferList.filter(ao => ao.offerId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+    setSelectedFolklore(
+      folklore.map(
+        av => {
+              return assetDetaill.assetOfferList.filter(ao => ao.offerId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+
+     setSelectedOtherServices(
+      otherServices.map(
+        av => {
+              return assetDetaill.assetOfferList.filter(ao => ao.offerId === av.value)[0].score + av.value;
+        })
+        .filter((av) => av)
+    );
+
+    setSelectedManifestations(
+      manifestations.map((am) => {
+        for (let i = 0; i < assetDetaill.assetManifestations.length; i++) {
+          if (
+            am.value === assetDetaill.assetManifestations[i].manifestationId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedLandAccess(
+      terrestrialAccess.map((am) => {
+        for (let i = 0; i < assetDetaill.assetAccessList.length; i++) {
+          if (am.value === assetDetaill.assetAccessList[i].accessId) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedAerialAccess(
+      aerialAccess.map((am) => {
+        for (let i = 0; i < assetDetaill.assetAccessList.length; i++) {
+          if (am.value === assetDetaill.assetAccessList[i].accessId) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedMaritimeAccess(
+      maritimeAccess.map((am) => {
+        for (let i = 0; i < assetDetaill.assetAccessList.length; i++) {
+          if (am.value === assetDetaill.assetAccessList[i].accessId) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedBasicServices(
+      publicService.map((am) => {
+        for (let i = 0; i < assetDetaill.assetPublicServiceList.length; i++) {
+          if (
+            am.value === assetDetaill.assetPublicServiceList[i].publicServiceId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedCommunications(
+      communication.map((am) => {
+        for (let i = 0; i < assetDetaill.assetCommunicationList.length; i++) {
+          if (
+            am.value === assetDetaill.assetCommunicationList[i].communicationId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedQuality(
+      qualityRecommendations.map((am) => {
+        for (let i = 0; i < assetDetaill.assetRecommendationList.length; i++) {
+          if (
+            am.value ===
+            assetDetaill.assetRecommendationList[i].recommendationId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedWellnessSustainability(
+      wellnessRecommendations.map((am) => {
+        for (let i = 0; i < assetDetaill.assetRecommendationList.length; i++) {
+          if (
+            am.value ===
+            assetDetaill.assetRecommendationList[i].recommendationId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedEconomicRecomendations(
+      economicRecommendations.map((am) => {
+        for (let i = 0; i < assetDetaill.assetRecommendationList.length; i++) {
+          if (
+            am.value ===
+            assetDetaill.assetRecommendationList[i].recommendationId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+
+    setSelectedAssetCommunities(
+      ehtnicGroup
+        .map((eth) => {
+          for (let i = 0; i < assetDetaill.assetCommunities.length; i++) {
+            if (eth.value === assetDetaill.assetCommunities[i].communityId) {
+              return eth;
+            }
+          }
+        })
+        .filter((eth) => eth)
+    );
+
+    
+
+    if (assetDetaill.dateEvent) {
+      var date = new Date(
+        assetDetaill.dateEvent[0],
+        assetDetaill.dateEvent[1],
+        assetDetaill.dateEvent[2],
+        assetDetaill.dateEvent[3],
+        assetDetaill.dateEvent[4]
+      )
+        .toISOString()
+        .substring(0, 10);
+      setDate(date);
+
+      console.log(date);
+    }
+
+    console.log(assetDetaill);
+    alert('Activo cultural cargado satisfactoriamente.')
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box maxWidth={1} sx={boxSx}>
         <Header fontColor="#ffffff" fontSize="big"></Header>
+
+
         <Container>
           <form
+            id = "assetForm"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
               margin: "10px 0",
             }}
           >
+             <Box paddingTop={"3%"}>
+                <Title
+                  size="large"
+                  shadow="bottom-left"
+                  color="#ffffff"
+                  textAlign="center"
+                  titleName="USTED VA ACTUALIZAR EL ACTIVO CULTURAL, DEBE DILIGENCIAR TODOS LOS CAMPOS Y REVISARLOS"
+                ></Title>
+              </Box>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
             <Container>
+              
+           
               <Box paddingTop={"3%"}>
                 <Title
                   size="large"
                   shadow="bottom-left"
                   color="#ffffff"
                   textAlign="center"
-                  titleName="Formulario de activos culturales"
+                  titleName="Actualización de activos culturales"
                 ></Title>
               </Box>
 
@@ -2353,6 +3345,24 @@ const CulturalAssetForm = () => {
                   return getQuestion(question);
                 })}
               </Box>
+
+              <Grid container justifyContent={"center"} padding="5%">
+                <Button
+                  sx={{
+                    background: "#A2C2EE",
+                    textTransform: "initial",
+                    width: "50%",
+                    borderRadius: "18px",
+                  }}
+                  onClick={loadAssetDataToForm}
+                >
+                  <Title
+                    titleName="Cargar Activo Cultural"
+                    size="normal"
+                    color="#ffffff"
+                  ></Title>
+                </Button>
+              </Grid>
 
               <Box paddingTop={"5%"}>
                 <Title
@@ -2480,7 +3490,7 @@ const CulturalAssetForm = () => {
                   sx={{ background: "#ffffff", height: "0.5vh", width: "100%" }}
                 ></Box>
               </Box>
-
+              
               <Box paddingTop={"3%"}>
                 {accessRoute.map((question) => {
                   return getQuestion(question);
@@ -2555,4 +3565,4 @@ const CulturalAssetForm = () => {
   );
 };
 
-export default CulturalAssetForm;
+export default CulturalAssetUpdate;

@@ -49,14 +49,14 @@ const CardElement = (props) => {
         <img
           style={{ paddingTop: "3%" }}
           className="__card_image"
-          src={props.imgSrc}
+          src={(props.imgSrc && !(props.imgSrc === "")) ? props.imgSrc : "https://www.muskersbroughtonhall.com.au/wp-content/plugins/ninja-forms/assets/img/no-image-available-icon-6.jpg"}
         ></img>
         <Grid item className="cardTitle">
           <Link to={props.link}>
             <Subtitle
               shadowType="dizzy"
               content={props.title}
-              fontSize="medium"
+              fontSize={(props.fontSize && !(props.fontSize === "")) ? props.fontSize : "medium"}
               color={"white"}
             ></Subtitle>
           </Link>

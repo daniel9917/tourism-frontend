@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.10",
     "@react-google-maps/api": "^2.17.0",
@@ -17,7 +18,7 @@
     "match-sorter": "^6.3.1",
     "nuka-carousel": "^5.4.1",
     "react": "^18.2.0",
-    "react-chartjs-2": "^5.0.1",
+    "react-chartjs-2": "^3.0.5",
     "react-dom": "^18.2.0",
     "react-headless-tabs": "^6.0.3",
     "react-hook-form": "^7.38.0",

@@ -12,6 +12,7 @@ import urls from "../../urls.json";
 import ImpactTab from "../../components/Tab/ImpactTab";
 import { useParams } from "react-router";
 import { useEffect } from "react";
+import BarChart from "../../components/Charts/BarChart";
 
 const carouselImgSx = {
   maxWidth: "100%",
@@ -24,6 +25,12 @@ const theme = createTheme({
   },
 });
 
+const barBoxSx = {
+  background: "#D9D9D9",
+  "border-radius": "20px",
+  padding: "20px",
+};
+
 const imgUrl =
   "https://wallpapercrafter.com/sizes/1920x1080/142984-Colombia-mountains-clouds-sunlight-forest-landscape-trees.jpg";
 
@@ -34,9 +41,9 @@ const imgBox = {
 };
 
 const mainBoxSx = {
-  //   background: "#ffffff",
-  minHeight: "100vh ",
-  backgroundImage: "url(" + imgUrl + ")",
+  background: "#a2e4f3",
+  // backgroundImage: "url(" + imgUrl + ")",
+  minHeight: "100vh",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
 };
@@ -44,7 +51,7 @@ const mainBoxSx = {
 const contentBoxSx = {
   minHeight: "100vh ",
   width: "100%",
-  background: "#ffffff",
+  background: "#CCF5AB",
 };
 
 const otherNamesBoxSx = {
@@ -53,19 +60,21 @@ const otherNamesBoxSx = {
   display: "flex",
 };
 
-const CulturalAssetDetail = () => {
+function CulturalAssetDetail () {
   const { assetId } = useParams();
 
   const [assetDetaill, setAssetDetaill] = useState({});
   const [isFetched, setIsFetched] = useState(false);
 
   const ref = useRef(null);
-    const onClickScroll = () => {
-      ref.current?.scrollIntoView({ behavior: "smooth" });
-    };
+  const onClickScroll = () => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   async function fetchData() {
-    const response = await fetch(`${process.env.REACT_APP_BASE_ASSET_URL}/${assetId}`);
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_ASSET_URL}/${assetId}`
+    );
     // const response = await fetch(`${urls.baseAssetURL}/${assetId}`);
     response.json().then((response) => {
       setAssetDetaill(response);
@@ -77,13 +86,21 @@ const CulturalAssetDetail = () => {
     fetchData();
   }, []);
 
-  console.log("dynamic detail");
-  console.log(assetDetaill);
-
   if (isFetched) {
-    
+    console.log(assetDetaill);
     const dataDTOList = assetDetaill.dataDTOList;
     const maturityDTO = assetDetaill.maturityDTO.values[0];
+    const typologyDTO = {
+      objectName: "typology",
+      values: assetDetaill.typologyDTO.values[0],
+    };
+    const assetCriteriaList = {
+      objectName: "criteria",
+      values: assetDetaill.assetCriteriaList.slice(
+        0,
+        assetDetaill.assetCriteriaList.length - 1
+      ),
+    };
 
     return (
       <ThemeProvider theme={theme}>
@@ -99,14 +116,24 @@ const CulturalAssetDetail = () => {
               textAlign="center"
               titleName={assetDetaill.name}
             ></Title>
-            <Box sx={{ paddingTop: "5%" }}>
+            <Box sx={otherNamesBoxSx}>
               <Paragraph
-                size="normal"
-                color="#194A47"
-                content={assetDetaill.description}
-                textAlign="center"
+                bold
+                color="#025928"
+                size="1.3rem"
+                content="Otros Nombres: "
+              ></Paragraph>
+              <Paragraph
+                fontStyle="italic"
+                shadow="2px 2px 6px black"
+                color="#025928"
+                size="1.3rem"
+                content={
+                  assetDetaill.alternateNames ? assetDetaill.alternateNames : ""
+                }
               ></Paragraph>
             </Box>
+
             {/* Gallery Caroussel */}
             <Box sx={{ paddingTop: "5%" }} height="70%">
               <Carousel
@@ -145,37 +172,45 @@ const CulturalAssetDetail = () => {
           </Container>
         </Box>
         {/** Asset detail */}
-        <Box ref={ref} sx={{ contentBoxSx }}>
+        <Box ref={ref} sx={contentBoxSx}>
           <Title
             padding="3%"
             size="extra"
             shadow="lighter-gray"
             color="#025928"
             textAlign="center"
-            titleName="Descripcion del activo"
+            titleName="Descripción del activo"
           ></Title>
-          <Box sx={otherNamesBoxSx}>
-            <Paragraph
-              bold
-              color="#025928"
-              size="1.3rem"
-              content="Otros Nombres: "
-            ></Paragraph>
-            <Paragraph
-              fontStyle="italic"
-              shadow="2px 2px 6px black"
-              color="#025928"
-              size="1.3rem"
-              content="Otros, Nombres, Diferentes"
-            ></Paragraph>
-          </Box>
           {/* Asset characteristics */}
           <Container sx={{ paddingTop: "2%" }}>
             <CharacteristicGroup data={dataDTOList}></CharacteristicGroup>
+            <Container sx={barBoxSx}>
+              <Title
+                padding="3%"
+                size="big"
+                shadow="lighter-gray"
+                color="#f9f9f9"
+                textAlign="center"
+                titleName="Tipolología del activo"
+              ></Title>
+              <BarChart data={typologyDTO}></BarChart>
+            </Container>
+            <br></br>
+            <br></br>
+            <Container sx={barBoxSx}>
+              <Title
+                padding="3%"
+                size="big"
+                shadow="lighter-gray"
+                color="#f9f9f9"
+                textAlign="center"
+                titleName="Criterios de calidad"
+              ></Title>
+              <BarChart data={assetCriteriaList}></BarChart>
+            </Container>
           </Container>
           <br></br>
           <br></br>
-
           {/* Asset Impact  */}
           <Box>
             <Title
@@ -184,12 +219,12 @@ const CulturalAssetDetail = () => {
               shadow="2px 5px 7px grey"
               color="#e35934"
               textAlign="center"
-              titleName="Impactos sobre la comunidades"
+              titleName="Impactos sobre la comunidad del destino"
             ></Title>
           </Box>
 
           <Box sx={{ background: "#B54815" }}>
-            <ImpactTab data={maturityDTO.factorTypeList}></ImpactTab>
+            <ImpactTab data={maturityDTO.factorTypeList.filter(ft => !(ft.name === "BEHAVIOUR LIKE HOST"))}></ImpactTab>
           </Box>
         </Box>
       </ThemeProvider>
@@ -197,4 +232,4 @@ const CulturalAssetDetail = () => {
   }
 };
 
-export default CulturalAssetDetail;
+export default React.memo(CulturalAssetDetail);

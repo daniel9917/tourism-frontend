@@ -11,15 +11,19 @@ import urls from "../../urls.json";
 import axios from "axios";
 import filterValues from "../../filters.json";
 
-
-const getFilters = axios.get(process.env.REACT_APP_BASE_ASSET_URL + "/form-builder/filters");
+const getFilters = axios.get(
+  process.env.REACT_APP_BASE_ASSET_URL + "/form-builder/filters"
+);
 const filters = await getFilters;
 
 let filteringParams = {};
 
-const getElements = axios.get(process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters", {      
+const getElements = axios.get(
+  process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters",
+  {
     params: filteringParams,
-});
+  }
+);
 const elements = await getElements;
 
 const theme = createTheme({
@@ -30,7 +34,10 @@ const theme = createTheme({
 
 const mapImgUrl = "https://i.imgur.com/u6dkjRJ.png";
 
-const mainBox = {};
+const imageSrc = "https://images.unsplash.com/photo-1645263813697-b037b91e9907?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE0fHx8ZW58MHx8fHw%3D&w=1000&q=80";
+const mainBox = {
+  // backgroundImage: "url(" + imageSrc + ")",
+};
 
 const minSrcUrl =
   "https://procolombia.co/sites/default/files/01-barranquilla-hori.jpg?1612187920";
@@ -43,7 +50,7 @@ const headerBox = {
 
 const queryBox = {
   background: "#CCF5AB",
-  height: "100vh",
+  height: "95vh",
 };
 
 const filterBox = {
@@ -59,9 +66,18 @@ const descriptionBox = {
 };
 
 const resultBox = {
-  minHeight : "100vh",
+  minHeight: "70vh",
   background: "#03A65A",
 };
+
+const resultBoxx = {
+  height: "80vh",
+  width: "60vw",
+  background: "#CCF5AB",
+  overflow: "scroll",
+  "overflow-x": "hidden",
+};
+
 
 const filterObjects = [
   {
@@ -74,7 +90,7 @@ const filterObjects = [
   },
   {
     name: "Clasificación",
-    sections: ["Tipo", "Subtipo", "Manifestacion", "Patrimonio", "Categoria"],
+    sections: ["Tipo", "Subtipo", "Manifestacion", "Patrimonio", "Grupo"],
   },
 ];
 
@@ -85,17 +101,20 @@ const CulturalAssetListing = () => {
 
   const sendRequest = () => {
     fetch(
-      (typeof reqParams === undefined) ||
+      typeof reqParams === undefined ||
         (Object.keys(reqParams).length === 0 &&
           reqParams.constructor === Object)
-        ? process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters"
-        : process.env.REACT_APP_BASE_ASSET_URL+"/list-by-filters" + "?" + new URLSearchParams(reqParams)
+        ? process.env.REACT_APP_BASE_ASSET_URL + "/list-by-filters"
+        : process.env.REACT_APP_BASE_ASSET_URL +
+            "/list-by-filters" +
+            "?" +
+            new URLSearchParams(reqParams)
     )
       .then((res) => res.json())
       .then(
         (result) => {
           setAssets(result.data);
-          console.log("printing result data : " + result.data);
+          // console.log("printing result data : " + result.data);
         },
         (error) => {
           console.log(error);
@@ -142,24 +161,22 @@ const CulturalAssetListing = () => {
   };
 
   const addParams = (param) => {
-    var jsonString = JSON.stringify(param);
-    console.log(JSON.parse(jsonString));
     var matchFound = false;
-    for (let index = 0; index < filterParams.length; index++) {
-      if (filterParams[index].name == param.name) {
+    var list = filterParams;
+    for (let index = 0; index < list.length; index++) {
+      if (list[index].name == param.name) {
         matchFound = true;
-        filterParams[index].params = param.params;
-        setFilterParams(filterParams);
+        list[index].params = param.params;
+        setFilterParams(list);
         break;
       }
     }
     if (!matchFound) {
-      filterParams.push(param);
-      setFilterParams(filterParams);
+      list.push(param);
+      setFilterParams(list);
     }
-    console.log(filterParams);
+    console.log(list);
   };
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -183,64 +200,35 @@ const CulturalAssetListing = () => {
                   filterObjects={getFilterObjects()}
                   onSelectFilters={addParams}
                   onApplyFilters={getAssets}
+                  onDeleteFilters={() => setFilterParams([])}
                   filterBy={filterParams}
                 ></FilterGroup>
               </Grid>
             </Box>
-            <Box sx={mapBox}>
-              <Grid
-                container
-                direction={"col"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <img
-                  src={mapImgUrl}
-                  style={{
-                    width: "90%",
-                    height: "auto",
-                  }}
-                />
-              </Grid>
-            </Box>
-            <Box sx={descriptionBox}>
-              <Grid
-                direction={"col"}
-                alignItems="center"
-                justifyContent={"center"}
-                maxWidth={"80%"}
-              >
-                <Subtitle
-                  color="#025928"
-                  fontSize="big"
-                  shadowType="light"
-                  content="Mapa de activos"
-                ></Subtitle>
-                <Paragraph
-                  padding={{ top: "5%" }}
-                  content="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. "
-                  color="#025928"
-                ></Paragraph>
+            {/* Result box */}
+            <Box sx={resultBoxx}>
+              <Grid container direction={"row"} justifyContent="space-evenly">
+                {assets.map((element, index) => {
+                  return (
+                    <CardElement
+                      key={index + element.name}
+                      link={"/asset-detail/" + element.id}
+                      item
+                      color={"#025928"}
+                      fontSize ={"1.5rem"}
+                      imgSrc={
+                        (element.imageList && element.imageList.length) > 0
+                          ? element.imageList[0].imageBlob
+                          : ""
+                      }
+                      title={element.name}
+                    ></CardElement>
+                  );
+                })}
               </Grid>
             </Box>
           </Grid>
         </Box>
-      </Box>
-      <Box sx={resultBox} xs={12}>
-        <Grid container direction={"row"} justifyContent="space-evenly">
-          {assets.map((element, index) => {
-            return (
-              <CardElement
-                key={index + element.name}
-                link = {'/asset-detail/'+element.id}
-                item
-                color={"#025928"}
-                imgSrc={minSrcUrl}
-                title={element.name}
-              ></CardElement>
-            );
-          })}
-        </Grid>
       </Box>
     </ThemeProvider>
   );

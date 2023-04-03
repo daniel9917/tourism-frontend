@@ -17,27 +17,27 @@ const Home = () => {
   //Array that holds the contents of the cards of the home page
   const cardContents = [
     {
-      title: "Visualizar activos",
-      link : "/list",
-      imgSrc : "https://i.imgur.com/Zb85TBy.jpg",
-      color : "#088c4c",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
       title: "Vincular activos",
       imgSrc : "https://i.imgur.com/guzB9Lh.jpg",
       link : "/asset",
       color : "#088c4c",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "",
     },
     {
-      title: "Reconozcamos los impactos tan chéveres del turismo en donde vivimos.",
+      title: "Visualizar activos",
+      link : "/list",
+      imgSrc : "https://i.imgur.com/Zb85TBy.jpg",
+      color : "#088c4c",
+      description:"",
+    },
+    {
+      title: "Reconozcamos los impactos del turismo en donde vivimos.",
       imgSrc : "https://i.imgur.com/9zDA2lh.jpg",
       link : "/impact",
       color : "#088c4c",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "",
     },
     {
       title: "¿Soy un turista consciente?",
@@ -45,7 +45,7 @@ const Home = () => {
       color : "#088c4c",
       link : "",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        "",
     }
   ];
 
